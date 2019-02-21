@@ -4,7 +4,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "{{module}}",
+  "module": "src/database.mjs",
+  "main": "src/database.mjs",
   "description": "leveldb structure definition",
   "keywords": [],
   "contributors": [
@@ -16,19 +17,23 @@
   "license": "BSD-2-Clause",
   "scripts": {
     "cover": "c8 --temp-directory build/coverage ava && c8 report -r lcov --temp-directory build/coverage",
-    "docs": "documentation readme {{module}} --section=API",
-    "lint": "documentation lint {{module}}",
+    "docs": "documentation readme src/database.mjs --section=API",
+    "lint": "documentation lint src/database.mjs",
     "posttest": "markdown-doctest",
     "test": "ava"
   },
-  "dependencies": {},
+  "dependencies": {
+    "leveldown": "^4.0.1",
+    "levelup": "^4.0.0"
+  },
   "devDependencies": {
     "ava": "^1.2.1",
     "c8": "^3.4.0",
     "documentation": "^9.1.1",
     "esm": "^3.2.5",
     "markdown-doctest": "^0.9.1",
-    "semantic-release": "^15.13.3"
+    "semantic-release": "^15.13.3",
+    "tmp": "0.0.33"
   },
   "engines": {
     "node": ">=10.15.1"
