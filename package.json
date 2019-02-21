@@ -1,4 +1,64 @@
 {
   "name": "konsum-database",
-  "description": "leveldb structure definition"
+  "version": "0.0.0-semantic-release",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "{{module}}",
+  "description": "leveldb structure definition",
+  "keywords": [],
+  "contributors": [
+    {
+      "name": "Markus Felten",
+      "email": "markus.felten@gmx.de"
+    }
+  ],
+  "license": "BSD-2-Clause",
+  "scripts": {
+    "cover": "c8 --temp-directory build/coverage ava && c8 report -r lcov --temp-directory build/coverage",
+    "docs": "documentation readme {{module}} --section=API",
+    "lint": "documentation lint {{module}}",
+    "posttest": "markdown-doctest",
+    "test": "ava"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "ava": "^1.2.1",
+    "c8": "^3.4.0",
+    "documentation": "^9.1.1",
+    "esm": "^3.2.5",
+    "markdown-doctest": "^0.9.1",
+    "semantic-release": "^15.13.3"
+  },
+  "engines": {
+    "node": ">=10.15.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arlac77/konsum-database.git"
+  },
+  "bugs": {
+    "url": "https://github.com/arlac77/konsum-database/issues"
+  },
+  "homepage": "https://github.com/arlac77/konsum-database#readme",
+  "ava": {
+    "require": [
+      "esm"
+    ],
+    "extensions": [
+      "js",
+      "mjs"
+    ],
+    "babel": false,
+    "compileEnhancements": false,
+    "files": [
+      "tests/*-test.js",
+      "tests/*-test.mjs"
+    ]
+  },
+  "template": {
+    "repository": {
+      "url": "https://github.com/arlac77/npm-package-template-esm-only.git"
+    }
+  }
 }
