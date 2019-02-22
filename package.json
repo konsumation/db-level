@@ -4,8 +4,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "module": "src/database.mjs",
   "main": "src/database.mjs",
+  "module": "src/database.mjs",
   "description": "leveldb structure definition",
   "keywords": [],
   "contributors": [
@@ -40,12 +40,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/arlac77/konsum-database.git"
+    "url": "https://github.com/k0nsti/konsum-db.git"
   },
   "bugs": {
-    "url": "https://github.com/arlac77/konsum-database/issues"
+    "url": "https://github.com/k0nsti/konsum-db/issues"
   },
-  "homepage": "https://github.com/arlac77/konsum-database#readme",
+  "homepage": "https://github.com/k0nsti/konsum-db#readme",
   "ava": {
     "require": [
       "esm"
