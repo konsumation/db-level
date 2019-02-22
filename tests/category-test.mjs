@@ -3,14 +3,14 @@ import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
 
-import { Category } from "../src/database";
+import { Category } from "../src/category";
 
 test("categories write / read", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));
 
   for (let i = 0; i < 10; i++) {
     const c = new Category(`CAT-${i}`, { unit: "kWh" });
-    c.write(db);
+    await c.write(db);
   }
 
   const cs = [];

@@ -25,11 +25,11 @@ timeseries database on leveldb
 
 ### Table of Contents
 
--   [Category](#category)
+-   [initialize](#initialize)
     -   [Parameters](#parameters)
+-   [Category](#category)
+    -   [Parameters](#parameters-1)
     -   [Properties](#properties)
-    -   [initialize](#initialize)
-        -   [Parameters](#parameters-1)
     -   [write](#write)
         -   [Parameters](#parameters-2)
     -   [writeValue](#writevalue)
@@ -39,12 +39,21 @@ timeseries database on leveldb
     -   [entries](#entries)
         -   [Parameters](#parameters-5)
 
+## initialize
+
+initialize database
+checks/writes master record
+
+### Parameters
+
+-   `db` **levelup** 
+
 ## Category
 
 ### Parameters
 
 -   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** category name
--   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
     -   `options.unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit
 
 ### Properties
@@ -52,22 +61,13 @@ timeseries database on leveldb
 -   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** category name
 -   `unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit
 
-### initialize
-
-initialize database
-checks/writes master record
-
-#### Parameters
-
--   `db` **levelup**
-
 ### write
 
 write the category
 
 #### Parameters
 
--   `db` **levelup**
+-   `db` **levelup** 
 
 ### writeValue
 
@@ -75,28 +75,28 @@ write a time/value pair
 
 #### Parameters
 
--   `db` **levelup**
--   `value` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**
--   `time` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**
+-   `db` **levelup** 
+-   `value` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+-   `time` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ### values
 
-get all values of the category
+get values of the category
 
 #### Parameters
 
--   `db` **levelup**
--   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  (optional, default `'\u0000'`)
--   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  (optional, default `'\uFFFF'`)
+-   `db` **levelup** 
+-   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  (optional, default `"\u0000"`)
+-   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  (optional, default `"\uFFFF"`)
 
-Returns **Iterator&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>**
+Returns **Iterator&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
 
 ### entries
 
-get all categories
+get categories
 
 #### Parameters
 
--   `db` **levelup**
--   `gte`   (optional, default `'\u0000'`)
--   `lte`   (optional, default `'\uFFFF'`)
+-   `db` **levelup** 
+-   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  (optional, default `"\u0000"`)
+-   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  (optional, default `"\uFFFF"`)
