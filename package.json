@@ -6,8 +6,8 @@
   },
   "main": "src/database.mjs",
   "module": "src/database.mjs",
-  "description": "leveldb structure definition",
-  "keywords": [],
+  "description": "timeseries database on leveldb",
+  "keywords": ["timeseries"],
   "contributors": [
     {
       "name": "Markus Felten",

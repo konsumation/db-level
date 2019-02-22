@@ -17,7 +17,7 @@
 
 # konsum-db
 
-leveldb structure definition
+timeseries database on leveldb
 
 # API
 
@@ -44,7 +44,7 @@ leveldb structure definition
 ### Parameters
 
 -   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** category name
--   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**
     -   `options.unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit
 
 ### Properties
@@ -59,7 +59,7 @@ checks/writes master record
 
 #### Parameters
 
--   `db` **levelup** 
+-   `db` **levelup**
 
 ### write
 
@@ -67,7 +67,7 @@ write the category
 
 #### Parameters
 
--   `db` **levelup** 
+-   `db` **levelup**
 
 ### writeValue
 
@@ -75,9 +75,9 @@ write a time/value pair
 
 #### Parameters
 
--   `db` **levelup** 
--   `value` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
--   `time` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `db` **levelup**
+-   `value` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**
+-   `time` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**
 
 ### values
 
@@ -85,11 +85,11 @@ get all values of the category
 
 #### Parameters
 
--   `db` **levelup** 
+-   `db` **levelup**
 -   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  (optional, default `'\u0000'`)
 -   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  (optional, default `'\uFFFF'`)
 
-Returns **Iterator&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
+Returns **Iterator&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>**
 
 ### entries
 
@@ -97,6 +97,6 @@ get all categories
 
 #### Parameters
 
--   `db` **levelup** 
+-   `db` **levelup**
 -   `gte`   (optional, default `'\u0000'`)
 -   `lte`   (optional, default `'\uFFFF'`)
