@@ -88,7 +88,7 @@ export class Category {
    * @param {levelup} db
    * @param {string} gte
    * @param {string} lte
-   * @return {Iterator<object>}
+   * @return {Iterator<Object>}
    */
   async * values(db, gte='\u0000', lte='\uFFFF') {
     const key = VALUE_PREFIX + this.name + '.';
