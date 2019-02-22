@@ -15,7 +15,7 @@
 [![downloads](http://img.shields.io/npm/dm/konsum-database.svg?style=flat-square)](https://npmjs.org/package/konsum-database)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-# konsum-database
+# konsum-db
 
 leveldb structure definition
 

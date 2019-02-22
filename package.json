@@ -1,5 +1,5 @@
 {
-  "name": "konsum-database",
+  "name": "konsum-db",
   "version": "0.0.0-semantic-release",
   "publishConfig": {
     "access": "public"
