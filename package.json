@@ -7,7 +7,9 @@
   "main": "src/database.mjs",
   "module": "src/database.mjs",
   "description": "timeseries database on leveldb",
-  "keywords": ["timeseries"],
+  "keywords": [
+    "timeseries"
+  ],
   "contributors": [
     {
       "name": "Markus Felten",
@@ -29,8 +31,8 @@
   "devDependencies": {
     "ava": "^1.2.1",
     "c8": "^3.4.0",
-    "documentation": "^9.1.1",
-    "esm": "^3.2.5",
+    "documentation": "^9.2.0",
+    "esm": "^3.2.6",
     "markdown-doctest": "^0.9.1",
     "semantic-release": "^15.13.3",
     "tmp": "0.0.33"
