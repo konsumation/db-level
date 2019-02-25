@@ -1,6 +1,10 @@
-import { Category } from "./category";
+import {
+  Category
+} from "./category";
 
-export { Category };
+export {
+  Category
+};
 
 const MASTER = "master";
 const SCHEMA_VERSION = "1";
@@ -23,7 +27,9 @@ export async function initialize(db) {
     return master;
   }
 
-  const master = { schemaVersion: SCHEMA_VERSION };
+  const master = {
+    schemaVersion: SCHEMA_VERSION
+  };
   await db.put(MASTER, JSON.stringify(master));
   return master;
 }
