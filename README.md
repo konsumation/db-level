@@ -4,7 +4,6 @@
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![Build Status](https://secure.travis-ci.org/k0nsti/konsum-db.png)](http://travis-ci.org/k0nsti/konsum-db)
 [![codecov.io](http://codecov.io/github/k0nsti/konsum-db/coverage.svg?branch=master)](http://codecov.io/github/k0nsti/konsum-db?branch=master)
-[![Coverage Status](https://coveralls.io/repos/k0nsti/konsum-db/badge.svg)](https://coveralls.io/r/k0nsti/konsum-db)
 [![Known Vulnerabilities](https://snyk.io/test/github/k0nsti/konsum-db/badge.svg)](https://snyk.io/test/github/k0nsti/konsum-db)
 [![GitHub Issues](https://img.shields.io/github/issues/k0nsti/konsum-db.svg?style=flat-square)](https://github.com/k0nsti/konsum-db/issues)
 [![Stories in Ready](https://badge.waffle.io/k0nsti/konsum-db.svg?label=ready&title=Ready)](http://waffle.io/k0nsti/konsum-db)
