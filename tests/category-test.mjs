@@ -20,7 +20,25 @@ test("categories write / read", async t => {
   }
 
   t.true(cs.length >= 10);
-  t.is(cs[0].unit, 'kWh');
+  t.is(cs[0].unit, "kWh");
 
   db.close();
+});
+
+test("values write / read", async t => {
+  const db = await levelup(leveldown(tmp.tmpNameSync()));
+  const c = new Category(`CAT-1`, { unit: "kWh" });
+  await c.write(db);
+
+  const now = Date.now();
+  await c.writeValue(db, 77, Date.now());
+
+  const values = [];
+
+  for await (const { value, time } of c.values(db)) {
+    values.push({ value, time });
+  }
+  console.log("VALUES", values[0]);
+
+  t.true(values.length > 0);
 });
