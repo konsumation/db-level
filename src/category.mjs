@@ -1,10 +1,21 @@
+import { secondsAsString } from "./util";
+
+/**
+ * prefix of the categories
+ * will be followed by the category name
+ */
 const CATEGORY_PREFIX = "categories.";
+
+/**
+ * prefix of the values
+ * will be followed by the category name
+ */
 const VALUE_PREFIX = "values.";
 
 /**
  * @param {string} name category name
  * @param {Object} options
- * @param {string} options.unit physical unit
+ * @param {string} options.unit physical unit like kWh or m3
  *
  * @property {string} name category name
  * @property {string} unit physical unit
@@ -40,8 +51,8 @@ export class Category {
   /**
    * get categories
    * @param {levelup} db
-   * @param {string} gte
-   * @param {string} lte
+   * @param {string} gte lowest name
+   * @param {string} lte highst name
    */
   static async *entries(db, gte = "\u0000", lte = "\uFFFF") {
     for await (const data of db.createReadStream({
@@ -57,18 +68,18 @@ export class Category {
    * write a time/value pair
    * @param {levelup} db
    * @param {number} value
-   * @param {string} time
+   * @param {number} time seconds since epoch
    */
   async writeValue(db, value, time) {
-    const key = VALUE_PREFIX + this.name + "." + time;
+    const key = VALUE_PREFIX + this.name + "." + secondsAsString(time);
     return db.put(key, value);
   }
 
   /**
    * get values of the category
    * @param {levelup} db
-   * @param {string} gte
-   * @param {string} lte
+   * @param {string} gte time of earliest value
+   * @param {string} lte time of latest value
    * @return {Iterator<Object>}
    */
   async *values(db, gte = "\u0000", lte = "\uFFFF") {

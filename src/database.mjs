@@ -1,12 +1,15 @@
-import {
-  Category
-} from "./category";
+import { Category } from "./category";
 
-export {
-  Category
-};
+export { Category };
 
+/**
+ * prefix of the master record
+ */
 const MASTER = "master";
+
+/**
+ * current schema schema version
+ */
 const SCHEMA_VERSION = "1";
 
 /**
