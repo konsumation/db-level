@@ -89,8 +89,9 @@ export class Category {
       gte: key + gte,
       lte: key + lte
     })) {
-      const time = data.key.toString().substring(key.length);
-      yield { value: data.value, time };
+      const value = parseFloat(data.value.toString());
+      const time = parseInt(data.key.toString().substring(key.length),10);
+      yield { value, time };
     }
   }
 }

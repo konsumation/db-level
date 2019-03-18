@@ -31,7 +31,7 @@ test("values write / read", async t => {
   await c.write(db);
 
   const now = Date.now();
-  await c.writeValue(db, 77, Date.now());
+  await c.writeValue(db, 77.34, now);
 
   const values = [];
 
@@ -41,4 +41,5 @@ test("values write / read", async t => {
   console.log("VALUES", values[0]);
 
   t.true(values.length > 0);
+  t.deepEqual(values[0], {value:77.34, time: now});
 });
