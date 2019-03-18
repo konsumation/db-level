@@ -1,7 +1,7 @@
 
 /**
  * format seconds as string left padded with '0'
- * @param {number} seconds since epoch
+ * @param {number} number seconds since epoch
  * @return {string} padded seconds
  */
 export function secondsAsString(number) {
