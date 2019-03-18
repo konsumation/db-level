@@ -13,6 +13,7 @@ const CATEGORY_PREFIX = "categories.";
 const VALUE_PREFIX = "values.";
 
 /**
+ * Value Catetegory
  * @param {string} name category name
  * @param {Object} options
  * @param {string} options.unit physical unit like kWh or m3
