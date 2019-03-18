@@ -6,11 +6,9 @@
 [![codecov.io](http://codecov.io/github/k0nsti/konsum-db/coverage.svg?branch=master)](http://codecov.io/github/k0nsti/konsum-db?branch=master)
 [![Known Vulnerabilities](https://snyk.io/test/github/k0nsti/konsum-db/badge.svg)](https://snyk.io/test/github/k0nsti/konsum-db)
 [![GitHub Issues](https://img.shields.io/github/issues/k0nsti/konsum-db.svg?style=flat-square)](https://github.com/k0nsti/konsum-db/issues)
-[![Stories in Ready](https://badge.waffle.io/k0nsti/konsum-db.svg?label=ready&title=Ready)](http://waffle.io/k0nsti/konsum-db)
 [![Dependency Status](https://david-dm.org/k0nsti/konsum-db.svg)](https://david-dm.org/k0nsti/konsum-db)
 [![devDependency Status](https://david-dm.org/k0nsti/konsum-db/dev-status.svg)](https://david-dm.org/k0nsti/konsum-db#info=devDependencies)
 [![docs](http://inch-ci.org/github/k0nsti/konsum-db.svg?branch=master)](http://inch-ci.org/github/k0nsti/konsum-db)
-[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 [![downloads](http://img.shields.io/npm/dm/konsum-db.svg?style=flat-square)](https://npmjs.org/package/konsum-db)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
