@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "leveldown": "^5.0.0",
-    "levelup": "^4.0.0"
+    "levelup": "^4.0.1"
   },
   "devDependencies": {
     "ava": "^1.4.1",
