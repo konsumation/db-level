@@ -22,8 +22,12 @@ timeseries database on leveldb
 
 ### Table of Contents
 
+-   [MASTER](#master)
+-   [SCHEMA_VERSION](#schema_version)
 -   [initialize](#initialize)
     -   [Parameters](#parameters)
+-   [CATEGORY_PREFIX](#category_prefix)
+-   [VALUE_PREFIX](#value_prefix)
 -   [Category](#category)
     -   [Parameters](#parameters-1)
     -   [Properties](#properties)
@@ -35,6 +39,20 @@ timeseries database on leveldb
         -   [Parameters](#parameters-4)
     -   [entries](#entries)
         -   [Parameters](#parameters-5)
+-   [secondsAsString](#secondsasstring)
+    -   [Parameters](#parameters-6)
+
+## MASTER
+
+prefix of the master record
+
+Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+## SCHEMA_VERSION
+
+current schema version
+
+Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
 
 ## initialize
 
@@ -45,13 +63,29 @@ checks/writes master record
 
 -   `db` **levelup** 
 
+## CATEGORY_PREFIX
+
+prefix of the categories
+will be followed by the category name
+
+Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+## VALUE_PREFIX
+
+prefix of the values
+will be followed by the category name
+
+Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
+
 ## Category
+
+Value Catetegory
 
 ### Parameters
 
 -   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** category name
 -   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-    -   `options.unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit
+    -   `options.unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit like kWh or m3
 
 ### Properties
 
@@ -74,7 +108,7 @@ write a time/value pair
 
 -   `db` **levelup** 
 -   `value` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
--   `time` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `time` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** seconds since epoch
 
 ### values
 
@@ -83,8 +117,8 @@ get values of the category
 #### Parameters
 
 -   `db` **levelup** 
--   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  (optional, default `"\u0000"`)
--   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  (optional, default `"\uFFFF"`)
+-   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** time of earliest value (optional, default `"\u0000"`)
+-   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** time of latest value (optional, default `"\uFFFF"`)
 
 Returns **Iterator&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
 
@@ -95,5 +129,15 @@ get categories
 #### Parameters
 
 -   `db` **levelup** 
--   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  (optional, default `"\u0000"`)
--   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  (optional, default `"\uFFFF"`)
+-   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** lowest name (optional, default `"\u0000"`)
+-   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** highst name (optional, default `"\uFFFF"`)
+
+## secondsAsString
+
+format seconds as string left padded with '0'
+
+### Parameters
+
+-   `number` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** seconds since epoch
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** padded seconds
