@@ -8,7 +8,7 @@ export { Category };
 const MASTER = "master";
 
 /**
- * current schema schema version
+ * current schema version
  */
 const SCHEMA_VERSION = "1";
 
@@ -24,7 +24,11 @@ export async function initialize(db) {
   })) {
     const master = JSON.parse(data.value.toString());
     if (master.schemaVersion !== SCHEMA_VERSION) {
-      throw new Error(`invalid schema version ${master.schemaVersion}`);
+      throw new Error(
+        `invalid schema version ${
+          master.schemaVersion
+        } only supporting version ${SCHEMA_VERSION}`
+      );
     }
 
     return master;
