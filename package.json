@@ -24,20 +24,21 @@
     "posttest": "markdown-doctest",
     "test": "ava"
   },
-  "peerDependencies": {
-    "leveldown": "^5.0.0",
-    "levelup": "^4.0.1"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "leveldown": "^5.0.0",
-    "levelup": "^4.0.1",
     "ava": "^1.4.1",
     "c8": "^3.4.0",
     "documentation": "^9.3.1",
     "esm": "^3.2.22",
+    "leveldown": "^5.0.0",
+    "levelup": "^4.0.1",
     "markdown-doctest": "^0.9.1",
-    "semantic-release": "^15.13.3",
+    "semantic-release": "^15.13.8",
     "tmp": "^0.1.0"
+  },
+  "peerDependencies": {
+    "leveldown": "^5.0.0",
+    "levelup": "^4.0.1"
   },
   "engines": {
     "node": ">=10.15.3"
