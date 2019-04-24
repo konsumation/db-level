@@ -1,4 +1,4 @@
-import { secondsAsString } from "./util";
+import { secondsAsString } from "./util.mjs";
 
 /**
  * prefix of the categories

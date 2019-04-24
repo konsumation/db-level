@@ -3,7 +3,7 @@ import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
 
-import { initialize } from "../src/database";
+import { initialize } from "../src/database.mjs";
 
 test("initialize", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));

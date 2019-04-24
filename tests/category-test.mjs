@@ -3,7 +3,7 @@ import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
 
-import { Category } from "../src/category";
+import { Category } from "../src/category.mjs";
 
 test("categories write / read", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));
