@@ -1,6 +1,4 @@
-import { Category } from "./category.mjs";
-
-export { Category };
+export { Category } from "./category.mjs";
 
 /**
  * prefix of the master record
