@@ -54,13 +54,11 @@
       "esm"
     ],
     "extensions": [
-      "js",
       "mjs"
     ],
     "babel": false,
     "compileEnhancements": false,
     "files": [
-      "tests/*-test.js",
       "tests/*-test.mjs"
     ]
   },
