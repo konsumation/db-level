@@ -23,7 +23,7 @@ export async function initialize(db) {
     const master = JSON.parse(data.value.toString());
     if (master.schemaVersion !== SCHEMA_VERSION) {
       throw new Error(
-        `invalid schema version ${
+        `Invalid schema version ${
           master.schemaVersion
         } only supporting version ${SCHEMA_VERSION}`
       );
