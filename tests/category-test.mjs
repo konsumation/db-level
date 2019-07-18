@@ -5,7 +5,7 @@ import leveldown from "leveldown";
 
 import { Category } from "../src/category.mjs";
 
-test.only("categories write / read", async t => {
+test("categories write / read", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));
 
   for (let i = 0; i < 10; i++) {
