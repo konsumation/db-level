@@ -39,8 +39,10 @@ timeseries database on leveldb
         -   [Parameters](#parameters-4)
     -   [entries](#entries)
         -   [Parameters](#parameters-5)
+    -   [entry](#entry)
+        -   [Parameters](#parameters-6)
 -   [secondsAsString](#secondsasstring)
-    -   [Parameters](#parameters-6)
+    -   [Parameters](#parameters-7)
 
 ## MASTER
 
@@ -131,6 +133,19 @@ get categories
 -   `db` **levelup** 
 -   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** lowest name (optional, default `"\u0000"`)
 -   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** highst name (optional, default `"\uFFFF"`)
+
+Returns **AsyncIterator&lt;[Category](#category)>** 
+
+### entry
+
+get a single category
+
+#### Parameters
+
+-   `db` **levelup** 
+-   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **[Category](#category)** 
 
 ## secondsAsString
 

@@ -54,6 +54,7 @@ export class Category {
    * @param {levelup} db
    * @param {string} gte lowest name
    * @param {string} lte highst name
+   * @return {AsyncIterator<Category>}
    */
   static async *entries(db, gte = "\u0000", lte = "\uFFFF") {
     for await (const data of db.createReadStream({
@@ -62,6 +63,18 @@ export class Category {
     })) {
       const name = data.key.toString().substring(CATEGORY_PREFIX.length);
       yield new Category(name, JSON.parse(data.value.toString()));
+    }
+  }
+
+  /**
+   * get a single category
+   * @param {levelup} db
+   * @param {string} name
+   * @return {Category}
+   */
+  static async entry(db, name) {
+    for await(const c of this.entries(db, name)) {
+      return c;
     }
   }
 
