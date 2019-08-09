@@ -92,7 +92,7 @@ export class Category {
   /**
    * get values of the category
    * @param {levelup} db
-   * @parma {Object} options
+   * @param {Object} options
    * @param {string} options.gte time of earliest value
    * @param {string} options.lte time of latest value
    * @param {boolean} options.reverse order
