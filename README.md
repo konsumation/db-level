@@ -119,8 +119,7 @@ get values of the category
 #### Parameters
 
 -   `db` **levelup** 
--   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** time of earliest value (optional, default `"\u0000"`)
--   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** time of latest value (optional, default `"\uFFFF"`)
+-   `options`   (optional, default `{}`)
 
 Returns **Iterator&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
 

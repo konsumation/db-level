@@ -73,7 +73,7 @@ export class Category {
    * @return {Category}
    */
   static async entry(db, name) {
-    for await(const c of this.entries(db, name)) {
+    for await (const c of this.entries(db, name)) {
       return c;
     }
   }
@@ -92,19 +92,48 @@ export class Category {
   /**
    * get values of the category
    * @param {levelup} db
-   * @param {string} gte time of earliest value
-   * @param {string} lte time of latest value
+   * @parma {Object} options
+   * @param {string} options.gte time of earliest value
+   * @param {string} options.lte time of latest value
+   * @param {boolean} options.reverse order
    * @return {Iterator<Object>}
    */
-  async *values(db, gte = "\u0000", lte = "\uFFFF") {
+  async *values(
+    db,
+    options = { }
+  ) {
     const key = VALUE_PREFIX + this.name + ".";
-    for await (const data of db.createReadStream({
-      gte: key + gte,
-      lte: key + lte
-    })) {
+
+    options = {
+      ...options,
+      gte: key + secondsAsString(options.gte || 0),
+      lte: key + secondsAsString(options.lte || 999999999999999)
+    };
+
+    for await (const data of db.createReadStream(options)) {
       const value = parseFloat(data.value.toString());
-      const time = parseInt(data.key.toString().substring(key.length),10);
+      const time = parseInt(data.key.toString().substring(key.length), 10);
       yield { value, time };
+    }
+  }
+
+  async pipe(
+    db,
+    writeable,
+    options = { }
+  ) {
+    const key = VALUE_PREFIX + this.name + ".";
+
+    options = {
+      ...options,
+      gte: key + secondsAsString(options.gte || 0),
+      lte: key + secondsAsString(options.lte || 999999999999999)
+    };
+
+    for await (const data of db.createReadStream(options)) {
+      const value = parseFloat(data.value.toString());
+      const time = parseInt(data.key.toString().substring(key.length), 10);
+      writeable.write(`${time} ${value}\n`);
     }
   }
 }
