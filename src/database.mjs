@@ -17,13 +17,13 @@ const SCHEMA_VERSION = "1";
  */
 export async function initialize(db) {
   for await (const data of db.createReadStream({
-    start: MASTER,
-    end: MASTER
+    gte: MASTER,
+    lte: MASTER
   })) {
     const master = JSON.parse(data.value.toString());
     if (master.schemaVersion !== SCHEMA_VERSION) {
       throw new Error(
-        `Invalid schema version ${
+        `Unsupported schema version ${
           master.schemaVersion
         } only supporting version ${SCHEMA_VERSION}`
       );
