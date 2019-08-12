@@ -26,25 +26,27 @@ timeseries database on leveldb
 -   [SCHEMA_VERSION](#schema_version)
 -   [initialize](#initialize)
     -   [Parameters](#parameters)
+-   [backup](#backup)
+    -   [Parameters](#parameters-1)
 -   [CATEGORY_PREFIX](#category_prefix)
 -   [VALUE_PREFIX](#value_prefix)
 -   [Category](#category)
-    -   [Parameters](#parameters-1)
+    -   [Parameters](#parameters-2)
     -   [Properties](#properties)
     -   [write](#write)
-        -   [Parameters](#parameters-2)
-    -   [writeValue](#writevalue)
         -   [Parameters](#parameters-3)
-    -   [values](#values)
+    -   [writeValue](#writevalue)
         -   [Parameters](#parameters-4)
-    -   [readStream](#readstream)
+    -   [values](#values)
         -   [Parameters](#parameters-5)
-    -   [entries](#entries)
+    -   [readStream](#readstream)
         -   [Parameters](#parameters-6)
-    -   [entry](#entry)
+    -   [entries](#entries)
         -   [Parameters](#parameters-7)
+    -   [entry](#entry)
+        -   [Parameters](#parameters-8)
 -   [secondsAsString](#secondsasstring)
-    -   [Parameters](#parameters-8)
+    -   [Parameters](#parameters-9)
 
 ## MASTER
 
@@ -66,6 +68,16 @@ checks/writes master record
 ### Parameters
 
 -   `db` **levelup** 
+
+## backup
+
+copy all data into out stream as long term ascii data
+
+### Parameters
+
+-   `database`  
+-   `master`  
+-   `out` **Writeable** 
 
 ## CATEGORY_PREFIX
 

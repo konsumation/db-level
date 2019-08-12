@@ -1,4 +1,7 @@
-export { Category } from "./category.mjs";
+import { Category } from "./category.mjs";
+import { pump } from "./util.mjs";
+
+export { Category};
 
 /**
  * prefix of the master record
@@ -37,4 +40,19 @@ export async function initialize(db) {
   };
   await db.put(MASTER, JSON.stringify(master));
   return master;
+}
+
+/**
+ * copy all data into out stream as long term ascii data
+ * @param database 
+ * @param master 
+ * @param {Writeable} out 
+ */
+export async function backup(database, master, out) {
+  out.write(`schemaVersion = ${master.schemaVersion}\n\n`);
+
+  for await (const c of Category.entries(database)) {
+    await out.write(`[${c.name}]\n`);
+    await pump(c.readStream(database), out);
+  }
 }
