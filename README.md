@@ -37,12 +37,14 @@ timeseries database on leveldb
         -   [Parameters](#parameters-3)
     -   [values](#values)
         -   [Parameters](#parameters-4)
-    -   [entries](#entries)
+    -   [readStream](#readstream)
         -   [Parameters](#parameters-5)
-    -   [entry](#entry)
+    -   [entries](#entries)
         -   [Parameters](#parameters-6)
+    -   [entry](#entry)
+        -   [Parameters](#parameters-7)
 -   [secondsAsString](#secondsasstring)
-    -   [Parameters](#parameters-7)
+    -   [Parameters](#parameters-8)
 
 ## MASTER
 
@@ -119,12 +121,26 @@ get values of the category
 #### Parameters
 
 -   `db` **levelup** 
--   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
     -   `options.gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** time of earliest value
     -   `options.lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** time of latest value
     -   `options.reverse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** order
 
 Returns **Iterator&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
+
+### readStream
+
+get values of the category as ascii text stream with time and value on each line
+
+#### Parameters
+
+-   `db` **levelup** 
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `options.gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** time of earliest value
+    -   `options.lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** time of latest value
+    -   `options.reverse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** order
+
+Returns **Readable** 
 
 ### entries
 

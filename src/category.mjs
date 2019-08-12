@@ -1,3 +1,4 @@
+import { Readable } from "stream";
 import { secondsAsString } from "./util.mjs";
 
 /**
@@ -98,42 +99,69 @@ export class Category {
    * @param {boolean} options.reverse order
    * @return {Iterator<Object>}
    */
-  async *values(
-    db,
-    options = { }
-  ) {
+  async *values(db, options) {
     const key = VALUE_PREFIX + this.name + ".";
+    const prefixLength = key.length;
 
-    options = {
-      ...options,
-      gte: key + secondsAsString(options.gte || 0),
-      lte: key + secondsAsString(options.lte || 999999999999999)
-    };
-
-    for await (const data of db.createReadStream(options)) {
+    for await (const data of db.createReadStream(
+      readStreamOptions(key, options)
+    )) {
       const value = parseFloat(data.value.toString());
-      const time = parseInt(data.key.toString().substring(key.length), 10);
+      const time = parseInt(data.key.toString().substring(prefixLength), 10);
       yield { value, time };
     }
   }
 
-  async pipe(
-    db,
-    writeable,
-    options = { }
-  ) {
+  /**
+   * get values of the category as ascii text stream with time and value on each line
+   * @param {levelup} db
+   * @param {Object} options
+   * @param {string} options.gte time of earliest value
+   * @param {string} options.lte time of latest value
+   * @param {boolean} options.reverse order
+   * @return {Readable}
+   */
+  readStream(db, options) {
     const key = VALUE_PREFIX + this.name + ".";
+    const prefixLength = key.length;
 
-    options = {
-      ...options,
-      gte: key + secondsAsString(options.gte || 0),
-      lte: key + secondsAsString(options.lte || 999999999999999)
-    };
+    return new CategoryReadStream(
+      db.iterator(readStreamOptions(key, options)),
+      prefixLength
+    );
+  }
+}
 
-    for await (const data of db.createReadStream(options)) {
-      const value = parseFloat(data.value.toString());
-      const time = parseInt(data.key.toString().substring(key.length), 10);
-      writeable.write(`${time} ${value}\n`);
-    }
+function readStreamOptions(key, options = {}) {
+  return {
+    ...options,
+    gte: key + secondsAsString(options.gte || 0),
+    lte: key + secondsAsString(options.lte || 999999999999999)
+  };
+}
+
+class CategoryReadStream extends Readable {
+  constructor(iterator, prefixLength) {
+    super();
+    Object.defineProperties(this, {
+      iterator: { value: iterator },
+      prefixLength: { value: prefixLength }
+    });
+  }
+  _read() {
+    if (this.destroyed) return;
+
+    this.iterator.next((err, key, value) => {
+      if (this.destroyed) return;
+      if (err) {
+        return this.iterator.end(err2 => callback(err || err2));
+      }
+
+      if (key === undefined && value === undefined) {
+        this.push(null);
+      } else {
+        this.push(`${parseInt(key.toString().substring(this.prefixLength), 10)} ${parseFloat(value.toString())}\n`);
+      }
+    });
   }
 }

@@ -2,6 +2,8 @@ import test from "ava";
 import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
+import { Readable } from "stream";
+import { createWriteStream } from "fs";
 
 import { Category } from "../src/category.mjs";
 
@@ -68,7 +70,7 @@ test("values write / read", async t => {
   t.deepEqual(values[0], { value: lastValue, time: last });
 });
 
-test.skip("values  pipe", async t => {
+test("readStream", async t => {
   const dbf = tmp.tmpNameSync();
   const db = await levelup(leveldown(dbf));
   const c = new Category(`CAT-1`, { unit: "kWh" });
@@ -85,5 +87,13 @@ test.skip("values  pipe", async t => {
     await c.writeValue(db, lastValue, last);
   }
 
-  await c.pipe(db,process.stdout);
+  const stream = c.readStream(db,{ reverse: true});
+
+ // stream.pipe(process.stdout);
+
+  const outFileName = tmp.tmpNameSync();
+  console.log(outFileName);
+  stream.pipe(createWriteStream(outFileName,{ encoding: 'utf8' }));
+
+  t.true(stream instanceof Readable);
 });
