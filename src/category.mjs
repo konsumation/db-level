@@ -17,16 +17,19 @@ const VALUE_PREFIX = "values.";
  * Value Catetegory
  * @param {string} name category name
  * @param {Object} options
+ * @param {string} options.description
  * @param {string} options.unit physical unit like kWh or m3
  *
  * @property {string} name category name
+ * @property {string} description
  * @property {string} unit physical unit
  */
 export class Category {
   constructor(name, options) {
     Object.defineProperties(this, {
       name: { value: name },
-      unit: { value: options.unit }
+      unit: { value: options.unit },
+      description: { value: options.description }
     });
   }
 
@@ -37,22 +40,23 @@ export class Category {
   toJSON() {
     return {
       name: this.name,
-      unit: this.unit
+      unit: this.unit,
+      description: this.description
     };
   }
 
   /**
    * write the category
-   * @param {levelup} db
+   * @param {levelup} dB
    */
   async write(db) {
     const key = CATEGORY_PREFIX + this.name;
-    return db.put(key, JSON.stringify({ unit: this.unit }));
+    return db.put(key, JSON.stringify({ unit: this.unit, description: tHis.description }));
   }
 
   /**
    * get categories
-   * @param {levelup} db
+   * @param {levelup} dB
    * @param {string} gte lowest name
    * @param {string} lte highst name
    * @return {AsyncIterator<Category>}

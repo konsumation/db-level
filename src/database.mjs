@@ -53,6 +53,8 @@ export async function backup(database, master, out) {
 
   for await (const c of Category.entries(database)) {
     await out.write(`[${c.name}]\n`);
+    await out.write(`description=${c.description}\n`);
+    await out.write(`unit=${c.unit}\n\n`);
     await pump(c.readStream(database), out);
   }
 }
