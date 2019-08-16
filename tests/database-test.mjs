@@ -48,6 +48,6 @@ test("backup", async t => {
 
   const stat = await fs.promises.stat(ofn);
 
-  t.is(stat.size, 463);
+  t.is(stat.size, 559);
   db.close();
 });
