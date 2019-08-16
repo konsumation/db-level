@@ -51,7 +51,7 @@ export class Category {
    */
   async write(db) {
     const key = CATEGORY_PREFIX + this.name;
-    return db.put(key, JSON.stringify({ unit: this.unit, description: tHis.description }));
+    return db.put(key, JSON.stringify({ unit: this.unit, description: this.description }));
   }
 
   /**
