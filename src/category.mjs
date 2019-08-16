@@ -47,7 +47,7 @@ export class Category {
 
   /**
    * write the category
-   * @param {levelup} dB
+   * @param {levelup} db
    */
   async write(db) {
     const key = CATEGORY_PREFIX + this.name;
@@ -56,7 +56,7 @@ export class Category {
 
   /**
    * get categories
-   * @param {levelup} dB
+   * @param {levelup} db
    * @param {string} gte lowest name
    * @param {string} lte highst name
    * @return {AsyncIterator<Category>}
