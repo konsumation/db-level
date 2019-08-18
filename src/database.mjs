@@ -1,7 +1,7 @@
 import { Category } from "./category.mjs";
 import { pump } from "./util.mjs";
 
-export { Category};
+export { Category };
 
 /**
  * prefix of the master record
@@ -43,10 +43,10 @@ export async function initialize(db) {
 }
 
 /**
- * copy all data into out stream as long term ascii data
- * @param database 
- * @param master 
- * @param {Writeable} out 
+ * Copy all data into out stream as long term ascii data
+ * @param {levelup} database
+ * @param {Object} master
+ * @param {Writeable} out
  */
 export async function backup(database, master, out) {
   out.write(`schemaVersion = ${master.schemaVersion}\n\n`);
@@ -57,4 +57,58 @@ export async function backup(database, master, out) {
     await out.write(`unit=${c.unit}\n\n`);
     await pump(c.readStream(database), out);
   }
+}
+
+/**
+ * Restore database from input stream
+ * @param {levelup} database
+ * @param {Readable} input data from backup
+ */
+export async function restore(database, input) {
+  let last = "";
+
+  let c;
+  let attributes;
+  let cn;
+
+  function process(line) {
+    let m = line.match(/^(\w+)\s*=\s*(.*)/);
+    if (m) {
+      if(attributes === undefined) { attributes = {}; }
+      attributes[m[1]]= m[2];
+      return;
+    }
+
+    m = line.match(/^\[([^\]]+)\]/);
+    if (m) {
+      attributes = undefined;
+      cn = m[1];
+      return;
+    }
+
+    if(cn !== undefined) {
+      c = new Category(cn, attributes);
+      c.write(database);
+      cn = undefined;
+    }
+
+    m = line.match(/^([\d\.]+)\s+([\d\.]+)/);
+    if (m) {
+      c.writeValue(database, parseFloat(m[2]), parseFloat(m[1]));
+    }
+  }
+
+  for await (const chunk of input) {
+    last += chunk;
+
+    let lines = last.split(/\n/);
+
+    last = lines.pop();
+
+    for (const line of lines) {
+      process(line);
+    }
+  }
+
+  process(last);
 }

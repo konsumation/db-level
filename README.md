@@ -28,25 +28,27 @@ timeseries database on leveldb
     -   [Parameters](#parameters)
 -   [backup](#backup)
     -   [Parameters](#parameters-1)
+-   [restore](#restore)
+    -   [Parameters](#parameters-2)
 -   [CATEGORY_PREFIX](#category_prefix)
 -   [VALUE_PREFIX](#value_prefix)
 -   [Category](#category)
-    -   [Parameters](#parameters-2)
+    -   [Parameters](#parameters-3)
     -   [Properties](#properties)
     -   [write](#write)
-        -   [Parameters](#parameters-3)
-    -   [writeValue](#writevalue)
         -   [Parameters](#parameters-4)
-    -   [values](#values)
+    -   [writeValue](#writevalue)
         -   [Parameters](#parameters-5)
-    -   [readStream](#readstream)
+    -   [values](#values)
         -   [Parameters](#parameters-6)
-    -   [entries](#entries)
+    -   [readStream](#readstream)
         -   [Parameters](#parameters-7)
-    -   [entry](#entry)
+    -   [entries](#entries)
         -   [Parameters](#parameters-8)
+    -   [entry](#entry)
+        -   [Parameters](#parameters-9)
 -   [secondsAsString](#secondsasstring)
-    -   [Parameters](#parameters-9)
+    -   [Parameters](#parameters-10)
 
 ## MASTER
 
@@ -71,13 +73,22 @@ checks/writes master record
 
 ## backup
 
-copy all data into out stream as long term ascii data
+Copy all data into out stream as long term ascii data
 
 ### Parameters
 
--   `database`  
--   `master`  
+-   `database` **levelup** 
+-   `master` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 -   `out` **Writeable** 
+
+## restore
+
+Restore database from input stream
+
+### Parameters
+
+-   `database` **levelup** 
+-   `input` **Readable** data from backup
 
 ## CATEGORY_PREFIX
 

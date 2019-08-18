@@ -3,8 +3,8 @@ import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
 
-import { initialize, backup, Category } from "../src/database.mjs";
-import fs, { createWriteStream } from "fs";
+import { initialize, backup, restore, Category } from "../src/database.mjs";
+import fs, { createWriteStream, createReadStream } from "fs";
 
 test("initialize", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));
@@ -25,7 +25,7 @@ test("backup", async t => {
   const master = await initialize(db);
 
   for (let i = 0; i < 3; i++) {
-    const c = new Category(`CAT-${i}`, { unit: "kWh" });
+    const c = new Category(`CAT-${i}`, { unit: "kWh", description: "mains power" });
     await c.write(db);
 
     const first = Date.now();
@@ -40,14 +40,17 @@ test("backup", async t => {
     }
   }
 
-  t.log(ofn);
-
   const out = createWriteStream(ofn, { encoding: "utf8" });
 
   await backup(db, master, out);
 
   const stat = await fs.promises.stat(ofn);
 
-  t.is(stat.size, 559);
+  t.is(stat.size, 565);
   db.close();
+
+  const db2 = await levelup(leveldown(tmp.tmpNameSync()));
+  const input = createReadStream(ofn, { encoding: "utf8" });
+
+  await restore(db2, input);
 });
