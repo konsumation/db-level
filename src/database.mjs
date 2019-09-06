@@ -43,7 +43,7 @@ export async function initialize(db) {
 }
 
 /**
- * Copy all data into out stream as long term ascii data
+ * Copy all data into out stream as long time text data
  * @param {levelup} database
  * @param {Object} master
  * @param {Writeable} out

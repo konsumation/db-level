@@ -46,7 +46,7 @@ export class Category {
   }
 
   /**
-   * write the category
+   * write the category. Leaves all the values alone
    * @param {levelup} db
    */
   async write(db) {
