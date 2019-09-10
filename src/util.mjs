@@ -20,3 +20,46 @@ export async function pump(stream, dest) {
     s.on("error", err => reject(err));
   });
 }
+
+
+/**
+ * create properties from options and default options
+ * @see Object.definedProperties()
+ * @param {Object} object target object
+ * @param {Object} options as passed to object constructor
+ * @param {Object} properties object properties
+ */
+export function definePropertiesFromOptions(object, options, properties = {}) {
+  const defaultOptions = object.constructor.defaultOptions;
+  const after = {};
+
+  Object.keys(defaultOptions).forEach(name => {
+    const value =
+      (options !== undefined && options[name]) || defaultOptions[name];
+
+    if (properties[name] === undefined) {
+      properties[name] = { value };
+    } else {
+      after[name] = value;
+    }
+  });
+
+  Object.defineProperties(object, properties);
+  Object.assign(object, after);
+}
+
+/**
+ * create json based on present options.
+ * In other words only produce key value pairs if value is defined.
+ * @param {Object} object
+ * @param {Object} initial
+ * @return {Object} initial + defined values
+ */
+export function optionJSON(object, initial = {}) {
+  return Object.keys(object.constructor.defaultOptions).reduce((a, c) => {
+    if (object[c] !== undefined) {
+      a[c] = object[c];
+    }
+    return a;
+  }, initial);
+}

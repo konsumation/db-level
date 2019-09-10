@@ -1,5 +1,5 @@
 import { Readable } from "stream";
-import { secondsAsString } from "./util.mjs";
+import { secondsAsString, definePropertiesFromOptions, optionJSON } from "./util.mjs";
 
 /**
  * prefix of the categories
@@ -25,11 +25,27 @@ const VALUE_PREFIX = "values.";
  * @property {string} unit physical unit
  */
 export class Category {
+
+  static get defaultOptions() {
+    return {
+      /**
+       * the description of the content.
+       * @return {string}
+       */
+      description: undefined,
+
+      /**
+       * physical unit.
+       * @return {string}
+       */
+      unit: undefined
+    };
+  }
+
+
   constructor(name, options) {
-    Object.defineProperties(this, {
-      name: { value: name },
-      unit: { value: options.unit },
-      description: { value: options.description }
+    definePropertiesFromOptions(this, options, {
+      name: { value: name }
     });
   }
 
@@ -38,11 +54,9 @@ export class Category {
   }
 
   toJSON() {
-    return {
-      name: this.name,
-      unit: this.unit,
-      description: this.description
-    };
+    return optionJSON(this, {
+      name: this.name
+    });
   }
 
   /**

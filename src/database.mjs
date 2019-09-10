@@ -51,11 +51,17 @@ export async function initialize(db) {
 export async function backup(database, master, out) {
   out.write(`schemaVersion = ${master.schemaVersion}\n\n`);
 
-  for await (const c of Category.entries(database)) {
-    await out.write(`[${c.name}]\n`);
-    await out.write(`description=${c.description}\n`);
-    await out.write(`unit=${c.unit}\n\n`);
-    await pump(c.readStream(database), out);
+  for await (const category of Category.entries(database)) {
+    await out.write(`[${category.name}]\n`);
+
+    for(const o of Object.keys(category.constructor.defaultOptions)) {
+      const v = category[o];
+      if(v !== undefined) {
+        await out.write(`${o}=${v}\n`);
+      }
+    }
+    await out.write('\n');
+    await pump(category.readStream(database), out);
   }
 }
 
