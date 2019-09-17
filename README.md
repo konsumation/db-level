@@ -47,8 +47,14 @@ timeseries database on leveldb
         -   [Parameters](#parameters-8)
     -   [entry](#entry)
         -   [Parameters](#parameters-9)
+-   [description](#description)
+-   [unit](#unit)
 -   [secondsAsString](#secondsasstring)
     -   [Parameters](#parameters-10)
+-   [definePropertiesFromOptions](#definepropertiesfromoptions)
+    -   [Parameters](#parameters-11)
+-   [optionJSON](#optionjson)
+    -   [Parameters](#parameters-12)
 
 ## MASTER
 
@@ -73,7 +79,7 @@ checks/writes master record
 
 ## backup
 
-Copy all data into out stream as long term ascii data
+Copy all data into out stream as long time text data
 
 ### Parameters
 
@@ -123,7 +129,7 @@ Value Catetegory
 
 ### write
 
-write the category
+write the category. Leaves all the values alone
 
 #### Parameters
 
@@ -190,6 +196,18 @@ get a single category
 
 Returns **[Category](#category)** 
 
+## description
+
+the description of the content.
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## unit
+
+physical unit.
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
 ## secondsAsString
 
 format seconds as string left padded with '0'
@@ -199,3 +217,27 @@ format seconds as string left padded with '0'
 -   `number` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** seconds since epoch
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** padded seconds
+
+## definePropertiesFromOptions
+
+-   **See: Object.definedProperties()**
+
+create properties from options and default options
+
+### Parameters
+
+-   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** target object
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** as passed to object constructor
+-   `properties` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** object properties (optional, default `{}`)
+
+## optionJSON
+
+create json based on present options.
+In other words only produce key value pairs if value is defined.
+
+### Parameters
+
+-   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `initial` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
+
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** initial + defined values
