@@ -39,7 +39,7 @@
     "tmp": "^0.1.0"
   },
   "engines": {
-    "node": ">=12.11.0"
+    "node": ">=12.11.1"
   },
   "repository": {
     "type": "git",
