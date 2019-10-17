@@ -35,11 +35,11 @@
     "documentation": "^12.1.2",
     "esm": "^3.2.25",
     "markdown-doctest": "^0.9.1",
-    "semantic-release": "^15.13.25",
+    "semantic-release": "^15.13.26",
     "tmp": "^0.1.0"
   },
   "engines": {
-    "node": ">=12.11.1"
+    "node": ">=12.12.0"
   },
   "repository": {
     "type": "git",
