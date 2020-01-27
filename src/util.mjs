@@ -6,7 +6,7 @@
 export function secondsAsString(number) {
   const s = `000000000000000000${number}`;
 
-  return s.substring(s.length - 15);
+  return s.slice(s.length - 15);
 }
 
 export async function pump(stream, dest) {

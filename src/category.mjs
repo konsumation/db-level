@@ -80,7 +80,7 @@ export class Category {
       gte: CATEGORY_PREFIX + gte,
       lte: CATEGORY_PREFIX + lte
     })) {
-      const name = data.key.toString().substring(CATEGORY_PREFIX.length);
+      const name = data.key.toString().slice(CATEGORY_PREFIX.length);
       yield new Category(name, JSON.parse(data.value.toString()));
     }
   }
@@ -125,7 +125,7 @@ export class Category {
       readStreamOptions(key, options)
     )) {
       const value = parseFloat(data.value.toString());
-      const time = parseInt(data.key.toString().substring(prefixLength), 10);
+      const time = parseInt(data.key.toString().slice(prefixLength), 10);
       yield { value, time };
     }
   }
@@ -178,7 +178,7 @@ class CategoryReadStream extends Readable {
       if (key === undefined && value === undefined) {
         this.push(null);
       } else {
-        this.push(`${parseInt(key.toString().substring(this.prefixLength), 10)} ${parseFloat(value.toString())}\n`);
+        this.push(`${parseInt(key.toString().slice(this.prefixLength), 10)} ${parseFloat(value.toString())}\n`);
       }
     });
   }
