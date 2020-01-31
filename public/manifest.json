@@ -1,0 +1,10 @@
+{
+  "name": "konsum-db",
+  "description": "timeseries database on leveldb",
+  "icons": [
+    {
+      "src": "facicon.ico",
+      "sizes": "16x16"
+    }
+  ]
+}
