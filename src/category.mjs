@@ -42,7 +42,6 @@ export class Category {
     };
   }
 
-
   constructor(name, options) {
     definePropertiesFromOptions(this, options, {
       name: { value: name }

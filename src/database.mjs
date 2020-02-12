@@ -1,7 +1,8 @@
 import { Category } from "./category.mjs";
+import { Meter } from "./meter.mjs";
 import { pump } from "./util.mjs";
 
-export { Category };
+export { Category, Meter };
 
 /**
  * prefix of the master record
