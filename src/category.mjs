@@ -13,6 +13,8 @@ const CATEGORY_PREFIX = "categories.";
  */
 const VALUE_PREFIX = "values.";
 
+const METER_PREFIX = "meters.";
+
 /**
  * Value Catetegory
  * @param {string} name category name
@@ -146,6 +148,17 @@ export class Category {
       db.iterator(readStreamOptions(key, options)),
       prefixLength
     );
+  }
+  
+  async *meters(db,options)
+  {
+   const key = METER_PREFIX + this.name + ".";
+    const prefixLength = key.length;
+    for await (const data of db.createReadStream(
+      readStreamOptions(key, options)
+    )) {
+      yield new Meter();
+    }
   }
 }
 
