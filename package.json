@@ -48,6 +48,9 @@
   },
   "homepage": "https://github.com/k0nsti/konsum-db#readme",
   "template": {
-    "inheritFrom": "arlac77/template-esm-only"
+    "inheritFrom": [
+      "arlac77/template-esm-only",
+      "arlac77/template-github"
+    ]
   }
 }
