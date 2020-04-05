@@ -150,13 +150,23 @@ export class Category {
     );
   }
   
+  /**
+   * get meters of the category
+   * @param {levelup} db
+   * @param {Object} options
+   * @param {string} options.gte time of earliest value
+   * @param {string} options.lte time of latest value
+   * @param {boolean} options.reverse order
+   * @return {Iterator<Object>}
+   */
   async *meters(db,options)
   {
-   const key = METER_PREFIX + this.name + ".";
+    const key = METER_PREFIX + this.name + ".";
     const prefixLength = key.length;
     for await (const data of db.createReadStream(
       readStreamOptions(key, options)
     )) {
+      // TODO actual values 
       yield new Meter();
     }
   }
