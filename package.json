@@ -10,7 +10,8 @@
   "module": "src/database.mjs",
   "description": "timeseries database on leveldb",
   "keywords": [
-    "timeseries"
+    "timeseries",
+    "leveldb"
   ],
   "contributors": [
     {
@@ -26,7 +27,7 @@
     "lint": "documentation lint src/database.mjs"
   },
   "dependencies": {
-    "levelup": "^4.3.2"
+    "levelup": "^4.4.0"
   },
   "devDependencies": {
     "ava": "^3.6.0",
