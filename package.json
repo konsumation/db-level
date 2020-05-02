@@ -6,7 +6,7 @@
   },
   "sideEffects": false,
   "type": "module",
-  "main": "src/database.mjs",
+  "main": "./src/database.mjs",
   "exports": {
     ".": "./src/database.mjs",
     "./": "./"
