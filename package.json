@@ -38,7 +38,7 @@
     "documentation": "^13.0.0",
     "leveldown": "^5.6.0",
     "semantic-release": "^17.0.7",
-    "tmp": "^0.1.0"
+    "tmp": "^0.2.0"
   },
   "engines": {
     "node": ">=12.16.3"
