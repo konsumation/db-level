@@ -8,8 +8,7 @@
   "type": "module",
   "main": "./src/database.mjs",
   "exports": {
-    ".": "./src/database.mjs",
-    "./": "./"
+    ".": "./src/database.mjs"
   },
   "description": "timeseries database on leveldb",
   "keywords": [
