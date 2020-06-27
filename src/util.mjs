@@ -23,7 +23,7 @@ export async function pump(stream, dest) {
 
 
 /**
- * create properties from options and default options
+ * Create properties from options and default options
  * @see Object.definedProperties()
  * @param {Object} object target object
  * @param {Object} options as passed to object constructor
@@ -49,7 +49,7 @@ export function definePropertiesFromOptions(object, options, properties = {}) {
 }
 
 /**
- * create json based on present options.
+ * Create json based on present options.
  * In other words only produce key value pairs if value is defined.
  * @param {Object} object
  * @param {Object} initial

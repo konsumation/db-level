@@ -2,13 +2,13 @@ import { Readable } from "stream";
 import { secondsAsString, definePropertiesFromOptions, optionJSON } from "./util.mjs";
 
 /**
- * prefix of the categories
+ * Prefix of the categories
  * will be followed by the category name
  */
 const CATEGORY_PREFIX = "categories.";
 
 /**
- * prefix of the values
+ * Prefix of the values
  * will be followed by the category name
  */
 const VALUE_PREFIX = "values.";
@@ -16,7 +16,7 @@ const VALUE_PREFIX = "values.";
 const METER_PREFIX = "meters.";
 
 /**
- * Value Catetegory
+ * Value Category
  * @param {string} name category name
  * @param {Object} options
  * @param {string} options.description
@@ -61,7 +61,7 @@ export class Category {
   }
 
   /**
-   * write the category. Leaves all the values alone
+   * Write the category. Leaves all the values alone
    * @param {levelup} db
    */
   async write(db) {
@@ -70,7 +70,7 @@ export class Category {
   }
 
   /**
-   * get categories
+   * Get categories
    * @param {levelup} db
    * @param {string} gte lowest name
    * @param {string} lte highst name
@@ -87,7 +87,7 @@ export class Category {
   }
 
   /**
-   * get a single category
+   * Get a single category
    * @param {levelup} db
    * @param {string} name
    * @return {Category}
@@ -99,7 +99,7 @@ export class Category {
   }
 
   /**
-   * write a time/value pair
+   * Write a time/value pair
    * @param {levelup} db
    * @param {number} value
    * @param {number} time seconds since epoch
@@ -110,7 +110,7 @@ export class Category {
   }
 
   /**
-   * get values of the category
+   * Get values of the category
    * @param {levelup} db
    * @param {Object} options
    * @param {string} options.gte time of earliest value
@@ -132,7 +132,7 @@ export class Category {
   }
 
   /**
-   * get values of the category as ascii text stream with time and value on each line
+   * Get values of the category as ascii text stream with time and value on each line
    * @param {levelup} db
    * @param {Object} options
    * @param {string} options.gte time of earliest value
@@ -151,7 +151,7 @@ export class Category {
   }
   
   /**
-   * get meters of the category
+   * Get meters of the category
    * @param {levelup} db
    * @param {Object} options
    * @param {string} options.gte time of earliest value

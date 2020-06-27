@@ -5,17 +5,17 @@ import { pump } from "./util.mjs";
 export { Category, Meter };
 
 /**
- * prefix of the master record
+ * Prefix of the master record
  */
 const MASTER = "master";
 
 /**
- * current schema version
+ * Current schema version
  */
 const SCHEMA_VERSION = "1";
 
 /**
- * initialize database
+ * Initialize database
  * checks/writes master record
  * @param {levelup} db
  */
