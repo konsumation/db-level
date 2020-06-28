@@ -16,22 +16,23 @@
 timeseries database on leveldb
 
 # example
- ```js
+
+```js
 import levelup from "levelup";
 import leveldown from "leveldown";
 
 import { Category } from "konsum-db";
 
 async function example() {
-  // open database
-  const db = await levelup(leveldown("example.db"));
+ // open database
+ const db = await levelup(leveldown("example.db"));
 
-  // create category named EV
-  const ev = new Category(`EV`, { unit: "kWh" });
-  await ev.write(db);
-  
-  // write entry
-  await ev.writeValue(db, Date.now(), 77.34);
+ // create category named EV
+ const ev = new Category(`EV`, { unit: "kWh" });
+ await ev.write(db);
+ 
+ // write entry
+ await ev.writeValue(db, Date.now(), 77.34);
 }
 
 example();
@@ -64,34 +65,41 @@ example();
         -   [Parameters](#parameters-6)
     -   [readStream](#readstream)
         -   [Parameters](#parameters-7)
-    -   [entries](#entries)
+    -   [meters](#meters)
         -   [Parameters](#parameters-8)
-    -   [entry](#entry)
+    -   [entries](#entries)
         -   [Parameters](#parameters-9)
+    -   [entry](#entry)
+        -   [Parameters](#parameters-10)
 -   [description](#description)
+-   [description](#description-1)
 -   [unit](#unit)
--   [secondsAsString](#secondsasstring)
-    -   [Parameters](#parameters-10)
--   [definePropertiesFromOptions](#definepropertiesfromoptions)
+-   [unit](#unit-1)
+-   [Meter](#meter)
     -   [Parameters](#parameters-11)
--   [optionJSON](#optionjson)
+    -   [Properties](#properties-1)
+-   [secondsAsString](#secondsasstring)
     -   [Parameters](#parameters-12)
+-   [definePropertiesFromOptions](#definepropertiesfromoptions)
+    -   [Parameters](#parameters-13)
+-   [optionJSON](#optionjson)
+    -   [Parameters](#parameters-14)
 
 ## MASTER
 
-prefix of the master record
+Prefix of the master record
 
 Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
 
 ## SCHEMA_VERSION
 
-current schema version
+Current schema version
 
 Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
 
 ## initialize
 
-initialize database
+Initialize database
 checks/writes master record
 
 ### Parameters
@@ -119,21 +127,21 @@ Restore database from input stream
 
 ## CATEGORY_PREFIX
 
-prefix of the categories
+Prefix of the categories
 will be followed by the category name
 
 Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
 
 ## VALUE_PREFIX
 
-prefix of the values
+Prefix of the values
 will be followed by the category name
 
 Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
 
 ## Category
 
-Value Catetegory
+Value Category
 
 ### Parameters
 
@@ -150,7 +158,7 @@ Value Catetegory
 
 ### write
 
-write the category. Leaves all the values alone
+Write the category. Leaves all the values alone
 
 #### Parameters
 
@@ -158,7 +166,7 @@ write the category. Leaves all the values alone
 
 ### writeValue
 
-write a time/value pair
+Write a time/value pair
 
 #### Parameters
 
@@ -168,7 +176,7 @@ write a time/value pair
 
 ### values
 
-get values of the category
+Get values of the category
 
 #### Parameters
 
@@ -182,7 +190,7 @@ Returns **Iterator&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript
 
 ### readStream
 
-get values of the category as ascii text stream with time and value on each line
+Get values of the category as ascii text stream with time and value on each line
 
 #### Parameters
 
@@ -194,9 +202,23 @@ get values of the category as ascii text stream with time and value on each line
 
 Returns **Readable** 
 
+### meters
+
+Get meters of the category
+
+#### Parameters
+
+-   `db` **levelup** 
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `options.gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** time of earliest value
+    -   `options.lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** time of latest value
+    -   `options.reverse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** order
+
+Returns **Iterator&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
+
 ### entries
 
-get categories
+Get categories
 
 #### Parameters
 
@@ -208,7 +230,7 @@ Returns **AsyncIterator&lt;[Category](#category)>**
 
 ### entry
 
-get a single category
+Get a single category
 
 #### Parameters
 
@@ -223,15 +245,45 @@ the description of the content.
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
+## description
+
+the description of the content.
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
 ## unit
 
 physical unit.
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
+## unit
+
+physical unit.
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## Meter
+
+Meter
+
+### Parameters
+
+-   `category`  
+-   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** meter name
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `options.description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+    -   `options.unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit like kWh or m3
+
+### Properties
+
+-   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** category name
+-   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit
+
 ## secondsAsString
 
-format seconds as string left padded with '0'
+Format seconds as string left padded with '0'
 
 ### Parameters
 
@@ -241,9 +293,10 @@ Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 ## definePropertiesFromOptions
 
--   **See: Object.definedProperties()**
+-   **See: Object.definedProperties()
+    **
 
-create properties from options and default options
+Create properties from options and default options
 
 ### Parameters
 
@@ -253,7 +306,7 @@ create properties from options and default options
 
 ## optionJSON
 
-create json based on present options.
+Create json based on present options.
 In other words only produce key value pairs if value is defined.
 
 ### Parameters
