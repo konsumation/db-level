@@ -25,7 +25,7 @@ test("backup", async t => {
   const master = await initialize(db);
 
   for (let i = 0; i < 3; i++) {
-    const c = new Category(`CAT-${i}`, { unit: "kWh", description: "mains power" });
+    const c = new Category(`CAT-${i}`, { unit: "kWh", fractionalDigits: 2, description: "mains power" });
     await c.write(db);
 
     const first = Date.now();
@@ -46,7 +46,7 @@ test("backup", async t => {
 
   const stat = await fs.promises.stat(ofn);
 
-  t.is(stat.size, 565);
+  t.is(stat.size, 622);
   db.close();
 
   const db2 = await levelup(leveldown(tmp.tmpNameSync()));
