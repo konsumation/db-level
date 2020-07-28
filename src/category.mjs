@@ -31,16 +31,18 @@ export class Category {
   static get defaultOptions() {
     return {
       /**
-       * the description of the content.
+       * The description of the content.
        * @return {string}
        */
       description: undefined,
 
       /**
-       * physical unit.
+       * Physical unit.
        * @return {string}
        */
-      unit: undefined
+      unit: undefined,
+
+      fractionalDigits: 2
     };
   }
 
