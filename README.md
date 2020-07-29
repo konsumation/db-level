@@ -241,7 +241,7 @@ Returns **[Category](#category)**
 
 ## description
 
-the description of the content.
+The description of the content.
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
@@ -253,7 +253,7 @@ Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 ## unit
 
-physical unit.
+Physical unit.
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
