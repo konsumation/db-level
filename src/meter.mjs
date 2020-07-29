@@ -25,7 +25,9 @@ export class Meter {
        * physical unit.
        * @return {string}
        */
-      unit: undefined
+      unit: undefined,
+
+      fractionalDigits: 2
     };
   }
 

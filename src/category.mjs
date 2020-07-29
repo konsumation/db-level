@@ -1,5 +1,9 @@
 import { Readable } from "stream";
-import { secondsAsString, definePropertiesFromOptions, optionJSON } from "./util.mjs";
+import {
+  secondsAsString,
+  definePropertiesFromOptions,
+  optionJSON
+} from "./util.mjs";
 
 /**
  * Prefix of the categories
@@ -27,7 +31,6 @@ const METER_PREFIX = "meters.";
  * @property {string} unit physical unit
  */
 export class Category {
-
   static get defaultOptions() {
     return {
       /**
@@ -68,7 +71,14 @@ export class Category {
    */
   async write(db) {
     const key = CATEGORY_PREFIX + this.name;
-    return db.put(key, JSON.stringify({ unit: this.unit, description: this.description }));
+    return db.put(
+      key,
+      JSON.stringify({
+        unit: this.unit,
+        description: this.description,
+        fractionalDigits: this.fractionalDigits
+      })
+    );
   }
 
   /**
@@ -151,7 +161,7 @@ export class Category {
       prefixLength
     );
   }
-  
+
   /**
    * Get meters of the category
    * @param {levelup} db
@@ -161,14 +171,13 @@ export class Category {
    * @param {boolean} options.reverse order
    * @return {Iterator<Object>}
    */
-  async *meters(db,options)
-  {
+  async *meters(db, options) {
     const key = METER_PREFIX + this.name + ".";
     const prefixLength = key.length;
     for await (const data of db.createReadStream(
       readStreamOptions(key, options)
     )) {
-      // TODO actual values 
+      // TODO actual values
       yield new Meter();
     }
   }
@@ -202,7 +211,12 @@ class CategoryReadStream extends Readable {
       if (key === undefined && value === undefined) {
         this.push(null);
       } else {
-        this.push(`${parseInt(key.toString().slice(this.prefixLength), 10)} ${parseFloat(value.toString())}\n`);
+        this.push(
+          `${parseInt(
+            key.toString().slice(this.prefixLength),
+            10
+          )} ${parseFloat(value.toString())}\n`
+        );
       }
     });
   }

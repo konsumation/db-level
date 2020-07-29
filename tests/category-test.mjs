@@ -11,7 +11,7 @@ test("categories write / read", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));
 
   for (let i = 0; i < 10; i++) {
-    const c = new Category(`CAT-${i}`, { unit: "kWh" });
+    const c = new Category(`CAT-${i}`, { unit: "kWh", fractionalDigits: 3 });
     await c.write(db);
   }
 
@@ -23,10 +23,12 @@ test("categories write / read", async t => {
 
   t.true(cs.length >= 10);
   t.is(cs[0].unit, "kWh");
+  t.is(cs[0].fractionalDigits, 3);
 
   const c = await Category.entry(db, "CAT-7");
   t.is(c.name, "CAT-7");
   t.is(c.unit, "kWh");
+  t.is(c.fractionalDigits, 3);
 
   db.close();
 });
@@ -73,7 +75,7 @@ test("values write / read", async t => {
 test("readStream", async t => {
   const dbf = tmp.tmpNameSync();
   const db = await levelup(leveldown(dbf));
-  const c = new Category(`CAT-1`, { unit: "kWh" });
+  const c = new Category(`CAT-1`, { unit: "kWh", fractionalDigits: 2 });
   await c.write(db);
 
   const first = Date.now();
