@@ -21,32 +21,88 @@ export async function pump(stream, dest) {
   });
 }
 
-
 /**
  * Create properties from options and default options
+ * Already present properties (direct) are skipped
  * @see Object.definedProperties()
+ * @see Object.hasOwnProperty()
  * @param {Object} object target object
  * @param {Object} options as passed to object constructor
  * @param {Object} properties object properties
  */
-export function definePropertiesFromOptions(object, options, properties = {}) {
-  const defaultOptions = object.constructor.defaultOptions;
+export function definePropertiesFromOptions(
+  object,
+  options = {},
+  properties = {}
+) {
   const after = {};
+  const attributes = object.constructor.attributes;
+  if (attributes !== undefined) {
+    Object.entries(attributes).forEach(([name, attribute]) => {
+      if (properties[name] !== undefined && properties[name].value) {
+        return;
+      }
 
-  Object.keys(defaultOptions).forEach(name => {
-    const value =
-      (options !== undefined && options[name]) || defaultOptions[name];
+      let value = options[name];
+      if (value === undefined) {
+        value = attribute.default;
+      }
 
-    if (properties[name] === undefined) {
-      properties[name] = { value };
-    } else {
-      after[name] = value;
-    }
-  });
+      if (value === undefined) {
+        return;
+      }
+
+      if (attribute.set) {
+        value = attribute.set(value);
+      } else {
+        switch (attribute.type) {
+          case "boolean":
+            value =
+              value === 0 || value === "0" || value === false ? false : true;
+            break;
+        }
+      }
+
+      if (object.hasOwnProperty(name)) {
+        after[name] = value;
+        return;
+      }
+
+      const path = name.split(/\./);
+      let key = path[0];
+
+      if (properties[key] === undefined) {
+        if (path.length === 1) {
+          properties[key] = { value };
+          return;
+        }
+        properties[key] = { value: {} };
+      } else {
+        if (path.length === 1) {
+          after[name] = value;
+          return;
+        }
+      }
+
+      // TODO only 2 levels for now
+      properties[key].value[path[1]] = value;
+    });
+  }
 
   Object.defineProperties(object, properties);
   Object.assign(object, after);
 }
+
+export function getAttribute(object, name) {
+  let value = object;
+
+  for (const p of name.split(/\./)) {
+    value = value[p];
+  }
+
+  return value;
+}
+
 
 /**
  * Create json based on present options.
@@ -56,7 +112,7 @@ export function definePropertiesFromOptions(object, options, properties = {}) {
  * @return {Object} initial + defined values
  */
 export function optionJSON(object, initial = {}) {
-  return Object.keys(object.constructor.defaultOptions).reduce((a, c) => {
+  return Object.keys(object.constructor.attributes).reduce((a, c) => {
     if (object[c] !== undefined) {
       a[c] = object[c];
     }

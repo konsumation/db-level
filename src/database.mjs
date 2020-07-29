@@ -55,7 +55,7 @@ export async function backup(database, master, out) {
   for await (const category of Category.entries(database)) {
     await out.write(`[${category.name}]\n`);
 
-    for(const o of Object.keys(category.constructor.defaultOptions)) {
+    for(const o of Object.keys(category.constructor.attributes)) {
       const v = category[o];
       if(v !== undefined) {
         await out.write(`${o}=${v}\n`);

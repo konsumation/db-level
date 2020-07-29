@@ -13,27 +13,37 @@ import { secondsAsString, definePropertiesFromOptions, optionJSON } from "./util
  * @property {string} unit physical unit
  */
 export class Meter {
-  static get defaultOptions() {
+  static get attributes() {
     return {
       /**
        * the description of the content.
        * @return {string}
        */
-      description: undefined,
+      description: { type: "string" },
 
       /**
        * physical unit.
        * @return {string}
        */
-      unit: undefined,
+      unit: { type: "string" },
 
-      fractionalDigits: 2
+      fractionalDigits: { type: "number", default: 2 }
     };
   }
 
   constructor(category, name) {
     definePropertiesFromOptions(this, options, {
       name: { value: name }
+    });
+  }
+  
+  toString() {
+    return `${this.name}: ${this.unit}`;
+  }
+  
+  toJSON() {
+    return optionJSON(this, {
+      name: this.name
     });
   }
 }

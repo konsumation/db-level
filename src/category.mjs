@@ -1,4 +1,5 @@
 import { Readable } from "stream";
+import { Meter } from "./meter.mjs";
 import {
   secondsAsString,
   definePropertiesFromOptions,
@@ -30,41 +31,7 @@ const METER_PREFIX = "meters.";
  * @property {string} description
  * @property {string} unit physical unit
  */
-export class Category {
-  static get defaultOptions() {
-    return {
-      /**
-       * The description of the content.
-       * @return {string}
-       */
-      description: undefined,
-
-      /**
-       * Physical unit.
-       * @return {string}
-       */
-      unit: undefined,
-
-      fractionalDigits: 2
-    };
-  }
-
-  constructor(name, options) {
-    definePropertiesFromOptions(this, options, {
-      name: { value: name }
-    });
-  }
-
-  toString() {
-    return `${this.name}: ${this.unit}`;
-  }
-
-  toJSON() {
-    return optionJSON(this, {
-      name: this.name
-    });
-  }
-
+export class Category extends Meter {
   /**
    * Write the category. Leaves all the values alone
    * @param {levelup} db
@@ -154,11 +121,10 @@ export class Category {
    */
   readStream(db, options) {
     const key = VALUE_PREFIX + this.name + ".";
-    const prefixLength = key.length;
 
     return new CategoryReadStream(
       db.iterator(readStreamOptions(key, options)),
-      prefixLength
+      key.length
     );
   }
 
@@ -173,12 +139,11 @@ export class Category {
    */
   async *meters(db, options) {
     const key = METER_PREFIX + this.name + ".";
-    const prefixLength = key.length;
     for await (const data of db.createReadStream(
       readStreamOptions(key, options)
     )) {
-      // TODO actual values
-      yield new Meter();
+      const name = data.key.toString().slice(key.length);
+      yield new Meter(name, JSON.parse(data.value.toString()));
     }
   }
 }
