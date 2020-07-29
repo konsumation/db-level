@@ -5,7 +5,6 @@
  */
 export function secondsAsString(number) {
   const s = `000000000000000000${number}`;
-
   return s.slice(s.length - 15);
 }
 

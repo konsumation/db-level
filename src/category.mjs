@@ -1,10 +1,7 @@
 import { Readable } from "stream";
 import { Meter } from "./meter.mjs";
-import {
-  secondsAsString,
-  definePropertiesFromOptions,
-  optionJSON
-} from "./util.mjs";
+import { Base } from "./base.mjs";
+import { secondsAsString } from "./util.mjs";
 
 /**
  * Prefix of the categories
@@ -17,7 +14,6 @@ const CATEGORY_PREFIX = "categories.";
  * will be followed by the category name
  */
 const VALUE_PREFIX = "values.";
-
 const METER_PREFIX = "meters.";
 
 /**
@@ -31,7 +27,7 @@ const METER_PREFIX = "meters.";
  * @property {string} description
  * @property {string} unit physical unit
  */
-export class Category extends Meter {
+export class Category extends Base {
   /**
    * Write the category. Leaves all the values alone
    * @param {levelup} db

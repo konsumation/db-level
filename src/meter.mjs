@@ -1,5 +1,4 @@
-import { Readable } from "stream";
-import { secondsAsString, definePropertiesFromOptions, optionJSON } from "./util.mjs";
+import { Base } from "./base.mjs";
 
 /**
  * Meter
@@ -12,38 +11,11 @@ import { secondsAsString, definePropertiesFromOptions, optionJSON } from "./util
  * @property {string} description
  * @property {string} unit physical unit
  */
-export class Meter {
+export class Meter extends Base {
   static get attributes() {
     return {
-      /**
-       * the description of the content.
-       * @return {string}
-       */
-      description: { type: "string" },
-
-      /**
-       * physical unit.
-       * @return {string}
-       */
-      unit: { type: "string" },
-
-      fractionalDigits: { type: "number", default: 2 }
+      ...super.attributes,
+      serial: { type: "string" }
     };
-  }
-
-  constructor( name, options) {
-    definePropertiesFromOptions(this, options, {
-      name: { value: name }
-    });
-  }
-  
-  toString() {
-    return `${this.name}: ${this.unit}`;
-  }
-  
-  toJSON() {
-    return optionJSON(this, {
-      name: this.name
-    });
   }
 }
