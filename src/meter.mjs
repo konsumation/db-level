@@ -31,7 +31,7 @@ export class Meter {
     };
   }
 
-  constructor(category, name) {
+  constructor( name, options) {
     definePropertiesFromOptions(this, options, {
       name: { value: name }
     });
