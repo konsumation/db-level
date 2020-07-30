@@ -71,19 +71,20 @@ example();
         -   [Parameters](#parameters-9)
     -   [entry](#entry)
         -   [Parameters](#parameters-10)
--   [description](#description)
--   [description](#description-1)
--   [unit](#unit)
--   [unit](#unit-1)
--   [Meter](#meter)
+-   [Base](#base)
     -   [Parameters](#parameters-11)
     -   [Properties](#properties-1)
--   [secondsAsString](#secondsasstring)
+-   [description](#description)
+-   [unit](#unit)
+-   [Meter](#meter)
     -   [Parameters](#parameters-12)
--   [definePropertiesFromOptions](#definepropertiesfromoptions)
+    -   [Properties](#properties-2)
+-   [secondsAsString](#secondsasstring)
     -   [Parameters](#parameters-13)
--   [optionJSON](#optionjson)
+-   [definePropertiesFromOptions](#definepropertiesfromoptions)
     -   [Parameters](#parameters-14)
+-   [optionJSON](#optionjson)
+    -   [Parameters](#parameters-15)
 
 ## MASTER
 
@@ -140,6 +141,8 @@ will be followed by the category name
 Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
 
 ## Category
+
+**Extends Base**
 
 Value Category
 
@@ -239,21 +242,26 @@ Get a single category
 
 Returns **[Category](#category)** 
 
-## description
+## Base
 
-The description of the content.
+Base
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+### Parameters
+
+-   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** meter name
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `options.description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+    -   `options.unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit like kWh or m3
+
+### Properties
+
+-   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** category name
+-   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit
 
 ## description
 
 the description of the content.
-
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-## unit
-
-Physical unit.
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
@@ -265,11 +273,12 @@ Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 ## Meter
 
+**Extends Base**
+
 Meter
 
 ### Parameters
 
--   `category`  
 -   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** meter name
 -   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
     -   `options.description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
@@ -295,13 +304,16 @@ Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 -   **See: Object.definedProperties()
     **
+-   **See: Object.hasOwnProperty()
+    **
 
 Create properties from options and default options
+Already present properties (direct) are skipped
 
 ### Parameters
 
 -   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** target object
--   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** as passed to object constructor
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** as passed to object constructor (optional, default `{}`)
 -   `properties` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** object properties (optional, default `{}`)
 
 ## optionJSON
