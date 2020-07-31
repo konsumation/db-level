@@ -50,7 +50,7 @@ export async function initialize(db) {
  * @param {Writeable} out
  */
 export async function backup(database, master, out) {
-  out.write(`schemaVersion = ${master.schemaVersion}\n\n`);
+  out.write(`schemaVersion=${master.schemaVersion}\n\n`);
 
   for await (const category of Category.entries(database)) {
     await out.write(`[${category.name}]\n`);

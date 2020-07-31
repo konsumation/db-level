@@ -46,7 +46,7 @@ test("backup", async t => {
 
   const stat = await fs.promises.stat(ofn);
 
-  t.is(stat.size, 622);
+  t.is(stat.size, 620);
   db.close();
 
   const db2 = await levelup(leveldown(tmp.tmpNameSync()));
