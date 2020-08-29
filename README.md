@@ -70,14 +70,14 @@ example();
         -   [Parameters](#parameters-9)
     -   [entry](#entry)
         -   [Parameters](#parameters-10)
--   [Meter](#meter)
+-   [Base](#base)
     -   [Parameters](#parameters-11)
     -   [Properties](#properties-1)
--   [Base](#base)
-    -   [Parameters](#parameters-12)
-    -   [Properties](#properties-2)
 -   [description](#description)
 -   [unit](#unit)
+-   [Meter](#meter)
+    -   [Parameters](#parameters-12)
+    -   [Properties](#properties-2)
 -   [secondsAsString](#secondsasstring)
     -   [Parameters](#parameters-13)
 -   [definePropertiesFromOptions](#definepropertiesfromoptions)
@@ -241,25 +241,6 @@ Get a single category
 
 Returns **[Category](#category)** 
 
-## Meter
-
-**Extends Base**
-
-Meter
-
-### Parameters
-
--   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** meter name
--   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-    -   `options.description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-    -   `options.unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit like kWh or m3
-
-### Properties
-
--   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** category name
--   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit
-
 ## Base
 
 Base
@@ -288,6 +269,25 @@ Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 physical unit.
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## Meter
+
+**Extends Base**
+
+Meter
+
+### Parameters
+
+-   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** meter name
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `options.description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+    -   `options.unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit like kWh or m3
+
+### Properties
+
+-   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** category name
+-   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit
 
 ## secondsAsString
 
