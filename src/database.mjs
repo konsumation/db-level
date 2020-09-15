@@ -108,7 +108,7 @@ export async function restore(database, input) {
   for await (const chunk of input) {
     last += chunk;
 
-    let lines = last.split(/\n/);
+    const lines = last.split(/\n/);
 
     last = lines.pop();
 
