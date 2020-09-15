@@ -4,14 +4,14 @@ import { Base } from "./base.mjs";
 import { secondsAsString } from "./util.mjs";
 
 /**
- * Prefix of the categories
- * will be followed by the category name
+ * Prefix of the categories.
+ * Will be followed by the category name
  */
 const CATEGORY_PREFIX = "categories.";
 
 /**
- * Prefix of the values
- * will be followed by the category name
+ * Prefix of the values.
+ * Will be followed by the category name
  */
 const VALUE_PREFIX = "values.";
 const METER_PREFIX = "meters.";
