@@ -127,15 +127,15 @@ Restore database from input stream
 
 ## CATEGORY_PREFIX
 
-Prefix of the categories
-will be followed by the category name
+Prefix of the categories.
+Will be followed by the category name
 
 Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
 
 ## VALUE_PREFIX
 
-Prefix of the values
-will be followed by the category name
+Prefix of the values.
+Will be followed by the category name
 
 Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
 
