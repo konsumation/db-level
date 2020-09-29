@@ -1,5 +1,17 @@
-name: Merge me!
+name: Auto approve
 'on':
+  '0': p
+  '1': u
+  '2': l
+  '3': l
+  '4': _
+  '5': r
+  '6': e
+  '7': q
+  '8': u
+  '9': e
+  '10': s
+  '11': t
   check_suite:
     types:
       - completed
@@ -18,11 +30,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: hmarr/auto-approve-action@v2.0.0
-        if: >-
-          github.actor == 'dependabot[bot]' || github.actor ==
-          'dependabot-preview[bot]'
+        if: "github.actor == 'arlac77' ||\_github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'"
         with:
           github-token: '${{ secrets.GITHUB_TOKEN }}'
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
   merge-me:
     name: Merge me!
     runs-on: ubuntu-latest
