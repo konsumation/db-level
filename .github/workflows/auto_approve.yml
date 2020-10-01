@@ -8,3 +8,4 @@ jobs:
         if: "github.actor == 'arlac77' ||\_github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'"
         with:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          github-token: '${{ secrets.GITHUB_TOKEN }}'
