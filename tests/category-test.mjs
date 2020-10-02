@@ -5,7 +5,7 @@ import leveldown from "leveldown";
 import { Readable } from "stream";
 import { createWriteStream } from "fs";
 
-import { Category } from "../src/category.mjs";
+import { Category } from "konsum-db";
 
 test("categories write / read", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));

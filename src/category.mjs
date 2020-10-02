@@ -14,7 +14,7 @@ const CATEGORY_PREFIX = "categories.";
  * Will be followed by the category name
  */
 const VALUE_PREFIX = "values.";
-const METER_PREFIX = "meters.";
+export const METER_PREFIX = "meters.";
 
 /**
  * Value Category
@@ -139,7 +139,7 @@ export class Category extends Base {
       readStreamOptions(key, options)
     )) {
       const name = data.key.toString().slice(key.length);
-      yield new Meter(name, JSON.parse(data.value.toString()));
+      yield new Meter(name, this, JSON.parse(data.value.toString()));
     }
   }
 }

@@ -3,7 +3,7 @@ import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
 
-import { initialize, backup, restore, Category } from "../src/database.mjs";
+import { initialize, backup, restore, Category } from "konsum-db";
 import fs, { createWriteStream, createReadStream } from "fs";
 
 test("initialize", async t => {
