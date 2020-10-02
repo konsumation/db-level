@@ -10,11 +10,16 @@ import { secondsAsString } from "./util.mjs";
 const CATEGORY_PREFIX = "categories.";
 
 /**
+ * Prefix of the meters.
+ * Will be followed by the category and meter name
+ */
+export const METER_PREFIX = "meters.";
+
+/**
  * Prefix of the values.
  * Will be followed by the category name
  */
 const VALUE_PREFIX = "values.";
-export const METER_PREFIX = "meters.";
 
 /**
  * Value Category

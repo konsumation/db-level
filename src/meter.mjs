@@ -4,7 +4,7 @@ import { METER_PRFIX } from "./category.mjs";
 /**
  * Meter
  * @param {string} name meter name
- * @param {Category} catebory
+ * @param {Category} category
  * @param {Object} options
  * @param {string} options.description
  * @param {string} options.unit physical unit like kWh or m3
