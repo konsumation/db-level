@@ -38,15 +38,7 @@ export class Category extends Base {
    * @param {levelup} db
    */
   async write(db) {
-    const key = CATEGORY_PREFIX + this.name;
-    return db.put(
-      key,
-      JSON.stringify({
-        unit: this.unit,
-        description: this.description,
-        fractionalDigits: this.fractionalDigits
-      })
-    );
+    return super.write(db, CATEGORY_PREFIX + this.name);
   }
 
   /**
@@ -57,13 +49,7 @@ export class Category extends Base {
    * @return {AsyncIterator<Category>}
    */
   static async *entries(db, gte = "\u0000", lte = "\uFFFF") {
-    for await (const data of db.createReadStream({
-      gte: CATEGORY_PREFIX + gte,
-      lte: CATEGORY_PREFIX + lte
-    })) {
-      const name = data.key.toString().slice(CATEGORY_PREFIX.length);
-      yield new Category(name, JSON.parse(data.value.toString()));
-    }
+     yield * super.entries(db, CATEGORY_PREFIX, gte, lte);
   }
 
   /**

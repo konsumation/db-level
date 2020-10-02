@@ -1,5 +1,5 @@
 import { Base } from "./base.mjs";
-import { METER_PRFIX } from "./category.mjs";
+import { METER_PREFIX } from "./category.mjs";
 
 /**
  * Meter
@@ -20,28 +20,29 @@ export class Meter extends Base {
       serial: { type: "string" }
     };
   }
-  
-  constructor(name,category,options) {
-    super(name,options);
-    Object.defineProperties(this,{ category: { value: category }});
+
+  static async *entries(db, gte, lte) {
+    yield * super.entries(db, METER_PREFIX, gte, lte);
   }
-  
-  get unit()
-  {
-    retun this.category.unit;
+
+  constructor(name, category, options) {
+    super(name, options);
+    Object.defineProperties(this, { category: { value: category } });
   }
-  
-   /**
+
+  get unit() {
+    return this.category.unit;
+  }
+
+  get fractionalDigits() {
+    return this.category.fractionalDigits;
+  }
+
+  /**
    * Write the Meter.
    * @param {levelup} db
    */
   async write(db) {
-    const key = METER_PREFIX + this.name;
-    return db.put(
-      key,
-      JSON.stringify({
-        description: this.description
-      })
-    );
+    return super.write(db, METER_PREFIX + this.category.name + '.' + this.name);
   }
 }

@@ -4,7 +4,6 @@ import levelup from "levelup";
 import leveldown from "leveldown";
 import { Readable } from "stream";
 import { createWriteStream } from "fs";
-
 import { Category } from "konsum-db";
 
 test("categories write / read", async t => {
@@ -94,7 +93,7 @@ test("readStream", async t => {
  // stream.pipe(process.stdout);
 
   const outFileName = tmp.tmpNameSync();
-  console.log(outFileName);
+  //console.log(outFileName);
   stream.pipe(createWriteStream(outFileName,{ encoding: 'utf8' }));
 
   t.true(stream instanceof Readable);
