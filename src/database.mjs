@@ -54,6 +54,10 @@ export async function backup(database, master, out) {
 
   for await (const category of Category.entries(database)) {
     category.writeAsText(out,category.name);
+    for await (const meter of category.meters(database)) {
+      await meter.writeAsText(out,category.name + '.' + meter.name);
+    }
+
     await pump(category.readStream(database), out);
   }
 }
