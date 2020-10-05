@@ -44,7 +44,7 @@ example();
 ### Table of Contents
 
 -   [MASTER](#master)
--   [SCHEMA_VERSION](#schema_version)
+-   [SCHEMA_VERSION_1](#schema_version_1)
 -   [initialize](#initialize)
     -   [Parameters](#parameters)
 -   [backup](#backup)
@@ -52,6 +52,7 @@ example();
 -   [restore](#restore)
     -   [Parameters](#parameters-2)
 -   [CATEGORY_PREFIX](#category_prefix)
+-   [METER_PREFIX](#meter_prefix)
 -   [VALUE_PREFIX](#value_prefix)
 -   [Category](#category)
     -   [Parameters](#parameters-3)
@@ -68,22 +69,28 @@ example();
         -   [Parameters](#parameters-8)
     -   [entries](#entries)
         -   [Parameters](#parameters-9)
-    -   [entry](#entry)
-        -   [Parameters](#parameters-10)
--   [Base](#base)
-    -   [Parameters](#parameters-11)
-    -   [Properties](#properties-1)
--   [description](#description)
--   [unit](#unit)
 -   [Meter](#meter)
+    -   [Parameters](#parameters-10)
+    -   [Properties](#properties-1)
+    -   [write](#write-1)
+        -   [Parameters](#parameters-11)
+-   [Base](#base)
     -   [Parameters](#parameters-12)
     -   [Properties](#properties-2)
+    -   [write](#write-2)
+        -   [Parameters](#parameters-13)
+    -   [entries](#entries-1)
+        -   [Parameters](#parameters-14)
+    -   [entry](#entry)
+        -   [Parameters](#parameters-15)
+-   [description](#description)
+-   [unit](#unit)
 -   [secondsAsString](#secondsasstring)
-    -   [Parameters](#parameters-13)
+    -   [Parameters](#parameters-16)
 -   [definePropertiesFromOptions](#definepropertiesfromoptions)
-    -   [Parameters](#parameters-14)
+    -   [Parameters](#parameters-17)
 -   [optionJSON](#optionjson)
-    -   [Parameters](#parameters-15)
+    -   [Parameters](#parameters-18)
 
 ## MASTER
 
@@ -91,7 +98,7 @@ Prefix of the master record
 
 Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
 
-## SCHEMA_VERSION
+## SCHEMA_VERSION_1
 
 Current schema version
 
@@ -129,6 +136,13 @@ Restore database from input stream
 
 Prefix of the categories.
 Will be followed by the category name
+
+Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+## METER_PREFIX
+
+Prefix of the meters.
+Will be followed by the category and meter name
 
 Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
 
@@ -230,16 +244,33 @@ Get categories
 
 Returns **AsyncIterator&lt;[Category](#category)>** 
 
-### entry
+## Meter
 
-Get a single category
+**Extends Base**
+
+Meter
+
+### Parameters
+
+-   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** meter name
+-   `category` **[Category](#category)** 
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `options.description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+    -   `options.unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit like kWh or m3
+
+### Properties
+
+-   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** category name
+-   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit
+
+### write
+
+Write the Meter.
 
 #### Parameters
 
 -   `db` **levelup** 
--   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-Returns **[Category](#category)** 
 
 ## Base
 
@@ -258,6 +289,37 @@ Base
 -   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit
 
+### write
+
+#### Parameters
+
+-   `db` **levelup** 
+-   `key`  
+
+### entries
+
+Get instances
+
+#### Parameters
+
+-   `db` **levelup** 
+-   `prefix`  
+-   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** lowest name (optional, default `"\u0000"`)
+-   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** highst name (optional, default `"\uFFFF"`)
+
+Returns **AsyncIterator&lt;[Base](#base)>** 
+
+### entry
+
+Get a single instance
+
+#### Parameters
+
+-   `db` **levelup** 
+-   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **[Base](#base)** 
+
 ## description
 
 the description of the content.
@@ -270,24 +332,13 @@ physical unit.
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
-## Meter
+### write
 
-**Extends Base**
+Write the Meter.
 
-Meter
+#### Parameters
 
-### Parameters
-
--   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** meter name
--   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-    -   `options.description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-    -   `options.unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit like kWh or m3
-
-### Properties
-
--   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** category name
--   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit
+-   `db` **levelup** 
 
 ## secondsAsString
 
