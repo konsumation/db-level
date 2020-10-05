@@ -47,6 +47,18 @@ export class Base {
     }
   }
 
+  /**
+   * Get a single instance
+   * @param {levelup} db
+   * @param {string} name
+   * @return {Base}
+   */
+  static async entry(db, name) {
+    for await (const c of this.entries(db, name)) {
+      return c;
+    }
+  }
+
   constructor(name, options) {
     definePropertiesFromOptions(this, options, {
       name: { value: name }
@@ -87,6 +99,6 @@ export class Base {
         await out.write(`${o}=${v}\n`);
       }
     }
-    await out.write("\n");
+    return out.write("\n");
   }
 }

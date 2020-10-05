@@ -53,18 +53,6 @@ export class Category extends Base {
   }
 
   /**
-   * Get a single category
-   * @param {levelup} db
-   * @param {string} name
-   * @return {Category}
-   */
-  static async entry(db, name) {
-    for await (const c of this.entries(db, name)) {
-      return c;
-    }
-  }
-
-  /**
    * Write a time/value pair
    * @param {levelup} db
    * @param {number} value

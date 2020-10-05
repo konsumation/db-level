@@ -12,7 +12,7 @@ const MASTER = "master";
 /**
  * Current schema version
  */
-const SCHEMA_VERSION = "1";
+const SCHEMA_VERSION_1 = "1";
 
 /**
  * Initialize database
@@ -25,11 +25,9 @@ export async function initialize(db) {
     lte: MASTER
   })) {
     const master = JSON.parse(data.value.toString());
-    if (master.schemaVersion !== SCHEMA_VERSION) {
+    if (master.schemaVersion !== SCHEMA_VERSION_1) {
       throw new Error(
-        `Unsupported schema version ${
-          master.schemaVersion
-        } only supporting version ${SCHEMA_VERSION}`
+        `Unsupported schema version ${master.schemaVersion} only supporting version ${SCHEMA_VERSION_1}`
       );
     }
 
@@ -37,7 +35,7 @@ export async function initialize(db) {
   }
 
   const master = {
-    schemaVersion: SCHEMA_VERSION
+    schemaVersion: SCHEMA_VERSION_1
   };
   await db.put(MASTER, JSON.stringify(master));
   return master;
@@ -53,10 +51,10 @@ export async function backup(database, master, out) {
   out.write(`schemaVersion=${master.schemaVersion}\n\n`);
 
   for await (const category of Category.entries(database)) {
-    category.writeAsText(out,category.name);
-    for await (const meter of category.meters(database)) {
-      await meter.writeAsText(out,category.name + '.' + meter.name);
-    }
+    await category.writeAsText(out, category.name);
+    /*for await (const meter of category.meters(database)) {
+      await meter.writeAsText(out, category.name + "." + meter.name);
+    }*/
 
     await pump(category.readStream(database), out);
   }
@@ -77,8 +75,10 @@ export async function restore(database, input) {
   function process(line) {
     let m = line.match(/^(\w+)\s*=\s*(.*)/);
     if (m) {
-      if(attributes === undefined) { attributes = {}; }
-      attributes[m[1]]= m[2];
+      if (attributes === undefined) {
+        attributes = {};
+      }
+      attributes[m[1]] = m[2];
       return;
     }
 
@@ -89,7 +89,7 @@ export async function restore(database, input) {
       return;
     }
 
-    if(cn !== undefined) {
+    if (cn !== undefined) {
       c = new Category(cn, attributes);
       c.write(database);
       cn = undefined;
