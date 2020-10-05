@@ -2,9 +2,6 @@ import test from "ava";
 import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
-import { Readable } from "stream";
-import { createWriteStream } from "fs";
-
 import { Category, Meter } from "konsum-db";
 
 test("create Meter", async t => {

@@ -3,8 +3,9 @@ import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
 
-import { initialize, backup, restore, Category } from "konsum-db";
-import fs, { createWriteStream, createReadStream } from "fs";
+import { initialize, backup, restore, Category, Meter } from "konsum-db";
+import { createWriteStream, createReadStream } from "fs";
+import { stat } from "fs/promises";
 
 test("initialize", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));
@@ -30,7 +31,12 @@ test("backup", async t => {
       fractionalDigits: 2,
       description: "mains power"
     });
+
     await c.write(db);
+    const m1 = new Meter("M-1", c, { serial: "1" });
+    m1.write(db);
+    const m2 = new Meter("M-2", c, { serial: "2" });
+    m2.write(db);
 
     const first = Date.now();
     const firstValue = 77.34 + i;
@@ -48,9 +54,10 @@ test("backup", async t => {
 
   await backup(db, master, out);
 
-  const stat = await fs.promises.stat(ofn);
+  const s = await stat(ofn);
 
-  t.is(stat.size, 620);
+  //console.log(ofn);
+  t.is(s.size, 620);
   db.close();
 
   const db2 = await levelup(leveldown(tmp.tmpNameSync()));

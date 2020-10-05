@@ -1,7 +1,7 @@
 schemaVersion=1
 
 [CAT-0]
-description=mains power
+description=mains power 0
 unit=kWh
 fractionalDigits=2
 
@@ -16,7 +16,7 @@ fractionalDigits=2
 1596182230832 85.34
 1596182317232 86.34
 [CAT-1]
-description=mains power
+description=mains power 1
 unit=kWh
 fractionalDigits=2
 
@@ -31,7 +31,7 @@ fractionalDigits=2
 1596182230834 86.34
 1596182317234 87.34
 [CAT-2]
-description=mains power
+description=mains power 2
 unit=kWh
 fractionalDigits=2
 
