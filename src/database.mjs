@@ -15,6 +15,11 @@ const MASTER = "master";
 const SCHEMA_VERSION_1 = "1";
 
 /**
+ * future schema with type + name
+ */
+const SCHEMA_VERSION_2 = "2";
+
+/**
  * Initialize database
  * checks/writes master record
  * @param {levelup} db
@@ -71,6 +76,7 @@ export async function restore(database, input) {
   let c;
   let attributes;
   let cn;
+  let factory;
 
   function process(line) {
     let m = line.match(/^(\w+)\s*=\s*(.*)/);
@@ -82,15 +88,27 @@ export async function restore(database, input) {
       return;
     }
 
+    m = line.match(/^\[(\w+)\s+"([^"]+)"\]/);
+    if (m) {
+      switch(m[1]) {
+        case 'category': factory = Category; break;
+        case 'meter': factory = Meter; break;
+      }
+      attributes = undefined;
+      cn = m[2];
+      return;
+    }
+
     m = line.match(/^\[([^\]]+)\]/);
     if (m) {
+      factory = Category; 
       attributes = undefined;
       cn = m[1];
       return;
     }
 
     if (cn !== undefined) {
-      c = new Category(cn, attributes);
+      c = new factory(cn, attributes);
       c.write(database);
       cn = undefined;
     }

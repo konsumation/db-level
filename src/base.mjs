@@ -91,6 +91,10 @@ export class Base {
     });
   }
 
+  get typeName() {
+    return this.constructor.typeName;
+  }
+
   /**
    * @param {levelup} db
    */
@@ -107,7 +111,7 @@ export class Base {
   }
 
   async writeAsText(out, name) {
-    await out.write(`[${name}]\n`);
+    await out.write(`[${this.typeName} "${name}"]\n`);
 
     for (const o of Object.keys(this.constructor.attributes)) {
       const v = this[o];
