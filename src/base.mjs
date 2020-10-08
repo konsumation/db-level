@@ -12,6 +12,22 @@ import { definePropertiesFromOptions, optionJSON } from "./util.mjs";
  * @property {string} unit physical unit
  */
 export class Base {
+  /**
+   * Prefix of the key
+   * @return {string}
+   */
+  static get keyPrefix() {
+    return this.typeName + "s.";
+  }
+
+  /**
+   * Name of the type in text dump
+   * @return {string}
+   */
+  static get typeName() {
+    return this.name.toLowerCase();
+  }
+ 
   static get attributes() {
     return {
       /**
