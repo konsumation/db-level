@@ -1,23 +1,23 @@
 import { Category } from "./category.mjs";
 import { Meter } from "./meter.mjs";
+import { MASTER, SCHEMA_VERSION_1 } from "./consts.mjs";
+import { Base } from "./base.mjs";
 import { pump } from "./util.mjs";
 
 export { Category, Meter };
 
-/**
- * Prefix of the master record
- */
-const MASTER = "master";
+export class Database extends Base {
+  static get keyPrefix() {
+    return MASTER;
+  }
 
-/**
- * Current schema version
- */
-const SCHEMA_VERSION_1 = "1";
-
-/**
- * future schema with type + name
- */
-const SCHEMA_VERSION_2 = "2";
+  static get attributes() {
+    return {
+      ...super.attributes,
+      schemaVersion: { type: "string" }
+    };
+  }
+}
 
 /**
  * Initialize database
@@ -56,9 +56,9 @@ export async function backup(database, master, out) {
   out.write(`schemaVersion=${master.schemaVersion}\n\n`);
 
   for await (const category of Category.entries(database)) {
-    await category.writeAsText(out, category.name);
+    await category.writeAsText(out, category.name, master);
     /*for await (const meter of category.meters(database)) {
-      await meter.writeAsText(out, category.name + "." + meter.name);
+      await meter.writeAsText(out, category.name + "." + meter.name, master);
     }*/
 
     await pump(category.readStream(database), out);
@@ -90,9 +90,13 @@ export async function restore(database, input) {
 
     m = line.match(/^\[(\w+)\s+"([^"]+)"\]/);
     if (m) {
-      switch(m[1]) {
-        case 'category': factory = Category; break;
-        case 'meter': factory = Meter; break;
+      switch (m[1]) {
+        case "category":
+          factory = Category;
+          break;
+        case "meter":
+          factory = Meter;
+          break;
       }
       attributes = undefined;
       cn = m[2];
@@ -101,7 +105,7 @@ export async function restore(database, input) {
 
     m = line.match(/^\[([^\]]+)\]/);
     if (m) {
-      factory = Category; 
+      factory = Category;
       attributes = undefined;
       cn = m[1];
       return;

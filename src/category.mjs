@@ -2,24 +2,7 @@ import { Readable } from "stream";
 import { Meter } from "./meter.mjs";
 import { Base } from "./base.mjs";
 import { secondsAsString } from "./util.mjs";
-
-/**
- * Prefix of the categories.
- * Will be followed by the category name
- */
-const CATEGORY_PREFIX = "categories.";
-
-/**
- * Prefix of the meters.
- * Will be followed by the category and meter name
- */
-export const METER_PREFIX = "meters.";
-
-/**
- * Prefix of the values.
- * Will be followed by the category name
- */
-const VALUE_PREFIX = "values.";
+import { CATEGORY_PREFIX, VALUE_PREFIX, METER_PREFIX } from "./consts.mjs";
 
 /**
  * Value Category
@@ -49,7 +32,7 @@ export class Category extends Base {
    * @return {AsyncIterator<Category>}
    */
   static async *entries(db, gte = "\u0000", lte = "\uFFFF") {
-     yield * super.entries(db, CATEGORY_PREFIX, gte, lte);
+    yield* super.entries(db, CATEGORY_PREFIX, gte, lte);
   }
 
   /**

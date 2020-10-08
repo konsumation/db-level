@@ -1,5 +1,5 @@
 import { Base } from "./base.mjs";
-import { METER_PREFIX } from "./category.mjs";
+import { METER_PREFIX } from "./consts.mjs";
 
 /**
  * Meter
@@ -38,11 +38,15 @@ export class Meter extends Base {
     return this.category.fractionalDigits;
   }
 
+  get keyPrefix() {
+    return this.constructor.keyPrefix + this.category.name + '.';
+  }
+
   /**
    * Write the Meter.
    * @param {levelup} db
    */
   async write(db) {
-    return super.write(db, METER_PREFIX + this.category.name + '.' + this.name);
+    return super.write(db, this.keyPrefix + '.' + this.name);
   }
 }

@@ -1,4 +1,5 @@
 import { definePropertiesFromOptions, optionJSON } from "./util.mjs";
+import { SCHEMA_VERSION_1 } from "./consts.mjs";
 
 /**
  * Base
@@ -27,7 +28,7 @@ export class Base {
   static get typeName() {
     return this.name.toLowerCase();
   }
- 
+
   static get attributes() {
     return {
       /**
@@ -95,6 +96,10 @@ export class Base {
     return this.constructor.typeName;
   }
 
+  get keyPrefix() {
+    return this.constructor.keyPrefix;
+  }
+
   /**
    * @param {levelup} db
    */
@@ -110,8 +115,12 @@ export class Base {
     return db.put(key, JSON.stringify(values));
   }
 
-  async writeAsText(out, name) {
-    await out.write(`[${this.typeName} "${name}"]\n`);
+  async writeAsText(out, name, master) {
+    await out.write(
+      master.schemaVersion === SCHEMA_VERSION_1
+        ? `[${name}]\n`
+        : `[${this.typeName} "${name}"]\n`
+    );
 
     for (const o of Object.keys(this.constructor.attributes)) {
       const v = this[o];
