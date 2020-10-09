@@ -1,4 +1,8 @@
-import { definePropertiesFromOptions, optionJSON } from "./util.mjs";
+import {
+  readStreamOptions,
+  definePropertiesFromOptions,
+  optionJSON
+} from "./util.mjs";
 import { SCHEMA_VERSION_1 } from "./consts.mjs";
 
 /**
@@ -21,6 +25,10 @@ export class Base {
     return this.typeName + "s.";
   }
 
+  static keyPrefixWith(object) {
+    return this.keyPrefix + object.name + ".";
+  }
+
   /**
    * Name of the type in text dump
    * @return {string}
@@ -29,21 +37,16 @@ export class Base {
     return this.name.toLowerCase();
   }
 
+  /**
+   * Additional attributes to be persisted
+   */
   static get attributes() {
     return {
       /**
-       * the description of the content.
+       * Description of the content.
        * @return {string}
        */
-      description: { type: "string" },
-
-      /**
-       * physical unit.
-       * @return {string}
-       */
-      unit: { type: "string" },
-
-      fractionalDigits: { type: "number", default: 2 }
+      description: { type: "string" }
     };
   }
 
@@ -67,11 +70,11 @@ export class Base {
   /**
    * Get a single instance
    * @param {levelup} db
-   * @param {string} name
+   * @param {string} key
    * @return {Base}
    */
-  static async entry(db, name) {
-    for await (const c of this.entries(db, name)) {
+  static async entry(db, key) {
+    for await (const c of this.entries(db, key)) {
       return c;
     }
   }
@@ -100,14 +103,20 @@ export class Base {
     return this.constructor.keyPrefix;
   }
 
+  /**
+   * @return {string}
+   */
   get key() {
     return this.keyPrefix + this.name;
   }
 
   /**
+   * Writes object into database.
+   * Leaves all other entries alone.
+   * @see {key}
    * @param {levelup} db
    */
-  async write(db, key) {
+  async write(db) {
     const values = {};
 
     for (const a in this.constructor.attributes) {
@@ -116,7 +125,7 @@ export class Base {
       }
     }
 
-    return db.put(key, JSON.stringify(values));
+    return db.put(this.key, JSON.stringify(values));
   }
 
   async writeAsText(out, name, master) {
@@ -133,5 +142,26 @@ export class Base {
       }
     }
     return out.write("\n");
+  }
+
+  /**
+   * Get detail objects
+   * @param {Class} factory
+   * @param {levelup} db
+   * @param {Object} options
+   * @param {string} options.gte from name
+   * @param {string} options.lte up to name
+   * @param {boolean} options.reverse order
+   * @return {Iterator<factory>}
+   */
+  async *readDetails(factory, db, options) {
+    const key = factory.keyPrefixWith(this);
+
+    for await (const data of db.createReadStream(
+      readStreamOptions(key, options)
+    )) {
+      const name = data.key.toString().slice(key.length);
+      yield new factory(name, this, JSON.parse(data.value.toString()));
+    }
   }
 }

@@ -1,10 +1,11 @@
 import { Category } from "./category.mjs";
 import { Meter } from "./meter.mjs";
+import { Note } from "./note.mjs";
 import { MASTER, SCHEMA_VERSION_1 } from "./consts.mjs";
 import { Base } from "./base.mjs";
 import { pump } from "./util.mjs";
 
-export { Category, Meter };
+export { Category, Meter, Note };
 
 export class Database extends Base {
   static get keyPrefix() {

@@ -26,8 +26,28 @@ export const CATEGORY_PREFIX = "categories.";
 export const METER_PREFIX = "meters.";
 
 /**
+ * Prefix of the notes.
+ * Will be followed by the category and note time
+ */
+export const NOTE_PREFIX = "notes.";
+
+/**
  * Prefix of the values.
  * Will be followed by the category name
  */
 export const VALUE_PREFIX = "values.";
 
+export const METER_ATTRIBUTES = {
+    /**
+     * Physical unit.
+     * @return {string}
+     */
+    unit: { type: "string" },
+  
+    /**
+     * Precission
+     * @return {number}
+     */
+    fractionalDigits: { type: "number", default: 2 }
+  };
+  

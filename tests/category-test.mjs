@@ -6,7 +6,9 @@ import { Readable } from "stream";
 import { createWriteStream } from "fs";
 import { Category } from "konsum-db";
 
-test("categories write / read", async t => {
+test("Category key", t => t.is(new Category("name1").key, "categories.name1"));
+
+test("Category write / read", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));
 
   for (let i = 0; i < 10; i++) {
@@ -62,7 +64,10 @@ test("values write / read", async t => {
   t.deepEqual(values[0], { value: firstValue, time: first });
 
   values = [];
-  for await (const { value, time } of c.values(db,{ gte: first + SECONDS_A_DAY * 99, reverse:true})) {
+  for await (const { value, time } of c.values(db, {
+    gte: first + SECONDS_A_DAY * 99,
+    reverse: true
+  })) {
     values.push({ value, time });
   }
   //t.log("VALUES", values);
@@ -88,13 +93,13 @@ test("readStream", async t => {
     await c.writeValue(db, lastValue, last);
   }
 
-  const stream = c.readStream(db,{ reverse: true});
+  const stream = c.readStream(db, { reverse: true });
 
- // stream.pipe(process.stdout);
+  // stream.pipe(process.stdout);
 
   const outFileName = tmp.tmpNameSync();
   //console.log(outFileName);
-  stream.pipe(createWriteStream(outFileName,{ encoding: 'utf8' }));
+  stream.pipe(createWriteStream(outFileName, { encoding: "utf8" }));
 
   t.true(stream instanceof Readable);
 });

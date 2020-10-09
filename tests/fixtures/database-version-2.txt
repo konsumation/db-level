@@ -16,8 +16,10 @@ fractionalDigits=2
 1596182230832 85.34
 1596182317232 86.34
 [meter "M-0"]
+category=CAT-0
 serial=0
 [meter "M-1"]
+category=CAT-0
 serial=1
 
 [category "CAT-1"]
@@ -50,3 +52,7 @@ fractionalDigits=2
 1596182144435 86.34
 1596182230835 87.34
 1596182317235 88.34
+
+[meter "M-3"]
+category=CAT-2
+serial=3

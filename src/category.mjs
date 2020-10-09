@@ -1,8 +1,9 @@
 import { Readable } from "stream";
-import { Meter } from "./meter.mjs";
 import { Base } from "./base.mjs";
-import { secondsAsString } from "./util.mjs";
-import { CATEGORY_PREFIX, VALUE_PREFIX, METER_PREFIX } from "./consts.mjs";
+import { Meter } from "./meter.mjs";
+import { Note } from "./note.mjs";
+import { secondsAsString, readStreamWithTimeOptions } from "./util.mjs";
+import { CATEGORY_PREFIX, VALUE_PREFIX, METER_ATTRIBUTES } from "./consts.mjs";
 
 /**
  * Value Category
@@ -10,22 +11,23 @@ import { CATEGORY_PREFIX, VALUE_PREFIX, METER_PREFIX } from "./consts.mjs";
  * @param {Object} options
  * @param {string} options.description
  * @param {string} options.unit physical unit like kWh or m3
+ * @param {number} options.fractionalDigits display precission
  *
  * @property {string} name category name
  * @property {string} description
  * @property {string} unit physical unit
+ * @property {number} fractionalDigits display precission
  */
 export class Category extends Base {
+  static get attributes() {
+    return {
+      ...super.attributes,
+      ...METER_ATTRIBUTES
+    };
+  }
+
   static get keyPrefix() {
     return CATEGORY_PREFIX;
-  }
- 
-  /**
-   * Write the category. Leaves all the values alone
-   * @param {levelup} db
-   */
-  async write(db) {
-    return super.write(db, this.keyPrefix + this.name);
   }
 
   /**
@@ -35,8 +37,8 @@ export class Category extends Base {
    * @param {string} lte highst name
    * @return {AsyncIterator<Category>}
    */
-  static async *entries(db, gte = "\u0000", lte = "\uFFFF") {
-    yield* super.entries(db, CATEGORY_PREFIX, gte, lte);
+  static async *entries(db, gte, lte) {
+    yield* super.entries(db, this.keyPrefix, gte, lte);
   }
 
   /**
@@ -64,7 +66,7 @@ export class Category extends Base {
     const prefixLength = key.length;
 
     for await (const data of db.createReadStream(
-      readStreamOptions(key, options)
+      readStreamWithTimeOptions(key, options)
     )) {
       const value = parseFloat(data.value.toString());
       const time = parseInt(data.key.toString().slice(prefixLength), 10);
@@ -84,41 +86,40 @@ export class Category extends Base {
   readStream(db, options) {
     const key = VALUE_PREFIX + this.name + ".";
 
-    return new CategoryReadStream(
-      db.iterator(readStreamOptions(key, options)),
+    return new CategoryValueReadStream(
+      db.iterator(readStreamWithTimeOptions(key, options)),
       key.length
     );
   }
 
   /**
-   * Get meters of the category
+   * Get Meters of the category
    * @param {levelup} db
    * @param {Object} options
-   * @param {string} options.gte time of earliest value
-   * @param {string} options.lte time of latest value
+   * @param {string} options.gte from name
+   * @param {string} options.lte up to name
    * @param {boolean} options.reverse order
-   * @return {Iterator<Object>}
+   * @return {Iterator<Meter>}
    */
   async *meters(db, options) {
-    const key = METER_PREFIX + this.name + ".";
-    for await (const data of db.createReadStream(
-      readStreamOptions(key, options)
-    )) {
-      const name = data.key.toString().slice(key.length);
-      yield new Meter(name, this, JSON.parse(data.value.toString()));
-    }
+    yield* this.readDetails(Meter, db, options);
+  }
+
+  /**
+   * Get Notes of the category
+   * @param {levelup} db
+   * @param {Object} options
+   * @param {string} options.gte time
+   * @param {string} options.lte up to time
+   * @param {boolean} options.reverse order
+   * @return {Iterator<Meter>}
+   */
+  async *notes(db, options) {
+    yield* this.readDetails(Note, db, options);
   }
 }
 
-function readStreamOptions(key, options = {}) {
-  return {
-    ...options,
-    gte: key + secondsAsString(options.gte || 0),
-    lte: key + secondsAsString(options.lte || 999999999999999)
-  };
-}
-
-class CategoryReadStream extends Readable {
+class CategoryValueReadStream extends Readable {
   constructor(iterator, prefixLength) {
     super();
     Object.defineProperties(this, {
