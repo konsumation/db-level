@@ -47,6 +47,6 @@ export class Meter extends Base {
    * @param {levelup} db
    */
   async write(db) {
-    return super.write(db, this.keyPrefix + '.' + this.name);
+    return super.write(db, this.keyPrefix + this.name);
   }
 }

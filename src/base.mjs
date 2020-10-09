@@ -100,6 +100,10 @@ export class Base {
     return this.constructor.keyPrefix;
   }
 
+  get key() {
+    return this.keyPrefix + this.name;
+  }
+
   /**
    * @param {levelup} db
    */

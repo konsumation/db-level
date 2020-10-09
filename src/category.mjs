@@ -16,12 +16,16 @@ import { CATEGORY_PREFIX, VALUE_PREFIX, METER_PREFIX } from "./consts.mjs";
  * @property {string} unit physical unit
  */
 export class Category extends Base {
+  static get keyPrefix() {
+    return CATEGORY_PREFIX;
+  }
+ 
   /**
    * Write the category. Leaves all the values alone
    * @param {levelup} db
    */
   async write(db) {
-    return super.write(db, CATEGORY_PREFIX + this.name);
+    return super.write(db, this.keyPrefix + this.name);
   }
 
   /**
