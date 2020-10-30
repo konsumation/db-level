@@ -25,6 +25,10 @@ export class Base {
     return this.typeName + "s.";
   }
 
+  /**
+   * @param {Base} object
+   * @return {String} prefix for a given (master) object
+   */
   static keyPrefixWith(object) {
     return this.keyPrefix + object.name + ".";
   }
@@ -53,6 +57,7 @@ export class Base {
   /**
    * Get instances
    * @param {levelup} db
+   * @param {string} prefix
    * @param {string} gte lowest name
    * @param {string} lte highst name
    * @return {AsyncIterator<Base>}
@@ -66,6 +71,28 @@ export class Base {
       yield new this(name, JSON.parse(data.value.toString()));
     }
   }
+
+  /**
+   * Get instances
+   * @param {levelup} db
+   * @param {string} gte lowest name
+   * @param {string} lte highst name
+   * @return {AsyncIterator<Base>}
+   */
+  static async *entriesWith(db, object, gte = "\u0000", lte = "\uFFFF") {
+
+    const prefix = this.keyPrefixWith(object);
+
+    for await (const data of db.createReadStream({
+      gte: prefix + gte,
+      lte: prefix + lte
+    })) {
+      const name = data.key.toString().slice(prefix.length);
+
+      yield new this(name, object, JSON.parse(data.value.toString()));
+    }
+  }
+
 
   /**
    * Get a single instance

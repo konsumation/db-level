@@ -10,11 +10,12 @@ test("create Note", async t => {
   const c = new Category("CAT-1");
   const n1 = new Note(time, c, { description: "some text" });
 
+  t.is(n1.keyPrefix, "notes.CAT-1.");
   t.is(n1.key, "notes.CAT-1." + secondsAsString(time));
   t.is(n1.description, "some text");
 });
 
-test.skip("Note write / read", async t => {
+test("Note write / read", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));
 
   const c = new Category("CAT-1", { unit: "kWh", fractionalDigits: 3 });
@@ -29,7 +30,7 @@ test.skip("Note write / read", async t => {
 
   const ms = [];
 
-  for await (const m of Note.entries(db)) {
+  for await (const m of Note.entriesWith(db, c)) {
     ms.push(m);
   }
 

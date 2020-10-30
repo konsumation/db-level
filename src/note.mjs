@@ -13,6 +13,6 @@ export class Note extends Base {
   }
 
   get keyPrefix() {
-    return this.constructor.keyPrefix + this.category.name + ".";
+    return super.keyPrefix + this.category.name + ".";
   }
 }
