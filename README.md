@@ -23,7 +23,7 @@ async function example() {
  const db = await levelup(leveldown("example.db"));
 
  // create category named EV
- const ev = new Category(`EV`, { unit: "kWh" });
+ const ev = new Category("EV", { unit: "kWh" });
  await ev.write(db);
  
  // write entry
