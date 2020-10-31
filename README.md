@@ -81,19 +81,23 @@ example();
     -   [readDetails](#readdetails)
         -   [Parameters](#parameters-13)
     -   [keyPrefix](#keyprefix)
+    -   [keyPrefixWith](#keyprefixwith)
+        -   [Parameters](#parameters-14)
     -   [typeName](#typename)
     -   [attributes](#attributes)
     -   [entries](#entries-1)
-        -   [Parameters](#parameters-14)
-    -   [entry](#entry)
         -   [Parameters](#parameters-15)
+    -   [entriesWith](#entrieswith)
+        -   [Parameters](#parameters-16)
+    -   [entry](#entry)
+        -   [Parameters](#parameters-17)
 -   [description](#description)
 -   [secondsAsString](#secondsasstring)
-    -   [Parameters](#parameters-16)
--   [definePropertiesFromOptions](#definepropertiesfromoptions)
-    -   [Parameters](#parameters-17)
--   [optionJSON](#optionjson)
     -   [Parameters](#parameters-18)
+-   [definePropertiesFromOptions](#definepropertiesfromoptions)
+    -   [Parameters](#parameters-19)
+-   [optionJSON](#optionjson)
+    -   [Parameters](#parameters-20)
 
 ## initialize
 
@@ -356,6 +360,14 @@ Prefix of the key
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
+### keyPrefixWith
+
+#### Parameters
+
+-   `object` **[Base](#base)** 
+
+Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** prefix for a given (master) object
+
 ### typeName
 
 Name of the type in text dump
@@ -373,7 +385,20 @@ Get instances
 #### Parameters
 
 -   `db` **levelup** 
--   `prefix`  
+-   `prefix` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** lowest name (optional, default `"\u0000"`)
+-   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** highst name (optional, default `"\uFFFF"`)
+
+Returns **AsyncIterator&lt;[Base](#base)>** 
+
+### entriesWith
+
+Get instances
+
+#### Parameters
+
+-   `db` **levelup** 
+-   `object`  
 -   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** lowest name (optional, default `"\u0000"`)
 -   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** highst name (optional, default `"\uFFFF"`)
 
