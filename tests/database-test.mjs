@@ -3,14 +3,14 @@ import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
 
-import { initialize, backup, restore, Category, Meter } from "konsum-db";
+import { Database, Category, Meter } from "konsum-db";
 import { createWriteStream, createReadStream } from "fs";
 import { stat } from "fs/promises";
 
 test("initialize", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));
 
-  const master = await initialize(db);
+  const master = await Database.initialize(db);
 
   t.is(master.schemaVersion, "1");
 
@@ -23,7 +23,7 @@ test("backup", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));
   const ofn = tmp.tmpNameSync();
 
-  const master = await initialize(db);
+  const master = await Database.initialize(db);
 
   for (let i = 0; i < 3; i++) {
     const c = new Category(`CAT-${i}`, master, {
@@ -52,7 +52,7 @@ test("backup", async t => {
 
   const out = createWriteStream(ofn, { encoding: "utf8" });
 
-  await backup(db, master, out);
+  await master.backup(db, out);
 
   const s = await stat(ofn);
 
@@ -63,5 +63,5 @@ test("backup", async t => {
   const db2 = await levelup(leveldown(tmp.tmpNameSync()));
   const input = createReadStream(ofn, { encoding: "utf8" });
 
-  await restore(db2, input);
+  await master.restore(db2, input);
 });
