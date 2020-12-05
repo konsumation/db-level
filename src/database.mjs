@@ -1,11 +1,11 @@
 import { Category } from "./category.mjs";
 import { Meter } from "./meter.mjs";
 import { Note } from "./note.mjs";
-import { MASTER, SCHEMA_VERSION_1 } from "./consts.mjs";
+import { MASTER, SCHEMA_VERSION_1, SCHEMA_VERSION_2 } from "./consts.mjs";
 import { Base } from "./base.mjs";
 import { pump } from "./util.mjs";
 
-export { Category, Meter, Note };
+export { Category, Meter, Note, SCHEMA_VERSION_1, SCHEMA_VERSION_2 };
 
 export class Database extends Base {
   static get keyPrefix() {
@@ -97,6 +97,9 @@ export async function restore(database, input) {
           break;
         case "meter":
           factory = Meter;
+          break;
+        case "meter":
+          factory = Note;
           break;
       }
       attributes = undefined;
