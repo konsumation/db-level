@@ -1,8 +1,5 @@
-import {
-  readStreamOptions,
-  definePropertiesFromOptions,
-  optionJSON
-} from "./util.mjs";
+import { readStreamOptions } from "./util.mjs";
+import { definePropertiesFromOptions, optionJSON } from "./attribute.mjs";
 import { SCHEMA_VERSION_1 } from "./consts.mjs";
 
 /**
@@ -80,7 +77,6 @@ export class Base {
    * @return {AsyncIterator<Base>}
    */
   static async *entriesWith(db, object, gte = "\u0000", lte = "\uFFFF") {
-
     const prefix = this.keyPrefixWith(object);
 
     for await (const data of db.createReadStream({
@@ -92,7 +88,6 @@ export class Base {
       yield new this(name, object, JSON.parse(data.value.toString()));
     }
   }
-
 
   /**
    * Get a single instance
