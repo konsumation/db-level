@@ -3,7 +3,13 @@ import tmp from "tmp";
 import { createReadStream, createWriteStream } from "fs";
 import levelup from "levelup";
 import leveldown from "leveldown";
-import { initialize, backup, restore, Category, SCHEMA_VERSION_2 } from "konsum-db";
+import {
+  initialize,
+  backup,
+  restore,
+  Category,
+  SCHEMA_VERSION_2
+} from "konsum-db";
 
 test("restore version 2", async t => {
   const fixture = new URL("fixtures/database-version-2.txt", import.meta.url);
@@ -35,7 +41,6 @@ test("restore version 2", async t => {
   );
   */
 
-  
   master.schemaVersion = SCHEMA_VERSION_2;
 
   const on = tmp.tmpNameSync();
@@ -43,6 +48,5 @@ test("restore version 2", async t => {
   const out = createWriteStream(on);
 
   console.log("WRITE: ", on);
-   await backup(db, master, out);
-
+  await backup(db, master, out);
 });

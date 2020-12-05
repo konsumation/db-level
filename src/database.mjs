@@ -78,6 +78,7 @@ export async function restore(database, input) {
   let attributes;
   let cn;
   let factory;
+  let value, lastValue;
 
   function process(line) {
     let m = line.match(/^(\w+)\s*=\s*(.*)/);
@@ -116,14 +117,22 @@ export async function restore(database, input) {
     }
 
     if (cn !== undefined) {
+      //console.log("NEW", factory.name, cn, attributes);
       c = new factory(cn, attributes);
       c.write(database);
       cn = undefined;
+      lastValue = 0;
     }
 
     m = line.match(/^([\d\.]+)\s+([\d\.]+)/);
     if (m) {
-      c.writeValue(database, parseFloat(m[2]), parseFloat(m[1]));
+      value = parseFloat(m[1]);
+
+      if (value < lastValue) {
+        console.log(`Value decreasing ${c.name}: ${value} < ${lastValue}`);
+      }
+      lastValue = value;
+      c.writeValue(database, parseFloat(m[2]), value);
     }
   }
 
