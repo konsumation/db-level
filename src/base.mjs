@@ -65,7 +65,7 @@ export class Base {
       lte: prefix + lte
     })) {
       const name = data.key.toString().slice(prefix.length);
-      yield new this(name, JSON.parse(data.value.toString()));
+      yield new this(name, undefined, JSON.parse(data.value.toString()));
     }
   }
 
@@ -101,9 +101,10 @@ export class Base {
     }
   }
 
-  constructor(name, options) {
+  constructor(name, owner, options) {
     definePropertiesFromOptions(this, options, {
-      name: { value: name }
+      name: { value: name },
+      owner: { value: owner }
     });
   }
 

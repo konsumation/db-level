@@ -26,7 +26,7 @@ test("backup", async t => {
   const master = await initialize(db);
 
   for (let i = 0; i < 3; i++) {
-    const c = new Category(`CAT-${i}`, {
+    const c = new Category(`CAT-${i}`, master, {
       unit: "kWh",
       fractionalDigits: 2,
       description: "mains power"

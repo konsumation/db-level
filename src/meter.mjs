@@ -32,9 +32,8 @@ export class Meter extends Base {
     yield* super.entries(db, this.keyPrefix, gte, lte);
   }
 
-  constructor(name, category, options) {
-    super(name, options);
-    Object.defineProperties(this, { category: { value: category } });
+  get category() {
+    return this.owner;
   }
 
   get unit() {

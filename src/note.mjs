@@ -7,9 +7,12 @@ export class Note extends Base {
     return NOTE_PREFIX;
   }
 
-  constructor(time, category, options) {
-    super(secondsAsString(time), options);
-    Object.defineProperties(this, { category: { value: category } });
+  constructor(time, owner, options) {
+    super(secondsAsString(time), owner, options);
+  }
+
+  get category() {
+    return this.owner;
   }
 
   get keyPrefix() {

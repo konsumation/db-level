@@ -7,7 +7,9 @@ import { Category, Note } from "konsum-db";
 
 test("create Note", async t => {
   const time = Date.now();
-  const c = new Category("CAT-1");
+  const database = {};
+
+  const c = new Category("CAT-1", database);
   const n1 = new Note(time, c, { description: "some text" });
 
   t.is(n1.keyPrefix, "notes.CAT-1.");
@@ -17,8 +19,9 @@ test("create Note", async t => {
 
 test("Note write / read", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));
+  const database = {};
 
-  const c = new Category("CAT-1", { unit: "kWh", fractionalDigits: 3 });
+  const c = new Category("CAT-1", database, { unit: "kWh", fractionalDigits: 3 });
   await c.write(db);
 
   const time = Date.now();

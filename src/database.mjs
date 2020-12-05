@@ -74,6 +74,7 @@ export async function backup(database, master, out) {
 export async function restore(database, input) {
   let last = "";
 
+  let owner = {};
   let c;
   let attributes;
   let cn;
@@ -117,8 +118,8 @@ export async function restore(database, input) {
     }
 
     if (cn !== undefined) {
-      //console.log("NEW", factory.name, cn, attributes);
-      c = new factory(cn, attributes);
+      //console.log("NEW", factory.name, cn, undefined, attributes);
+      c = new factory(cn, owner, attributes);
       c.write(database);
       cn = undefined;
       lastValue = 0;
