@@ -79,7 +79,7 @@ export class Database extends Base {
 
     let owner = this;
     let c;
-    let attributes;
+    let attributes = {};
     let cn;
     let factory;
     let value, lastValue;
@@ -87,9 +87,6 @@ export class Database extends Base {
     function process(line) {
       let m = line.match(/^(\w+)\s*=\s*(.*)/);
       if (m) {
-        if (attributes === undefined) {
-          attributes = {};
-        }
         attributes[m[1]] = m[2];
         return;
       }
@@ -107,7 +104,7 @@ export class Database extends Base {
             factory = Note;
             break;
         }
-        attributes = undefined;
+        attributes = {};
         cn = m[2];
         return;
       }
@@ -115,13 +112,17 @@ export class Database extends Base {
       m = line.match(/^\[([^\]]+)\]/);
       if (m) {
         factory = Category;
-        attributes = undefined;
+        attributes = {};
         cn = m[1];
         return;
       }
 
       if (cn !== undefined) {
         //console.log("NEW", factory.name, cn, undefined, attributes);
+        if(attributes.category) {
+          //owner=this.category(attributes.category);
+          delete attributes.category;
+        }
         c = new factory(cn, owner, attributes);
         c.write(database);
         cn = undefined;
