@@ -7,7 +7,7 @@ import { pump } from "./util.mjs";
 
 export { Category, Meter, Note, SCHEMA_VERSION_1, SCHEMA_VERSION_2 };
 
-export class Database extends Base {
+export class Master extends Base {
   static get keyPrefix() {
     return MASTER;
   }
@@ -20,61 +20,66 @@ export class Database extends Base {
   }
 
   /**
-   * Initialize database
-   * checks/writes master record
+   * Initialize database.
+   * checks/writes master record.
    * @param {levelup} db
+   * @return {Master}
    */
   static async initialize(db) {
-    let master;
+    let meta;
 
     for await (const data of db.createReadStream({
       gte: MASTER,
       lte: MASTER
     })) {
-      master = JSON.parse(data.value.toString());
-      if (master.schemaVersion !== SCHEMA_VERSION_1) {
+      meta = JSON.parse(data.value.toString());
+      if (meta.schemaVersion !== SCHEMA_VERSION_1) {
         throw new Error(
-          `Unsupported schema version ${master.schemaVersion} only supporting version ${SCHEMA_VERSION_1}`
+          `Unsupported schema version ${meta.schemaVersion} only supporting version ${SCHEMA_VERSION_1}`
         );
       }
       break;
     }
 
-    if (!master) {
-      master = {
+    if (!meta) {
+      meta = {
         schemaVersion: SCHEMA_VERSION_1
       };
-      await db.put(MASTER, JSON.stringify(master));
+      await db.put(MASTER, JSON.stringify(meta));
     }
 
-    return new Database("unnamed", undefined, master);
+    const master = new Master("unnamed", undefined, meta);
+    master.db = db;
+
+    return master;
+  }
+
+  close() {
+    return this.db.close();
   }
 
   /**
    * Copy all data into out stream as long time text data
-   * @param {levelup} database
-   * @param {Object} master
    * @param {Writeable} out
    */
-  async backup(database, out) {
+  async backup(out) {
     out.write(`schemaVersion=${this.schemaVersion}\n\n`);
 
-    for await (const category of Category.entries(database)) {
+    for await (const category of Category.entries(this.db)) {
       await category.writeAsText(out, category.name, this);
       /*for await (const meter of category.meters(database)) {
       await meter.writeAsText(out, category.name + "." + meter.name, master);
     }*/
 
-      await pump(category.readStream(database), out);
+      await pump(category.readStream(this.db), out);
     }
   }
 
   /**
-   * Restore database from input stream
-   * @param {levelup} database
+   * Restore database from input stream.
    * @param {Readable} input data from backup
    */
-  async restore(database, input) {
+  async restore(input) {
     let last = "";
 
     let owner = this;
@@ -84,7 +89,7 @@ export class Database extends Base {
     let factory;
     let value, lastValue;
 
-    function process(line) {
+    const process = line => {
       let m = line.match(/^(\w+)\s*=\s*(.*)/);
       if (m) {
         attributes[m[1]] = m[2];
@@ -119,12 +124,12 @@ export class Database extends Base {
 
       if (cn !== undefined) {
         //console.log("NEW", factory.name, cn, undefined, attributes);
-        if(attributes.category) {
+        if (attributes.category) {
           //owner=this.category(attributes.category);
           delete attributes.category;
         }
         c = new factory(cn, owner, attributes);
-        c.write(database);
+        c.write(this.db);
         cn = undefined;
         lastValue = 0;
       }
@@ -137,9 +142,9 @@ export class Database extends Base {
           console.log(`Value decreasing ${c.name}: ${value} < ${lastValue}`);
         }
         lastValue = value;
-        c.writeValue(database, parseFloat(m[2]), value);
+        c.writeValue(this.db, parseFloat(m[2]), value);
       }
-    }
+    };
 
     for await (const chunk of input) {
       last += chunk;

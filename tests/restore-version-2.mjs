@@ -4,7 +4,7 @@ import { createReadStream, createWriteStream } from "fs";
 import levelup from "levelup";
 import leveldown from "leveldown";
 import {
-  Database,
+  Master,
   Category,
   SCHEMA_VERSION_2
 } from "konsum-db";
@@ -12,11 +12,11 @@ import {
 test("restore version 2", async t => {
   const fixture = new URL("fixtures/database-version-2.txt", import.meta.url);
   const db = await levelup(leveldown(tmp.tmpNameSync()));
-  const master = await Database.initialize(db);
+  const master = await Master.initialize(db);
 
   const input = createReadStream(fixture.pathname, { encoding: "utf8" });
 
-  await master.restore(db, input);
+  await master.restore(input);
 
   const categories = [];
   for await (const c of Category.entries(db)) {
@@ -46,5 +46,5 @@ test("restore version 2", async t => {
   const out = createWriteStream(on);
 
   console.log("WRITE: ", on);
-  await master.backup(db, out);
+  await master.backup(out);
 });

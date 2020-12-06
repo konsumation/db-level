@@ -3,16 +3,16 @@ import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
 
-import { Database, Category, Meter } from "konsum-db";
+import { Master, Category, Meter } from "konsum-db";
 import { createWriteStream, createReadStream } from "fs";
 import { stat } from "fs/promises";
 
 test("initialize", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));
-
-  const master = await Database.initialize(db);
+  const master = await Master.initialize(db);
 
   t.is(master.schemaVersion, "1");
+  t.is(master.db, db);
 
   db.close();
 });
@@ -20,10 +20,7 @@ test("initialize", async t => {
 const SECONDS_A_DAY = 60 * 60 * 24;
 
 test("backup", async t => {
-  const db = await levelup(leveldown(tmp.tmpNameSync()));
-  const ofn = tmp.tmpNameSync();
-
-  const master = await Database.initialize(db);
+  const master = await Master.initialize(await levelup(leveldown(tmp.tmpNameSync())));
 
   for (let i = 0; i < 3; i++) {
     const c = new Category(`CAT-${i}`, master, {
@@ -32,11 +29,11 @@ test("backup", async t => {
       description: "mains power"
     });
 
-    await c.write(db);
+    await c.write(master.db);
     const m1 = new Meter("M-1", c, { serial: "1" });
-    m1.write(db);
+    m1.write(master.db);
     const m2 = new Meter("M-2", c, { serial: "2" });
-    m2.write(db);
+    m2.write(master.db);
 
     const first = Date.now();
     const firstValue = 77.34 + i;
@@ -46,22 +43,23 @@ test("backup", async t => {
     for (let i = 0; i < 10; i++) {
       last = new Date(first + SECONDS_A_DAY * i).getTime();
       lastValue = firstValue + i;
-      await c.writeValue(db, lastValue, last);
+      await c.writeValue(master.db, lastValue, last);
     }
   }
 
+  const ofn = tmp.tmpNameSync();
   const out = createWriteStream(ofn, { encoding: "utf8" });
 
-  await master.backup(db, out);
+  await master.backup(out);
 
   const s = await stat(ofn);
 
   //console.log(ofn);
   t.is(s.size, 620);
-  db.close();
+  master.close();
 
-  const db2 = await levelup(leveldown(tmp.tmpNameSync()));
+  const master2 = await Master.initialize(await levelup(leveldown(tmp.tmpNameSync())));
   const input = createReadStream(ofn, { encoding: "utf8" });
 
-  await master.restore(db2, input);
+  await master2.restore(input);
 });
