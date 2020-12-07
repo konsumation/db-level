@@ -12,16 +12,14 @@ export function definePropertiesFromOptions(
   options = {},
   properties = {}
 ) {
-  const after = {};
+  const applyLater = {};
+
   const attributes = object.constructor.attributes;
   if (attributes !== undefined) {
     Object.entries(attributes).forEach(([name, attribute]) => {
-      if (properties[name] !== undefined && properties[name].value) {
-        return;
-      }
-
       const path = name.split(/\./);
       const first = path.shift();
+      const property = properties[first];
 
       let value = options[name];
       if (value === undefined) {
@@ -31,15 +29,28 @@ export function definePropertiesFromOptions(
       const pv = value => {
         if (path.length) {
           const remaining = path.join(".");
-          if (properties[first]) {
-            setAttribute(properties[first].value, remaining, value);
+          if (property) {
+            setAttribute(property.value, remaining, value);
           } else {
             const slice = {};
             setAttribute(slice, remaining, value);
-            properties[first] = { value: slice };
+            properties[first] = { configurable: true, value: slice };
           }
         } else {
-          properties[first] = { value };
+          const op = Object.getOwnPropertyDescriptor(
+            object.constructor.prototype,
+            first
+          );
+          if (op && op.writable) {
+          } else {
+            if (property) {
+              if (value !== undefined) {
+                applyLater[first] = value;
+              }
+            } else {
+              properties[first] = { writable: attribute.writable, value };
+            }
+          }
         }
       };
 
@@ -61,21 +72,17 @@ export function definePropertiesFromOptions(
         }
       }
 
-      if (attribute.writeable || object.hasOwnProperty(name)) {
-        after[name] = value;
-        return;
-      }
-
       pv(value);
     });
   }
 
   Object.defineProperties(object, properties);
-  Object.assign(object, after);
+  Object.assign(object, applyLater);
 }
 
 /**
  * Set Object attribute.
+ * The name may be a property path like 'a.b.c'.
  * @param {Object} object
  * @param {string} name
  * @param {any} value
@@ -96,6 +103,7 @@ export function setAttribute(object, name, value) {
 
 /**
  * Deliver attribute value.
+ * The name may be a property path like 'a.b.c'.
  * @param {Object} object
  * @param {string} name
  * @returns {any} value associated with the given property name
