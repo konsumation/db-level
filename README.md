@@ -39,11 +39,11 @@ example();
 
 ### Table of Contents
 
--   [initialize](#initialize)
-    -   [Parameters](#parameters)
 -   [backup](#backup)
-    -   [Parameters](#parameters-1)
+    -   [Parameters](#parameters)
 -   [restore](#restore)
+    -   [Parameters](#parameters-1)
+-   [initialize](#initialize)
     -   [Parameters](#parameters-2)
 -   [Category](#category)
     -   [Parameters](#parameters-3)
@@ -92,21 +92,20 @@ example();
     -   [entry](#entry)
         -   [Parameters](#parameters-17)
 -   [description](#description)
--   [secondsAsString](#secondsasstring)
-    -   [Parameters](#parameters-18)
 -   [definePropertiesFromOptions](#definepropertiesfromoptions)
+    -   [Parameters](#parameters-18)
+-   [setAttribute](#setattribute)
     -   [Parameters](#parameters-19)
--   [optionJSON](#optionjson)
+-   [getAttribute](#getattribute)
     -   [Parameters](#parameters-20)
-
-## initialize
-
-Initialize database
-checks/writes master record
-
-### Parameters
-
--   `db` **levelup** 
+-   [optionJSON](#optionjson)
+    -   [Parameters](#parameters-21)
+-   [mapAttributes](#mapattributes)
+    -   [Parameters](#parameters-22)
+-   [mapAttributesInverse](#mapattributesinverse)
+    -   [Parameters](#parameters-23)
+-   [secondsAsString](#secondsasstring)
+    -   [Parameters](#parameters-24)
 
 ## backup
 
@@ -114,18 +113,26 @@ Copy all data into out stream as long time text data
 
 ### Parameters
 
--   `database` **levelup** 
--   `master` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 -   `out` **Writeable** 
 
 ## restore
 
-Restore database from input stream
+Restore database from input stream.
 
 ### Parameters
 
--   `database` **levelup** 
 -   `input` **Readable** data from backup
+
+## initialize
+
+Initialize database.
+checks/writes master record.
+
+### Parameters
+
+-   `db` **levelup** 
+
+Returns **Master** 
 
 ## Category
 
@@ -313,6 +320,7 @@ Base
 ### Parameters
 
 -   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** meter name
+-   `owner`  
 -   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
     -   `options.description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
     -   `options.unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit like kWh or m3
@@ -421,16 +429,6 @@ Description of the content.
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
-## secondsAsString
-
-Format seconds as string left padded with '0'
-
-### Parameters
-
--   `number` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** seconds since epoch
-
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** padded seconds
-
 ## definePropertiesFromOptions
 
 -   **See: Object.definedProperties()
@@ -438,14 +436,35 @@ Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 -   **See: Object.hasOwnProperty()
     **
 
-Create properties from options and default options
-Already present properties (direct) are skipped
+Create properties from options and default options.
+Already present properties (direct) are skipped.
 
 ### Parameters
 
 -   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** target object
 -   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** as passed to object constructor (optional, default `{}`)
 -   `properties` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** object properties (optional, default `{}`)
+
+## setAttribute
+
+Set Object attribute.
+
+### Parameters
+
+-   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `value` **any** 
+
+## getAttribute
+
+Deliver attribute value.
+
+### Parameters
+
+-   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **any** value associated with the given property name
 
 ## optionJSON
 
@@ -456,5 +475,44 @@ In other words only produce key value pairs if value is defined.
 
 -   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 -   `initial` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
+-   `skip` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** keys not to put in the result (optional, default `[]`)
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** initial + defined values
+
+## mapAttributes
+
+Rename attributes.
+Filters out null, undefined and empty strings.
+
+```js
+mapAttributes({a:1},{a:"a'"}) // {"a'": 1}
+```
+
+### Parameters
+
+-   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `mapping` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** keys renamed after mapping
+
+## mapAttributesInverse
+
+Same as mapAttributes but with the inverse mapping.
+Filters out null, undefined and empty strings
+
+### Parameters
+
+-   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `mapping` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** keys renamed after mapping
+
+## secondsAsString
+
+Format seconds as string left padded with '0'
+
+### Parameters
+
+-   `number` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** seconds since epoch
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** padded seconds
