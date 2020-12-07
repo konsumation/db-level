@@ -47,7 +47,7 @@ export class Base {
        * Description of the content.
        * @return {string}
        */
-      description: { type: "string" }
+      description: { type: "string", writable: true }
     };
   }
 

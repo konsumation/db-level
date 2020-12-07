@@ -58,8 +58,13 @@ export class Master extends Base {
     return this.db.close();
   }
 
+  async * categories(gte,lte)
+  {
+    yield * Category.entries(this.db, gte, lte);
+  }
+
   /**
-   * Copy all data into out stream as long time text data
+   * Copy all data into out stream as long time text data.
    * @param {Writeable} out
    */
   async backup(out) {

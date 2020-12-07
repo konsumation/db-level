@@ -14,13 +14,21 @@ test("initialize", async t => {
   t.is(master.schemaVersion, "1");
   t.is(master.db, db);
 
+  const categories = [];
+  for await (const c of master.categories()) {
+    categories.push(c);
+  }
+  t.deepEqual(categories, []);
+
   db.close();
 });
 
 const SECONDS_A_DAY = 60 * 60 * 24;
 
 test("backup", async t => {
-  const master = await Master.initialize(await levelup(leveldown(tmp.tmpNameSync())));
+  const master = await Master.initialize(
+    await levelup(leveldown(tmp.tmpNameSync()))
+  );
 
   for (let i = 0; i < 3; i++) {
     const c = new Category(`CAT-${i}`, master, {
@@ -54,11 +62,13 @@ test("backup", async t => {
 
   const s = await stat(ofn);
 
-  //console.log(ofn);
+  console.log(ofn);
   t.is(s.size, 620);
   master.close();
 
-  const master2 = await Master.initialize(await levelup(leveldown(tmp.tmpNameSync())));
+  const master2 = await Master.initialize(
+    await levelup(leveldown(tmp.tmpNameSync()))
+  );
   const input = createReadStream(ofn, { encoding: "utf8" });
 
   await master2.restore(input);

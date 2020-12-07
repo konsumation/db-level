@@ -1,5 +1,5 @@
 /**
- * Format seconds as string left padded with '0'
+ * Format seconds as string left padded with '0'.
  * @param {number} number seconds since epoch
  * @return {string} padded seconds
  */

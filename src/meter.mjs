@@ -1,5 +1,5 @@
 import { Base } from "./base.mjs";
-import { METER_PREFIX, METER_ATTRIBUTES } from "./consts.mjs";
+import { METER_ATTRIBUTES } from "./consts.mjs";
 
 /**
  * Meter
@@ -20,12 +20,8 @@ export class Meter extends Base {
     return {
       ...super.attributes,
       ...METER_ATTRIBUTES,
-      serial: { type: "string" }
+      serial: { type: "string", writable: true }
     };
-  }
-
-  static get keyPrefix() {
-    return METER_PREFIX;
   }
 
   static async *entries(db, gte, lte) {
@@ -45,6 +41,6 @@ export class Meter extends Base {
   }
 
   get keyPrefix() {
-    return this.constructor.keyPrefix + this.category.name + ".";
+    return super.keyPrefix + this.category.name + ".";
   }
 }
