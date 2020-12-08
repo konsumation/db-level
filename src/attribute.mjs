@@ -1,8 +1,21 @@
 /**
  * Create properties from options and default options.
  * Already present properties (direct) are skipped.
+ * The attribute list from the class will be applied to the
+ * options and merged with the given set of properties.
+ * ```js
+ * class aClass {
+ *   static get attributes() {
+ *     return { with_default: { default: 77 }};
+ *   }
+ * }
+ * 
+ * definePropertiesFromOptions(new aClass());
+ * // equivalent to
+ * Object.definedProperties(new aClass(),{ with_default: { value: 77 }})
+ * ```
  * @see Object.definedProperties()
- * @see Object.hasOwnProperty()
+ * @see Object.getOwnPropertyDescriptor()
  * @param {Object} object target object
  * @param {Object} options as passed to object constructor
  * @param {Object} properties object properties
@@ -30,56 +43,45 @@ export function definePropertiesFromOptions(
         value = attribute.default;
       }
 
-      const pv = value => {
-        if (path.length) {
-          const remaining = path.join(".");
-          if (property) {
-            setAttribute(property.value, remaining, value);
-          } else {
-            const slice = {};
-            setAttribute(slice, remaining, value);
-            properties[first] = { configurable: true, value: slice };
-          }
+      if (attribute.set) {
+        value = attribute.set(value);
+      } else {
+        switch (attribute.type) {
+          case "boolean":
+            if (value !== undefined) {
+              value =
+                value === 0 || value === "0" || value === false ? false : true;
+            }
+            break;
+        }
+      }
+
+      if (path.length) {
+        const remaining = path.join(".");
+        if (property) {
+          setAttribute(property.value, remaining, value);
         } else {
+          const slice = {};
+          setAttribute(slice, remaining, value);
+          properties[first] = { configurable: true, value: slice };
+        }
+      } else {
+        if (value !== undefined) {
           const op = Object.getOwnPropertyDescriptor(
             object.constructor.prototype,
             first
           );
 
           if ((op && (op.writable || op.set)) || property) {
-            if (value !== undefined) {
-              applyLater[first] = value;
-            }
+            applyLater[first] = value;
           } else {
-            properties[first] = { value };
             properties[first] = { value };
             if (attribute.writable) {
               properties[first].writable = true;
             }
-
           }
         }
-      };
-
-      if (value === undefined) {
-        if (path.length && object[first] === undefined) {
-          pv(undefined);
-        }
-        return;
       }
-
-      if (attribute.set) {
-        value = attribute.set(value);
-      } else {
-        switch (attribute.type) {
-          case "boolean":
-            value =
-              value === 0 || value === "0" || value === false ? false : true;
-            break;
-        }
-      }
-
-      pv(value);
     });
   }
 
