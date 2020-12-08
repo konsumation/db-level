@@ -67,8 +67,6 @@ example();
 -   [SCHEMA_VERSION_1](#schema_version_1)
 -   [SCHEMA_VERSION_2](#schema_version_2)
 -   [CATEGORY_PREFIX](#category_prefix)
--   [METER_PREFIX](#meter_prefix)
--   [NOTE_PREFIX](#note_prefix)
 -   [VALUE_PREFIX](#value_prefix)
 -   [unit](#unit)
 -   [fractionalDigits](#fractionaldigits)
@@ -109,7 +107,7 @@ example();
 
 ## backup
 
-Copy all data into out stream as long time text data
+Copy all data into out stream as long time text data.
 
 ### Parameters
 
@@ -280,20 +278,6 @@ Will be followed by the category name
 
 Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
 
-## METER_PREFIX
-
-Prefix of the meters.
-Will be followed by the category and meter name
-
-Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
-
-## NOTE_PREFIX
-
-Prefix of the notes.
-Will be followed by the category and note time
-
-Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
-
 ## VALUE_PREFIX
 
 Prefix of the values.
@@ -433,11 +417,25 @@ Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 -   **See: Object.definedProperties()
     **
--   **See: Object.hasOwnProperty()
+-   **See: Object.getOwnPropertyDescriptor()
     **
 
 Create properties from options and default options.
 Already present properties (direct) are skipped.
+The attribute list from the class will be applied to the
+options and merged with the given set of properties.
+
+```js
+class aClass {
+  static get attributes() {
+    return { with_default: { default: 77 }};
+  }
+}
+
+definePropertiesFromOptions(new aClass());
+// equivalent to
+Object.definedProperties(new aClass(),{ with_default: { value: 77 }})
+```
 
 ### Parameters
 
@@ -448,6 +446,7 @@ Already present properties (direct) are skipped.
 ## setAttribute
 
 Set Object attribute.
+The name may be a property path like 'a.b.c'.
 
 ### Parameters
 
@@ -458,6 +457,7 @@ Set Object attribute.
 ## getAttribute
 
 Deliver attribute value.
+The name may be a property path like 'a.b.c'.
 
 ### Parameters
 
@@ -509,7 +509,7 @@ Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 ## secondsAsString
 
-Format seconds as string left padded with '0'
+Format seconds as string left padded with '0'.
 
 ### Parameters
 
