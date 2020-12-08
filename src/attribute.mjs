@@ -22,7 +22,11 @@ export function definePropertiesFromOptions(
       const property = properties[first];
 
       let value = options[name];
-      if (value === undefined) {
+      if (
+        value === undefined &&
+        attribute.default !== undefined &&
+        attribute.default !== getAttribute(object, name)
+      ) {
         value = attribute.default;
       }
 
@@ -47,13 +51,18 @@ export function definePropertiesFromOptions(
               applyLater[first] = value;
             }
           } else {
-            properties[first] = { writable: attribute.writable, value };
+            properties[first] = { value };
+            properties[first] = { value };
+            if (attribute.writable) {
+              properties[first].writable = true;
+            }
+
           }
         }
       };
 
       if (value === undefined) {
-        if (path.length && getAttribute(object, first) === undefined) {
+        if (path.length && object[first] === undefined) {
           pv(undefined);
         }
         return;
@@ -110,10 +119,10 @@ export function getAttribute(object, name) {
   let value = object;
 
   for (const p of name.split(/\./)) {
-    value = value[p];
     if (value === undefined) {
       break;
     }
+    value = value[p];
   }
 
   return value;
