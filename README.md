@@ -140,7 +140,7 @@ Returns **Master**
 
 **Extends Base**
 
-Value Category
+Value Category.
 
 ### Parameters
 
@@ -159,7 +159,7 @@ Value Category
 
 ### writeValue
 
-Write a time/value pair
+Write a time/value pair.
 
 #### Parameters
 
@@ -169,7 +169,7 @@ Write a time/value pair
 
 ### values
 
-Get values of the category
+Get values of the category.
 
 #### Parameters
 
@@ -183,7 +183,7 @@ Returns **Iterator&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript
 
 ### readStream
 
-Get values of the category as ascii text stream with time and value on each line
+Get values of the category as ascii text stream with time and value on each line.
 
 #### Parameters
 
@@ -197,7 +197,7 @@ Returns **Readable**
 
 ### meters
 
-Get Meters of the category
+Get Meters of the category.
 
 #### Parameters
 
@@ -211,7 +211,7 @@ Returns **Iterator&lt;[Meter](#meter)>**
 
 ### notes
 
-Get Notes of the category
+Get Notes of the category.
 
 #### Parameters
 
@@ -225,7 +225,7 @@ Returns **Iterator&lt;[Meter](#meter)>**
 
 ### entries
 
-Get categories
+Get categories.
 
 #### Parameters
 
