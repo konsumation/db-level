@@ -19,15 +19,16 @@ timeseries database on leveldb
 import levelup from "levelup";
 import leveldown from "leveldown";
 
-import { Category } from "konsum-db";
+import { Master, Category } from "konsum-db";
 
 async function example() {
  // open database
  const db = await levelup(leveldown("example.db"));
+ const master = await Master.initialize(db);
 
  // create category named EV
- const ev = new Category("EV", { unit: "kWh" });
- await ev.write(db);
+ const ev = new Category("EV", master, { unit: "kWh" });
+ await ev.write(master.db);
  
  // write entry
  await ev.writeValue(db, Date.now(), 77.34);
