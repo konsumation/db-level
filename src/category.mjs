@@ -6,7 +6,7 @@ import { secondsAsString, readStreamWithTimeOptions } from "./util.mjs";
 import { CATEGORY_PREFIX, VALUE_PREFIX, METER_ATTRIBUTES } from "./consts.mjs";
 
 /**
- * Value Category
+ * Value Category.
  * @param {string} name category name
  * @param {Object} options
  * @param {string} options.description
@@ -31,7 +31,7 @@ export class Category extends Base {
   }
 
   /**
-   * Get categories
+   * Get categories.
    * @param {levelup} db
    * @param {string} gte lowest name
    * @param {string} lte highst name
@@ -42,7 +42,7 @@ export class Category extends Base {
   }
 
   /**
-   * Write a time/value pair
+   * Write a time/value pair.
    * @param {levelup} db
    * @param {number} value
    * @param {number} time seconds since epoch
@@ -53,7 +53,7 @@ export class Category extends Base {
   }
 
   /**
-   * Get values of the category
+   * Get values of the category.
    * @param {levelup} db
    * @param {Object} options
    * @param {string} options.gte time of earliest value
@@ -75,7 +75,7 @@ export class Category extends Base {
   }
 
   /**
-   * Get values of the category as ascii text stream with time and value on each line
+   * Get values of the category as ascii text stream with time and value on each line.
    * @param {levelup} db
    * @param {Object} options
    * @param {string} options.gte time of earliest value
@@ -93,7 +93,7 @@ export class Category extends Base {
   }
 
   /**
-   * Get Meters of the category
+   * Get Meters of the category.
    * @param {levelup} db
    * @param {Object} options
    * @param {string} options.gte from name
@@ -106,7 +106,7 @@ export class Category extends Base {
   }
 
   /**
-   * Get Notes of the category
+   * Get Notes of the category.
    * @param {levelup} db
    * @param {Object} options
    * @param {string} options.gte time
