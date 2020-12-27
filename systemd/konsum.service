@@ -1,0 +1,33 @@
+[Unit]
+Description={{description}}
+After=network-online.target
+Wants=network-online.target
+StopWhenUnneeded=true
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/node --unhandled-rejections=strict --trace-uncaught --trace-warnings --title {{name}} {{installdir}}/src/{{name}}-cli.mjs start
+ExecStop=/usr/bin/curl -s -XPOST --unix-socket {{socket}} http://localhost/admin/stop
+ExecReload=/usr/bin/curl -s -XPOST --unix-socket {{socket}} http://localhost/admin/reload
+TimeoutStartSec=20
+Restart=on-failure
+RestartSec=30s
+SystemCallErrorNumber=EPERM
+User={{name}}
+Group={{name}}
+PrivateTmp=true
+NoNewPrivileges=true
+RuntimeDirectory={{name}}
+RuntimeDirectoryMode=775
+RuntimeDirectoryPreserve=yes
+StateDirectory={{name}}
+ConfigurationDirectory={{name}}
+CPUWeight=30
+IOWeight=30
+MemoryAccounting=true
+MemoryHigh=60M
+MemoryMax=100M
+OOMPolicy=stop
+
+[Install]
+WantedBy=multi-user.target
