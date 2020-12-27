@@ -20,29 +20,55 @@
     }
   ],
   "license": "BSD-2-Clause",
+  "bin": {
+    "konsum": "./src/konsum-cli.mjs"
+  },
   "scripts": {
+    "package": "npm-pkgbuild --npm-dist --npm-modules pkgbuild pacman makepkg",
     "prepublishOnly": "publish-please guard",
     "publish-please": "publish-please",
+    "start": "node bin/konsum --config=config start",
     "test": "npm run test:ava",
     "test:ava": "ava --timeout 2m tests/*.mjs",
     "cover": "c8 -x 'tests/**/*' --temp-directory build/tmp ava --timeout 2m tests/*.mjs && c8 report -r lcov -o build/coverage --temp-directory build/tmp",
-    "docs": "documentation readme ./src/master.mjs --section=API",
+    "docs": "documentation readme ./src/konsum-cli.mjs --section=API && documentation readme ./src/master.mjs --section=API",
     "lint": "npm run lint:docs",
-    "lint:docs": "documentation lint ./src/master.mjs"
+    "lint:docs": "documentation lint ./src/konsum-cli.mjs && documentation lint ./src/master.mjs"
   },
   "dependencies": {
-    "levelup": "^4.4.0"
+    "commander": "^6.2.0",
+    "config-expander": "^12.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.13.0",
+    "koa-better-router": "^2.1.1",
+    "koa-bodyparser": "^4.3.0",
+    "koa-jwt": "^4.0.0",
+    "konsum-db": "^3.0.1",
+    "ldapts": "^2.10.1",
+    "leveldown": "^5.6.0",
+    "levelup": "^4.4.0",
+    "sd-daemon": "^1.0.2"
   },
   "devDependencies": {
+    "@semantic-release/commit-analyzer": "^8.0.1",
+    "@semantic-release/exec": "^5.0.0",
+    "@semantic-release/release-notes-generator": "^9.0.1",
     "ava": "^3.14.0",
+    "builtin-modules": "^3.1.0",
     "c8": "^7.3.5",
     "documentation": "github:arlac77/documentation",
+    "execa": "^5.0.0",
+    "got": "^11.8.1",
     "leveldown": "^5.6.0",
+    "npm-pkgbuild": "^6.12.18",
     "semantic-release": "^17.3.0",
-    "tmp": "0.2.1"
+    "tmp": "^0.2.1"
+  },
+  "optionalDependencies": {
+    "sd-daemon": "^1.0.2"
   },
   "engines": {
-    "node": ">=14.15.1"
+    "node": ">=14.15.3"
   },
   "repository": {
     "type": "git",
@@ -52,11 +78,53 @@
     "url": "https://github.com/konsumation/konsum-db/issues"
   },
   "homepage": "https://github.com/konsumation/konsum-db#readme",
+  "config": {
+    "base": "/services/${name}/api",
+    "socket": "/run/${name}/http/socket"
+  },
+  "systemd": {
+    "units": {
+      "${name}": "systemd/${name}*"
+    }
+  },
+  "pacman": {
+    "arch": [
+      "aarch64",
+      "armv7h",
+      "x86_64"
+    ],
+    "groups": "home-automation",
+    "backup": "etc/${name}/config.json",
+    "hooks": "pacman/hooks.sh",
+    "installdir": "/services/${name}",
+    "content": {
+      "/usr/lib/tmpfiles.d/${name}.conf": "pacman/tmpfiles.conf",
+      "/etc/${name}/config.json": "config/config.json",
+      "/etc/nginx/config.d/${name}.conf": "config/nginx.conf"
+    },
+    "depends": {
+      "systemd": ">=247.2",
+      "nginx-mainline": ">=1.19.3"
+    }
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/exec",
+        {
+          "publishCmd": "npx npm-pkgbuild --pkgver ${nextRelease.version} --npm-dist --npm-modules pkgbuild pacman makepkg"
+        }
+      ]
+    ]
+  },
   "template": {
     "inheritFrom": [
       "arlac77/template-esm-only",
       "arlac77/template-github-action",
       "arlac77/template-vscode",
+      "konsumation/konsum",
       "konsumation/template"
     ]
   }
