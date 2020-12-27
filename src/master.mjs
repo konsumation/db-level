@@ -7,6 +7,12 @@ import { pump } from "./util.mjs";
 
 export { Category, Meter, Note, SCHEMA_VERSION_1, SCHEMA_VERSION_2 };
 
+/**
+ * Master record
+ * holds schema version.
+ *
+ * @property {string} schemaVersion
+ */
 export class Master extends Base {
   static get keyPrefix() {
     return MASTER;
