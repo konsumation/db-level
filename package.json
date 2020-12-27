@@ -5,8 +5,6 @@
     "access": "public"
   },
   "sideEffects": false,
-  "type": "module",
-  "main": "./src/master.mjs",
   "exports": {
     ".": "./src/master.mjs"
   },
@@ -48,18 +46,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/k0nsti/konsum-db.git"
+    "url": "https://github.com/konsumation/konsum-db.git"
   },
   "bugs": {
-    "url": "https://github.com/k0nsti/konsum-db/issues"
+    "url": "https://github.com/konsumation/konsum-db/issues"
   },
-  "homepage": "https://github.com/k0nsti/konsum-db#readme",
+  "homepage": "https://github.com/konsumation/konsum-db#readme",
   "template": {
     "inheritFrom": [
       "arlac77/template-esm-only",
-      "arlac77/template-github",
       "arlac77/template-github-action",
-      "arlac77/template-vscode"
+      "arlac77/template-vscode",
+      "konsumation/template"
     ]
   }
 }
