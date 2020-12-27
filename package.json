@@ -54,7 +54,6 @@
     "inheritFrom": [
       "arlac77/template-esm-only",
       "arlac77/template-github-action",
-      "arlac77/template-vscode",
       "konsumation/template"
     ]
   }
