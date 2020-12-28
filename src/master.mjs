@@ -66,12 +66,18 @@ export class Master extends Base {
 
   /**
    * List Categories
-   * @param {string} gte 
-   * @param {string} lte 
+   * @param {string} gte
+   * @param {string} lte
    */
-  async * categories(gte,lte)
+  async *categories(gte, lte) {
+    yield* Category.entries(this.db, gte, lte);
+  }
+
+  async category(name)
   {
-    yield * Category.entries(this.db, gte, lte);
+    for await( const category of this.categories(name,name)) {
+      return category;
+    }
   }
 
   /**
@@ -96,14 +102,32 @@ export class Master extends Base {
    * @param {Readable} input data from backup
    */
   async restore(input) {
-    let last = "";
+    const categories = new Map();
 
+    let last = "";
     let owner = this;
-    let c;
+    let c, cn, factory, value, lastValue;
     let attributes = {};
-    let cn;
-    let factory;
-    let value, lastValue;
+
+    const insert = () => {
+      if (cn) {
+        if (attributes.category) {
+          owner= categories.get(attributes.category);
+          delete attributes.category;
+        }
+        //console.log("NEW", factory.name, cn, owner, attributes);
+
+        c = new factory(cn, owner, attributes);
+        c.write(this.db);
+
+        if(factory === Category) {
+          categories.set(c.name,c);
+        }
+        
+        cn = undefined;
+        lastValue = 0;
+      }
+    };
 
     const process = line => {
       let m = line.match(/^(\w+)\s*=\s*(.*)/);
@@ -114,6 +138,8 @@ export class Master extends Base {
 
       m = line.match(/^\[(\w+)\s+"([^"]+)"\]/);
       if (m) {
+        insert();
+
         switch (m[1]) {
           case "category":
             factory = Category;
@@ -138,17 +164,7 @@ export class Master extends Base {
         return;
       }
 
-      if (cn !== undefined) {
-        //console.log("NEW", factory.name, cn, undefined, attributes);
-        if (attributes.category) {
-          //owner=this.category(attributes.category);
-          delete attributes.category;
-        }
-        c = new factory(cn, owner, attributes);
-        c.write(this.db);
-        cn = undefined;
-        lastValue = 0;
-      }
+      insert();
 
       m = line.match(/^([\d\.]+)\s+([\d\.]+)/);
       if (m) {

@@ -5,7 +5,6 @@ import levelup from "levelup";
 import leveldown from "leveldown";
 import {
   Master,
-  Category,
   SCHEMA_VERSION_2
 } from "konsum-db";
 
@@ -28,7 +27,7 @@ test("restore version 2", async t => {
     ["CAT-0", "CAT-1", "CAT-2"]
   );
 
-  /*
+  
   const meters = [];
   for await (const m of categories[0].meters(db)) {
     meters.push(m);
@@ -37,7 +36,7 @@ test("restore version 2", async t => {
     meters.map(m => m.name),
     ["M-0", "M-1"]
   );
-  */
+  
 
 //  master.schemaVersion = SCHEMA_VERSION_2;
 
