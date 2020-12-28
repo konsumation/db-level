@@ -64,6 +64,11 @@ export class Master extends Base {
     return this.db.close();
   }
 
+  /**
+   * List Categories
+   * @param {string} gte 
+   * @param {string} lte 
+   */
   async * categories(gte,lte)
   {
     yield * Category.entries(this.db, gte, lte);
@@ -116,7 +121,7 @@ export class Master extends Base {
           case "meter":
             factory = Meter;
             break;
-          case "meter":
+          case "note":
             factory = Note;
             break;
         }

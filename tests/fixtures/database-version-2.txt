@@ -16,7 +16,7 @@ fractionalDigits=2
 1596182230832 85.34
 1596182317232 86.34
 
-[meter "N-0"]
+[note "N-0"]
 category=CAT-0
 description=blizzard
 

@@ -19,7 +19,7 @@ test("restore version 2", async t => {
   await master.restore(input);
 
   const categories = [];
-  for await (const c of Category.entries(db)) {
+  for await (const c of master.categories()) {
     categories.push(c);
   }
 
