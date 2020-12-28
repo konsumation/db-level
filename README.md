@@ -41,15 +41,17 @@ example();
 
 ### Table of Contents
 
--   [backup](#backup)
-    -   [Parameters](#parameters)
--   [restore](#restore)
-    -   [Parameters](#parameters-1)
--   [initialize](#initialize)
-    -   [Parameters](#parameters-2)
+-   [Master](#master)
+    -   [Properties](#properties)
+    -   [backup](#backup)
+        -   [Parameters](#parameters)
+    -   [restore](#restore)
+        -   [Parameters](#parameters-1)
+    -   [initialize](#initialize)
+        -   [Parameters](#parameters-2)
 -   [Category](#category)
     -   [Parameters](#parameters-3)
-    -   [Properties](#properties)
+    -   [Properties](#properties-1)
     -   [writeValue](#writevalue)
         -   [Parameters](#parameters-4)
     -   [values](#values)
@@ -64,8 +66,8 @@ example();
         -   [Parameters](#parameters-9)
 -   [Meter](#meter)
     -   [Parameters](#parameters-10)
-    -   [Properties](#properties-1)
--   [MASTER](#master)
+    -   [Properties](#properties-2)
+-   [MASTER](#master-1)
 -   [SCHEMA_VERSION_1](#schema_version_1)
 -   [SCHEMA_VERSION_2](#schema_version_2)
 -   [CATEGORY_PREFIX](#category_prefix)
@@ -74,7 +76,7 @@ example();
 -   [fractionalDigits](#fractionaldigits)
 -   [Base](#base)
     -   [Parameters](#parameters-11)
-    -   [Properties](#properties-2)
+    -   [Properties](#properties-3)
     -   [key](#key)
     -   [write](#write)
         -   [Parameters](#parameters-12)
@@ -107,32 +109,43 @@ example();
 -   [secondsAsString](#secondsasstring)
     -   [Parameters](#parameters-24)
 
-## backup
+## Master
+
+**Extends Base**
+
+Master record
+holds schema version.
+
+### Properties
+
+-   `schemaVersion` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### backup
 
 Copy all data into out stream as long time text data.
 
-### Parameters
+#### Parameters
 
 -   `out` **Writeable** 
 
-## restore
+### restore
 
 Restore database from input stream.
 
-### Parameters
+#### Parameters
 
 -   `input` **Readable** data from backup
 
-## initialize
+### initialize
 
 Initialize database.
 checks/writes master record.
 
-### Parameters
+#### Parameters
 
 -   `db` **levelup** 
 
-Returns **Master** 
+Returns **[Master](#master)** 
 
 ## Category
 
