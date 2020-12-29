@@ -43,29 +43,32 @@ example();
 
 -   [Master](#master)
     -   [Properties](#properties)
-    -   [backup](#backup)
+    -   [close](#close)
+    -   [categories](#categories)
         -   [Parameters](#parameters)
-    -   [restore](#restore)
+    -   [backup](#backup)
         -   [Parameters](#parameters-1)
-    -   [initialize](#initialize)
+    -   [restore](#restore)
         -   [Parameters](#parameters-2)
+    -   [initialize](#initialize)
+        -   [Parameters](#parameters-3)
 -   [Category](#category)
-    -   [Parameters](#parameters-3)
+    -   [Parameters](#parameters-4)
     -   [Properties](#properties-1)
     -   [writeValue](#writevalue)
-        -   [Parameters](#parameters-4)
-    -   [values](#values)
         -   [Parameters](#parameters-5)
-    -   [readStream](#readstream)
+    -   [values](#values)
         -   [Parameters](#parameters-6)
-    -   [meters](#meters)
+    -   [readStream](#readstream)
         -   [Parameters](#parameters-7)
-    -   [notes](#notes)
+    -   [meters](#meters)
         -   [Parameters](#parameters-8)
-    -   [entries](#entries)
+    -   [notes](#notes)
         -   [Parameters](#parameters-9)
+    -   [entries](#entries)
+        -   [Parameters](#parameters-10)
 -   [Meter](#meter)
-    -   [Parameters](#parameters-10)
+    -   [Parameters](#parameters-11)
     -   [Properties](#properties-2)
 -   [MASTER](#master-1)
 -   [SCHEMA_VERSION_1](#schema_version_1)
@@ -75,39 +78,41 @@ example();
 -   [unit](#unit)
 -   [fractionalDigits](#fractionaldigits)
 -   [Base](#base)
-    -   [Parameters](#parameters-11)
+    -   [Parameters](#parameters-12)
     -   [Properties](#properties-3)
     -   [key](#key)
     -   [write](#write)
-        -   [Parameters](#parameters-12)
-    -   [readDetails](#readdetails)
         -   [Parameters](#parameters-13)
+    -   [readDetails](#readdetails)
+        -   [Parameters](#parameters-14)
+    -   [delete](#delete)
+        -   [Parameters](#parameters-15)
     -   [keyPrefix](#keyprefix)
     -   [keyPrefixWith](#keyprefixwith)
-        -   [Parameters](#parameters-14)
+        -   [Parameters](#parameters-16)
     -   [typeName](#typename)
     -   [attributes](#attributes)
     -   [entries](#entries-1)
-        -   [Parameters](#parameters-15)
-    -   [entriesWith](#entrieswith)
-        -   [Parameters](#parameters-16)
-    -   [entry](#entry)
         -   [Parameters](#parameters-17)
+    -   [entriesWith](#entrieswith)
+        -   [Parameters](#parameters-18)
+    -   [entry](#entry)
+        -   [Parameters](#parameters-19)
 -   [description](#description)
 -   [definePropertiesFromOptions](#definepropertiesfromoptions)
-    -   [Parameters](#parameters-18)
--   [setAttribute](#setattribute)
-    -   [Parameters](#parameters-19)
--   [getAttribute](#getattribute)
     -   [Parameters](#parameters-20)
--   [optionJSON](#optionjson)
+-   [setAttribute](#setattribute)
     -   [Parameters](#parameters-21)
--   [mapAttributes](#mapattributes)
+-   [getAttribute](#getattribute)
     -   [Parameters](#parameters-22)
--   [mapAttributesInverse](#mapattributesinverse)
+-   [optionJSON](#optionjson)
     -   [Parameters](#parameters-23)
--   [secondsAsString](#secondsasstring)
+-   [mapAttributes](#mapattributes)
     -   [Parameters](#parameters-24)
+-   [mapAttributesInverse](#mapattributesinverse)
+    -   [Parameters](#parameters-25)
+-   [secondsAsString](#secondsasstring)
+    -   [Parameters](#parameters-26)
 
 ## Master
 
@@ -119,6 +124,19 @@ holds schema version.
 ### Properties
 
 -   `schemaVersion` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### close
+
+Close the underlaying database.
+
+### categories
+
+List Categories
+
+#### Parameters
+
+-   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ### backup
 
@@ -348,7 +366,7 @@ Leaves all other entries alone.
 
 ### readDetails
 
-Get detail objects
+Get detail objects.
 
 #### Parameters
 
@@ -360,6 +378,14 @@ Get detail objects
     -   `options.reverse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** order
 
 Returns **Iterator&lt;factory>** 
+
+### delete
+
+Delete record from database.
+
+#### Parameters
+
+-   `db` **levelup** 
 
 ### keyPrefix
 
@@ -387,7 +413,7 @@ Additional attributes to be persisted
 
 ### entries
 
-Get instances
+Get instances without owner.
 
 #### Parameters
 
@@ -400,7 +426,7 @@ Returns **AsyncIterator&lt;[Base](#base)>**
 
 ### entriesWith
 
-Get instances
+Get instances with owner.
 
 #### Parameters
 
@@ -408,12 +434,13 @@ Get instances
 -   `object`  
 -   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** lowest name (optional, default `"\u0000"`)
 -   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** highst name (optional, default `"\uFFFF"`)
+-   `owner` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 Returns **AsyncIterator&lt;[Base](#base)>** 
 
 ### entry
 
-Get a single instance
+Get a single instance.
 
 #### Parameters
 
