@@ -60,6 +60,9 @@ export class Master extends Base {
     return master;
   }
 
+  /**
+   * Close the underlaying database.
+   */
   close() {
     return this.db.close();
   }

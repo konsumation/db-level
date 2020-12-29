@@ -52,7 +52,7 @@ export class Base {
   }
 
   /**
-   * Get instances
+   * Get instances without owner.
    * @param {levelup} db
    * @param {string} prefix
    * @param {string} gte lowest name
@@ -70,8 +70,9 @@ export class Base {
   }
 
   /**
-   * Get instances
+   * Get instances with owner.
    * @param {levelup} db
+   * @param {Object} owner
    * @param {string} gte lowest name
    * @param {string} lte highst name
    * @return {AsyncIterator<Base>}
@@ -90,7 +91,7 @@ export class Base {
   }
 
   /**
-   * Get a single instance
+   * Get a single instance.
    * @param {levelup} db
    * @param {string} key
    * @return {Base}
@@ -168,7 +169,7 @@ export class Base {
   }
 
   /**
-   * Get detail objects
+   * Get detail objects.
    * @param {Class} factory
    * @param {levelup} db
    * @param {Object} options
@@ -186,5 +187,13 @@ export class Base {
       const name = data.key.toString().slice(key.length);
       yield new factory(name, this, JSON.parse(data.value.toString()));
     }
+  }
+
+  /**
+   * Delete record from database.
+   * @param {levelup} db
+   */
+  async delete(db) {
+    return db.del(this.key);
   }
 }

@@ -8,7 +8,7 @@ import { Master, Category } from "konsum-db";
 
 test("Category key", t => t.is(new Category("name1").key, "categories.name1"));
 
-test("Category write / read", async t => {
+test("Category write / read / delete", async t => {
   const master = await Master.initialize(await levelup(leveldown(tmp.tmpNameSync())));
 
   for (let i = 0; i < 10; i++) {
@@ -18,7 +18,7 @@ test("Category write / read", async t => {
 
   const cs = [];
 
-  for await (const c of Category.entries(master.db)) {
+  for await (const c of master.categories()) {
     cs.push(c);
   }
 
@@ -26,12 +26,22 @@ test("Category write / read", async t => {
   t.is(cs[0].unit, "kWh");
   t.is(cs[0].fractionalDigits, 3);
 
-  const c = await Category.entry(master.db, "CAT-7");
+  let c = await Category.entry(master.db, "CAT-7");
   t.is(c.name, "CAT-7");
   t.is(c.unit, "kWh");
   t.is(c.fractionalDigits, 3);
 
-  master.close();
+  c = await Category.entry(master.db, "CAT-12");
+  //t.falsy(c);
+
+  await c.delete(master.db);
+
+ // await master.backup(createWriteStream('/tmp/x.txt',{ encoding: "utf8" }));
+
+  c = await Category.entry(master.db, "CAT-7");
+  //t.falsy(c);
+
+  await master.close();
 });
 
 const SECONDS_A_DAY = 60 * 60 * 24;
@@ -75,7 +85,7 @@ test("values write / read", async t => {
   t.is(values.length, 1);
   t.deepEqual(values[0], { value: lastValue, time: last });
 
-  master.close();
+  await master.close();
 });
 
 test("readStream", async t => {
