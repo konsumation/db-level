@@ -103,6 +103,9 @@ export class Base {
   }
 
   constructor(name, owner, options) {
+    if (!name.match(/^[\_\-\w]+$/)) {
+      throw new Error("only letters digits '-' and '_' are allowed in names");
+    }
     definePropertiesFromOptions(this, options, {
       name: { value: name },
       owner: { value: owner }

@@ -24,10 +24,6 @@ export class Meter extends Base {
     };
   }
 
-  static async *entries(db, gte, lte) {
-    yield* super.entries(db, this.keyPrefix, gte, lte);
-  }
-
   get category() {
     return this.owner;
   }
