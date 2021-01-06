@@ -21,7 +21,7 @@ export class Master extends Base {
   static get attributes() {
     return {
       ...super.attributes,
-      schemaVersion: { type: "string" }
+      schemaVersion: { writable: true, type: "string" }
     };
   }
 
@@ -76,9 +76,8 @@ export class Master extends Base {
     yield* Category.entries(this.db, gte, lte);
   }
 
-  async category(name)
-  {
-    for await( const category of this.categories(name,name)) {
+  async category(name) {
+    for await (const category of this.categories(name, name)) {
       return category;
     }
   }
@@ -92,11 +91,16 @@ export class Master extends Base {
 
     for await (const category of Category.entries(this.db)) {
       await category.writeAsText(out, category.name, this);
-      /*for await (const meter of category.meters(database)) {
-      await meter.writeAsText(out, category.name + "." + meter.name, master);
-    }*/
 
       await pump(category.readStream(this.db), out);
+
+      for await (const note of category.notes(this.db)) {
+        await note.writeAsText(out, note.name, this);
+      }
+
+      for await (const meter of category.meters(this.db)) {
+        await meter.writeAsText(out, meter.name, this);
+      }
     }
   }
 
@@ -115,7 +119,7 @@ export class Master extends Base {
     const insert = () => {
       if (cn) {
         if (attributes.category) {
-          owner= categories.get(attributes.category);
+          owner = categories.get(attributes.category);
           delete attributes.category;
         }
         //console.log("NEW", factory.name, cn, owner, attributes);
@@ -123,10 +127,10 @@ export class Master extends Base {
         c = new factory(cn, owner, attributes);
         c.write(this.db);
 
-        if(factory === Category) {
-          categories.set(c.name,c);
+        if (factory === Category) {
+          categories.set(c.name, c);
         }
-        
+
         cn = undefined;
         lastValue = 0;
       }
@@ -141,6 +145,8 @@ export class Master extends Base {
 
       m = line.match(/^\[(\w+)\s+"([^"]+)"\]/);
       if (m) {
+      //  this.schemaVersion = SCHEMA_VERSION_2;
+
         insert();
 
         switch (m[1]) {

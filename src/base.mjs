@@ -162,6 +162,10 @@ export class Base {
         : `[${this.typeName} "${name}"]\n`
     );
 
+    if (this.owner) {
+      await out.write(`${this.owner.typeName}=${this.owner.name}\n`);
+    }
+
     for (const o of Object.keys(this.constructor.attributes)) {
       const v = this[o];
       if (v !== undefined) {

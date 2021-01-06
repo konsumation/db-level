@@ -3,7 +3,7 @@ import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
 
-import { Master, Category, Meter } from "konsum-db";
+import { Master, Category, Meter, SCHEMA_VERSION_2 } from "konsum-db";
 import { createWriteStream, createReadStream } from "fs";
 import { stat } from "fs/promises";
 
@@ -25,10 +25,12 @@ test("initialize", async t => {
 
 const SECONDS_A_DAY = 60 * 60 * 24;
 
-test("backup", async t => {
+test("backup as version 2", async t => {
   const master = await Master.initialize(
     await levelup(leveldown(tmp.tmpNameSync()))
   );
+
+  master.schemaVersion = SCHEMA_VERSION_2;
 
   for (let i = 0; i < 3; i++) {
     const c = new Category(`CAT-${i}`, master, {
@@ -62,8 +64,8 @@ test("backup", async t => {
 
   const s = await stat(ofn);
 
-  console.log(ofn);
-  t.is(s.size, 620);
+  //console.log(ofn);
+  t.is(s.size, 1115);
   master.close();
 
   const master2 = await Master.initialize(

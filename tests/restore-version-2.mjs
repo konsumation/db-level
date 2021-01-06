@@ -1,12 +1,11 @@
 import test from "ava";
 import tmp from "tmp";
 import { createReadStream, createWriteStream } from "fs";
+import { stat } from "fs/promises";
+
 import levelup from "levelup";
 import leveldown from "leveldown";
-import {
-  Master,
-  SCHEMA_VERSION_2
-} from "konsum-db";
+import { Master, SCHEMA_VERSION_2 } from "konsum-db";
 
 test("restore version 2", async t => {
   const fixture = new URL("fixtures/database-version-2.txt", import.meta.url);
@@ -27,7 +26,6 @@ test("restore version 2", async t => {
     ["CAT-0", "CAT-1", "CAT-2"]
   );
 
-  
   const meters = [];
   for await (const m of categories[0].meters(db)) {
     meters.push(m);
@@ -36,14 +34,26 @@ test("restore version 2", async t => {
     meters.map(m => m.name),
     ["M-0", "M-1"]
   );
-  
+});
 
-//  master.schemaVersion = SCHEMA_VERSION_2;
+test.skip("read write version 2", async t => {
+  const db = await levelup(leveldown(tmp.tmpNameSync()));
+  const master = await Master.initialize(db);
 
-  const on = tmp.tmpNameSync();
+  const fixture = new URL("fixtures/database-version-2.txt", import.meta.url);
 
-  const out = createWriteStream(on);
+  const fi = await stat(fixture);
 
-  console.log("WRITE: ", on);
-  await master.backup(out);
+  await master.restore(
+    createReadStream(fixture.pathname, { encoding: "utf8" })
+  );
+
+  const ofn = tmp.tmpNameSync();
+  console.log(ofn);
+  await master.backup(createWriteStream(ofn, { encoding: "utf8" }));
+
+  const fo = await stat(ofn);
+
+  t.is(fi.size,fo.size);
+  t.true(fi.size > 1000);
 });
