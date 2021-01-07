@@ -70,6 +70,8 @@ example();
 -   [Meter](#meter)
     -   [Parameters](#parameters-11)
     -   [Properties](#properties-2)
+-   [Note](#note)
+    -   [Parameters](#parameters-12)
 -   [MASTER](#master-1)
 -   [SCHEMA_VERSION_1](#schema_version_1)
 -   [SCHEMA_VERSION_2](#schema_version_2)
@@ -78,41 +80,41 @@ example();
 -   [unit](#unit)
 -   [fractionalDigits](#fractionaldigits)
 -   [Base](#base)
-    -   [Parameters](#parameters-12)
+    -   [Parameters](#parameters-13)
     -   [Properties](#properties-3)
     -   [key](#key)
     -   [write](#write)
-        -   [Parameters](#parameters-13)
-    -   [readDetails](#readdetails)
         -   [Parameters](#parameters-14)
-    -   [delete](#delete)
+    -   [readDetails](#readdetails)
         -   [Parameters](#parameters-15)
+    -   [delete](#delete)
+        -   [Parameters](#parameters-16)
     -   [keyPrefix](#keyprefix)
     -   [keyPrefixWith](#keyprefixwith)
-        -   [Parameters](#parameters-16)
+        -   [Parameters](#parameters-17)
     -   [typeName](#typename)
     -   [attributes](#attributes)
     -   [entries](#entries-1)
-        -   [Parameters](#parameters-17)
-    -   [entriesWith](#entrieswith)
         -   [Parameters](#parameters-18)
-    -   [entry](#entry)
+    -   [entriesWith](#entrieswith)
         -   [Parameters](#parameters-19)
+    -   [entry](#entry)
+        -   [Parameters](#parameters-20)
 -   [description](#description)
 -   [definePropertiesFromOptions](#definepropertiesfromoptions)
-    -   [Parameters](#parameters-20)
--   [setAttribute](#setattribute)
     -   [Parameters](#parameters-21)
--   [getAttribute](#getattribute)
+-   [setAttribute](#setattribute)
     -   [Parameters](#parameters-22)
--   [optionJSON](#optionjson)
+-   [getAttribute](#getattribute)
     -   [Parameters](#parameters-23)
--   [mapAttributes](#mapattributes)
+-   [optionJSON](#optionjson)
     -   [Parameters](#parameters-24)
--   [mapAttributesInverse](#mapattributesinverse)
+-   [mapAttributes](#mapattributes)
     -   [Parameters](#parameters-25)
--   [secondsAsString](#secondsasstring)
+-   [mapAttributesInverse](#mapattributesinverse)
     -   [Parameters](#parameters-26)
+-   [secondsAsString](#secondsasstring)
+    -   [Parameters](#parameters-27)
 
 ## Master
 
@@ -285,6 +287,18 @@ Meter
 -   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit
 -   `fractionalDigits` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** display precission
+
+## Note
+
+**Extends Base**
+
+Hints places on a category at a specific time
+
+### Parameters
+
+-   `time`  
+-   `owner`  
+-   `options`  
 
 ## MASTER
 
