@@ -93,6 +93,7 @@ export class Master extends Base {
       await category.writeAsText(out, category.name, this);
 
       await pump(category.readStream(this.db), out);
+      out.write("\n");
 
       for await (const note of category.notes(this.db)) {
         await note.writeAsText(out, note.name, this);
@@ -102,6 +103,13 @@ export class Master extends Base {
         await meter.writeAsText(out, meter.name, this);
       }
     }
+
+    return new Promise((resolve,reject) => {
+      out.end(undefined,(error) => {
+        if(error) { reject(error); }
+        else { resolve(); }
+      });
+    }); 
   }
 
   /**
@@ -145,7 +153,7 @@ export class Master extends Base {
 
       m = line.match(/^\[(\w+)\s+"([^"]+)"\]/);
       if (m) {
-      //  this.schemaVersion = SCHEMA_VERSION_2;
+        this.schemaVersion = SCHEMA_VERSION_2;
 
         insert();
 

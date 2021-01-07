@@ -36,7 +36,7 @@ test("restore version 2", async t => {
   );
 });
 
-test.skip("read write version 2", async t => {
+test("read write version 2", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));
   const master = await Master.initialize(db);
 
@@ -47,13 +47,14 @@ test.skip("read write version 2", async t => {
   await master.restore(
     createReadStream(fixture.pathname, { encoding: "utf8" })
   );
+  t.is(master.schemaVersion,SCHEMA_VERSION_2);
 
   const ofn = tmp.tmpNameSync();
-  console.log(ofn);
+  //console.log(ofn);
   await master.backup(createWriteStream(ofn, { encoding: "utf8" }));
 
   const fo = await stat(ofn);
 
-  t.is(fi.size,fo.size);
-  t.true(fi.size > 1000);
+  t.is(fi.size, fo.size);
+  t.is(fi.size,  1021);
 });

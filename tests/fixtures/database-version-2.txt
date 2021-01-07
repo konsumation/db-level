@@ -16,13 +16,14 @@ fractionalDigits=2
 1596182230832 85.34
 1596182317232 86.34
 
-[note "N-0"]
+[note "001596181798832"]
 category=CAT-0
 description=blizzard
 
 [meter "M-0"]
 category=CAT-0
 serial=0
+
 [meter "M-1"]
 category=CAT-0
 serial=1
@@ -42,6 +43,7 @@ fractionalDigits=2
 1596182144434 85.34
 1596182230834 86.34
 1596182317234 87.34
+
 [category "CAT-2"]
 description=mains power 2
 unit=kWh
@@ -61,3 +63,4 @@ fractionalDigits=2
 [meter "M-3"]
 category=CAT-2
 serial=3
+

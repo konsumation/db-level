@@ -65,7 +65,7 @@ test("backup as version 2", async t => {
   const s = await stat(ofn);
 
   //console.log(ofn);
-  t.is(s.size, 1115);
+  t.is(s.size, 1070);
   master.close();
 
   const master2 = await Master.initialize(
