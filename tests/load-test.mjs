@@ -42,7 +42,6 @@ test("backup as version 2", async t => {
   const ofn = tmp.tmpNameSync();
   const out = createWriteStream(ofn, { encoding: "utf8" });
 
-  console.log(ofn);
   await master.backup(out);
 
   t.true(true);

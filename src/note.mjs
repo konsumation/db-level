@@ -2,7 +2,7 @@ import { Base } from "./base.mjs";
 import { secondsAsString } from "./util.mjs";
 
 /**
- * Hints places on a category at a specific time
+ * Hints placed on a category at a specific time.
  */
 export class Note extends Base {
   constructor(time, owner, options) {
