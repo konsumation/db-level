@@ -292,7 +292,7 @@ Meter
 
 **Extends Base**
 
-Hints places on a category at a specific time
+Hints placed on a category at a specific time.
 
 ### Parameters
 
