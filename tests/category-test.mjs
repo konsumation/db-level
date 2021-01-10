@@ -6,13 +6,19 @@ import { Readable } from "stream";
 import { createWriteStream } from "fs";
 import { Master, Category } from "konsum-db";
 
-test("Category key", t => t.is(new Category("name1").key, "categories.name1"));
+test("Category key", (t) =>
+  t.is(new Category("name1").key, "categories.name1"));
 
-test("Category write / read / delete", async t => {
-  const master = await Master.initialize(await levelup(leveldown(tmp.tmpNameSync())));
+test("Category write / read / delete", async (t) => {
+  const master = await Master.initialize(
+    await levelup(leveldown(tmp.tmpNameSync()))
+  );
 
   for (let i = 0; i < 10; i++) {
-    const c = new Category(`CAT-${i}`, master, { unit: "kWh", fractionalDigits: 3 });
+    const c = new Category(`CAT-${i}`, master, {
+      unit: "kWh",
+      fractionalDigits: 3,
+    });
     await c.write(master.db);
   }
 
@@ -36,7 +42,7 @@ test("Category write / read / delete", async t => {
 
   await c.delete(master.db);
 
- // await master.backup(createWriteStream('/tmp/x.txt',{ encoding: "utf8" }));
+  // await master.backup(createWriteStream('/tmp/x.txt',{ encoding: "utf8" }));
 
   c = await Category.entry(master.db, "CAT-7");
   //t.falsy(c);
@@ -46,7 +52,7 @@ test("Category write / read / delete", async t => {
 
 const SECONDS_A_DAY = 60 * 60 * 24;
 
-test("values write / read", async t => {
+test("values write / read", async (t) => {
   const dbf = tmp.tmpNameSync();
   const master = await Master.initialize(await levelup(leveldown(dbf)));
 
@@ -76,7 +82,7 @@ test("values write / read", async t => {
   values = [];
   for await (const { value, time } of c.values(master.db, {
     gte: first + SECONDS_A_DAY * 99,
-    reverse: true
+    reverse: true,
   })) {
     values.push({ value, time });
   }
@@ -88,7 +94,33 @@ test("values write / read", async t => {
   await master.close();
 });
 
-test("readStream", async t => {
+test("values delete", async (t) => {
+  const dbf = tmp.tmpNameSync();
+  const master = await Master.initialize(await levelup(leveldown(dbf)));
+
+  const c = new Category(`CAT-2`, master, { unit: "kWh" });
+  await c.write(master.db);
+
+  const first = Date.now();
+  const firstValue = 77.34;
+  let last = first;
+  let lastValue = firstValue;
+
+  for (let i = 0; i < 3; i++) {
+    last = new Date(first + SECONDS_A_DAY * i).getTime();
+    lastValue = firstValue + i;
+    await c.writeValue(master.db, lastValue, last);
+  }
+  const ds = await c.getValue(master.db, first);
+  t.is((await c.getValue(master.db, first)).toString(), "77.34");
+  await c.deleteValue(master.db, first);
+    
+  t.is(await c.getValue(master.db,first), undefined);
+
+  await master.close();
+});
+
+test("readStream", async (t) => {
   const dbf = tmp.tmpNameSync();
   const master = await Master.initialize(await levelup(leveldown(dbf)));
 
@@ -115,7 +147,6 @@ test("readStream", async t => {
   stream.pipe(createWriteStream(outFileName, { encoding: "utf8" }));
 
   t.true(stream instanceof Readable);
-
 
   master.close();
 });

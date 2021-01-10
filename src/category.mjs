@@ -51,6 +51,29 @@ export class Category extends Base {
     const key = VALUE_PREFIX + this.name + "." + secondsAsString(time);
     return db.put(key, value);
   }
+ 
+  //TODO error handle if key doesn exists add some in catch block? now works...withouth catch abends
+  //https://github.com/Level/levelup#get
+  /**
+   * 
+   * @param {levelup} db 
+   * @param {number} time seconds since epoch
+   */
+  async getValue(db, time) {
+    const key = VALUE_PREFIX + this.name + "." + secondsAsString(time);
+    return db.get(key,{ asBuffer: false }).catch((err=>{}))
+  }
+
+  //TODO error handle if key doesn exists
+  /**
+   * 
+   * @param {levelup} db 
+   * @param {number} time seconds since epoch
+   */
+  async deleteValue(db, time) {
+    const key = VALUE_PREFIX + this.name + "." + secondsAsString(time);
+    return db.del(key);
+  }
 
   /**
    * Get values of the category.
