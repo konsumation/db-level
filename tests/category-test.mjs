@@ -17,7 +17,7 @@ test("Category write / read / delete", async (t) => {
   for (let i = 0; i < 10; i++) {
     const c = new Category(`CAT-${i}`, master, {
       unit: "kWh",
-      fractionalDigits: 3,
+      fractionalDigits: 3
     });
     await c.write(master.db);
   }
@@ -82,7 +82,7 @@ test("values write / read", async (t) => {
   values = [];
   for await (const { value, time } of c.values(master.db, {
     gte: first + SECONDS_A_DAY * 99,
-    reverse: true,
+    reverse: true
   })) {
     values.push({ value, time });
   }
