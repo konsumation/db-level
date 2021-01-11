@@ -57,21 +57,25 @@ example();
     -   [Properties](#properties-1)
     -   [writeValue](#writevalue)
         -   [Parameters](#parameters-5)
-    -   [values](#values)
+    -   [getValue](#getvalue)
         -   [Parameters](#parameters-6)
-    -   [readStream](#readstream)
+    -   [deleteValue](#deletevalue)
         -   [Parameters](#parameters-7)
-    -   [meters](#meters)
+    -   [values](#values)
         -   [Parameters](#parameters-8)
-    -   [notes](#notes)
+    -   [readStream](#readstream)
         -   [Parameters](#parameters-9)
-    -   [entries](#entries)
+    -   [meters](#meters)
         -   [Parameters](#parameters-10)
+    -   [notes](#notes)
+        -   [Parameters](#parameters-11)
+    -   [entries](#entries)
+        -   [Parameters](#parameters-12)
 -   [Meter](#meter)
-    -   [Parameters](#parameters-11)
+    -   [Parameters](#parameters-13)
     -   [Properties](#properties-2)
 -   [Note](#note)
-    -   [Parameters](#parameters-12)
+    -   [Parameters](#parameters-14)
 -   [MASTER](#master-1)
 -   [SCHEMA_VERSION_1](#schema_version_1)
 -   [SCHEMA_VERSION_2](#schema_version_2)
@@ -80,41 +84,41 @@ example();
 -   [unit](#unit)
 -   [fractionalDigits](#fractionaldigits)
 -   [Base](#base)
-    -   [Parameters](#parameters-13)
+    -   [Parameters](#parameters-15)
     -   [Properties](#properties-3)
     -   [key](#key)
     -   [write](#write)
-        -   [Parameters](#parameters-14)
-    -   [readDetails](#readdetails)
-        -   [Parameters](#parameters-15)
-    -   [delete](#delete)
         -   [Parameters](#parameters-16)
+    -   [readDetails](#readdetails)
+        -   [Parameters](#parameters-17)
+    -   [delete](#delete)
+        -   [Parameters](#parameters-18)
     -   [keyPrefix](#keyprefix)
     -   [keyPrefixWith](#keyprefixwith)
-        -   [Parameters](#parameters-17)
+        -   [Parameters](#parameters-19)
     -   [typeName](#typename)
     -   [attributes](#attributes)
     -   [entries](#entries-1)
-        -   [Parameters](#parameters-18)
-    -   [entriesWith](#entrieswith)
-        -   [Parameters](#parameters-19)
-    -   [entry](#entry)
         -   [Parameters](#parameters-20)
+    -   [entriesWith](#entrieswith)
+        -   [Parameters](#parameters-21)
+    -   [entry](#entry)
+        -   [Parameters](#parameters-22)
 -   [description](#description)
 -   [definePropertiesFromOptions](#definepropertiesfromoptions)
-    -   [Parameters](#parameters-21)
--   [setAttribute](#setattribute)
-    -   [Parameters](#parameters-22)
--   [getAttribute](#getattribute)
     -   [Parameters](#parameters-23)
--   [optionJSON](#optionjson)
+-   [setAttribute](#setattribute)
     -   [Parameters](#parameters-24)
--   [mapAttributes](#mapattributes)
+-   [getAttribute](#getattribute)
     -   [Parameters](#parameters-25)
--   [mapAttributesInverse](#mapattributesinverse)
+-   [optionJSON](#optionjson)
     -   [Parameters](#parameters-26)
--   [secondsAsString](#secondsasstring)
+-   [mapAttributes](#mapattributes)
     -   [Parameters](#parameters-27)
+-   [mapAttributesInverse](#mapattributesinverse)
+    -   [Parameters](#parameters-28)
+-   [secondsAsString](#secondsasstring)
+    -   [Parameters](#parameters-29)
 
 ## Master
 
@@ -196,6 +200,20 @@ Write a time/value pair.
 
 -   `db` **levelup** 
 -   `value` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+-   `time` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** seconds since epoch
+
+### getValue
+
+#### Parameters
+
+-   `db` **levelup** 
+-   `time` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** seconds since epoch
+
+### deleteValue
+
+#### Parameters
+
+-   `db` **levelup** 
 -   `time` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** seconds since epoch
 
 ### values
