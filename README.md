@@ -78,22 +78,24 @@ example();
 -   [Category](#category)
     -   [Parameters](#parameters-14)
     -   [Properties](#properties-1)
-    -   [writeValue](#writevalue)
+    -   [valueKey](#valuekey)
         -   [Parameters](#parameters-15)
-    -   [getValue](#getvalue)
+    -   [writeValue](#writevalue)
         -   [Parameters](#parameters-16)
-    -   [deleteValue](#deletevalue)
+    -   [getValue](#getvalue)
         -   [Parameters](#parameters-17)
-    -   [values](#values)
+    -   [deleteValue](#deletevalue)
         -   [Parameters](#parameters-18)
-    -   [readStream](#readstream)
+    -   [values](#values)
         -   [Parameters](#parameters-19)
-    -   [meters](#meters)
+    -   [readStream](#readstream)
         -   [Parameters](#parameters-20)
-    -   [notes](#notes)
+    -   [meters](#meters)
         -   [Parameters](#parameters-21)
-    -   [entries](#entries-1)
+    -   [notes](#notes)
         -   [Parameters](#parameters-22)
+    -   [entries](#entries-1)
+        -   [Parameters](#parameters-23)
 -   [MASTER](#master)
 -   [SCHEMA_VERSION_1](#schema_version_1)
 -   [SCHEMA_VERSION_2](#schema_version_2)
@@ -105,20 +107,20 @@ example();
     -   [Properties](#properties-2)
     -   [close](#close)
     -   [categories](#categories)
-        -   [Parameters](#parameters-23)
-    -   [backup](#backup)
         -   [Parameters](#parameters-24)
-    -   [restore](#restore)
+    -   [backup](#backup)
         -   [Parameters](#parameters-25)
-    -   [initialize](#initialize)
+    -   [restore](#restore)
         -   [Parameters](#parameters-26)
+    -   [initialize](#initialize)
+        -   [Parameters](#parameters-27)
 -   [Meter](#meter)
-    -   [Parameters](#parameters-27)
+    -   [Parameters](#parameters-28)
     -   [Properties](#properties-3)
 -   [Note](#note)
-    -   [Parameters](#parameters-28)
--   [secondsAsString](#secondsasstring)
     -   [Parameters](#parameters-29)
+-   [secondsAsString](#secondsasstring)
+    -   [Parameters](#parameters-30)
 
 ## definePropertiesFromOptions
 
@@ -359,6 +361,16 @@ Value Category.
 -   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit
 -   `fractionalDigits` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** display precission
+
+### valueKey
+
+Key for a given value.
+
+#### Parameters
+
+-   `time` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** seconds since epoch
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** key
 
 ### writeValue
 
