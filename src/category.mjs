@@ -41,6 +41,16 @@ export class Category extends Base {
     yield* super.entries(db, this.keyPrefix, gte, lte);
   }
 
+
+  /**
+   * Key for a given value.
+   * @param {number} time seconds since epoch
+   * @return {string} key
+   */
+  valueKey(time) {
+    return VALUE_PREFIX + this.name + "." + secondsAsString(time);
+  }
+
   /**
    * Write a time/value pair.
    * @param {levelup} db
@@ -48,31 +58,28 @@ export class Category extends Base {
    * @param {number} time seconds since epoch
    */
   async writeValue(db, value, time) {
-    const key = VALUE_PREFIX + this.name + "." + secondsAsString(time);
-    return db.put(key, value);
+    return db.put(this.valueKey(time), value);
   }
- 
+
+
   //TODO error handle if key doesn exists add some in catch block? now works...withouth catch abends
   //https://github.com/Level/levelup#get
   /**
-   * 
-   * @param {levelup} db 
+   *
+   * @param {levelup} db
    * @param {number} time seconds since epoch
    */
   async getValue(db, time) {
-    const key = VALUE_PREFIX + this.name + "." + secondsAsString(time);
-    return db.get(key,{ asBuffer: false }).catch((err=>{}))
+    return db.get(this.valueKey(time), { asBuffer: false }).catch(err => {});
   }
 
-  //TODO error handle if key doesn exists
   /**
-   * 
-   * @param {levelup} db 
+   *
+   * @param {levelup} db
    * @param {number} time seconds since epoch
    */
   async deleteValue(db, time) {
-    const key = VALUE_PREFIX + this.name + "." + secondsAsString(time);
-    return db.del(key);
+    return db.del(this.valueKey(time));
   }
 
   /**
