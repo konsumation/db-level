@@ -99,6 +99,7 @@ example();
 -   [MASTER](#master)
 -   [SCHEMA_VERSION_1](#schema_version_1)
 -   [SCHEMA_VERSION_2](#schema_version_2)
+-   [SCHEMA_VERSION_CURRENT](#schema_version_current)
 -   [CATEGORY_PREFIX](#category_prefix)
 -   [VALUE_PREFIX](#value_prefix)
 -   [unit](#unit)
@@ -472,15 +473,19 @@ Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 
 ## SCHEMA_VERSION_1
 
-Current schema version
+Outdated schema version
 
 Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
 
 ## SCHEMA_VERSION_2
 
-future schema with type + name
+Schema with type + name
 
 Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+## SCHEMA_VERSION_CURRENT
+
+Schema version for newly created databases
 
 ## CATEGORY_PREFIX
 
@@ -512,8 +517,8 @@ Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 **Extends Base**
 
-Master record
-holds schema version.
+Master record.
+Holds schema version.
 
 ### Properties
 
@@ -525,7 +530,7 @@ Close the underlaying database.
 
 ### categories
 
-List Categories
+List Categories.
 
 #### Parameters
 
@@ -599,6 +604,6 @@ Format seconds as string left padded with '0'.
 
 ### Parameters
 
--   `number` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** seconds since epoch
+-   `seconds` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** seconds since epoch
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** padded seconds
