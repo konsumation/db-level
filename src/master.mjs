@@ -9,6 +9,15 @@ export { Category, Meter, Note, SCHEMA_VERSION_1, SCHEMA_VERSION_2 };
 
 const supportedVersions = new Set([SCHEMA_VERSION_1, SCHEMA_VERSION_2]);
 
+function checkVersion(meta)
+{
+  if (!supportedVersions.has(meta.schemaVersion)) {
+    throw new Error(
+      `Unsupported schema version ${meta.schemaVersion} only supporting ${[...supportedVersions]}`
+    );
+  }
+}
+
 /**
  * Master record.
  * Holds schema version.
@@ -41,11 +50,6 @@ export class Master extends Base {
       lte: MASTER
     })) {
       meta = JSON.parse(data.value.toString());
-      if (!supportedVersions.has(meta.schemaVersion)) {
-        throw new Error(
-          `Unsupported schema version ${meta.schemaVersion} only supporting ${supportedVersions}`
-        );
-      }
       break;
     }
 
@@ -53,6 +57,7 @@ export class Master extends Base {
       meta = {
         schemaVersion: SCHEMA_VERSION_CURRENT
       };
+      checkVersion(meta);
       await db.put(MASTER, JSON.stringify(meta));
     }
 
@@ -70,7 +75,7 @@ export class Master extends Base {
   }
 
   /**
-   * List Categories
+   * List Categories.
    * @param {string} gte
    * @param {string} lte
    */
@@ -123,26 +128,32 @@ export class Master extends Base {
 
     let last = "";
     let owner = this;
-    let c, cn, factory, value, lastValue;
+    let c, name, factory, value, lastValue;
     let attributes = {};
 
     const insert = () => {
-      if (cn) {
+      if (name) {
         if (attributes.category) {
           owner = categories.get(attributes.category);
           delete attributes.category;
         }
-        //console.log("NEW", factory.name, cn, owner, attributes);
+        //console.log("NEW", factory.name, name, owner, attributes);
 
-        c = new factory(cn, owner, attributes);
+        c = new factory(name, owner, attributes);
         c.write(this.db);
 
         if (factory === Category) {
           categories.set(c.name, c);
         }
 
-        cn = undefined;
+        name = undefined;
         lastValue = 0;
+      }
+      else {
+        if(factory === undefined) {
+          checkVersion(attributes);
+          Object.assign(this,attributes);
+        }
       }
     };
 
@@ -155,8 +166,6 @@ export class Master extends Base {
 
       m = line.match(/^\[(\w+)\s+"([^"]+)"\]/);
       if (m) {
-        this.schemaVersion = SCHEMA_VERSION_CURRENT;
-
         insert();
 
         switch (m[1]) {
@@ -171,7 +180,7 @@ export class Master extends Base {
             break;
         }
         attributes = {};
-        cn = m[2];
+        name = m[2];
         return;
       }
 
@@ -179,7 +188,7 @@ export class Master extends Base {
       if (m) {
         factory = Category;
         attributes = {};
-        cn = m[1];
+        name = m[1];
         return;
       }
 

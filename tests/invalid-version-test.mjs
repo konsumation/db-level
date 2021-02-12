@@ -6,7 +6,7 @@ import leveldown from "leveldown";
 import { Master, Category } from "konsum-db";
 import { createReadStream } from "fs";
 
-test.skip("restore invalid version", async t => {
+test("restore invalid version", async t => {
   const fixture = new URL("fixtures/database-version-0.txt", import.meta.url);
   const db = await levelup(leveldown(tmp.tmpNameSync()));
   const master = await Master.initialize(db);
@@ -14,7 +14,8 @@ test.skip("restore invalid version", async t => {
 
   try {
     await master.restore(input);
-    t.true(false);
+    t.fail("should throw");
   } catch(e) {
+    t.is( e.message, "Unsupported schema version 0 only supporting 1,2");
   }
 });
