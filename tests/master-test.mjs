@@ -11,7 +11,7 @@ test("initialize", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));
   const master = await Master.initialize(db);
 
-  t.is(master.schemaVersion, "1");
+  t.is(master.schemaVersion, "2");
   t.is(master.db, db);
 
   const categories = [];
@@ -30,7 +30,7 @@ test("backup as version 2", async t => {
     await levelup(leveldown(tmp.tmpNameSync()))
   );
 
-  master.schemaVersion = SCHEMA_VERSION_2;
+  //master.schemaVersion = SCHEMA_VERSION_2;
 
   for (let i = 0; i < 3; i++) {
     const c = new Category(`CAT-${i}`, master, {

@@ -1,15 +1,17 @@
 import { Category } from "./category.mjs";
 import { Meter } from "./meter.mjs";
 import { Note } from "./note.mjs";
-import { MASTER, SCHEMA_VERSION_1, SCHEMA_VERSION_2 } from "./consts.mjs";
+import { MASTER, SCHEMA_VERSION_1, SCHEMA_VERSION_2, SCHEMA_VERSION_CURRENT } from "./consts.mjs";
 import { Base } from "./base.mjs";
 import { pump } from "./util.mjs";
 
 export { Category, Meter, Note, SCHEMA_VERSION_1, SCHEMA_VERSION_2 };
 
+const supportedVersions = new Set([SCHEMA_VERSION_1, SCHEMA_VERSION_2]);
+
 /**
- * Master record
- * holds schema version.
+ * Master record.
+ * Holds schema version.
  *
  * @property {string} schemaVersion
  */
@@ -39,9 +41,9 @@ export class Master extends Base {
       lte: MASTER
     })) {
       meta = JSON.parse(data.value.toString());
-      if (meta.schemaVersion !== SCHEMA_VERSION_1) {
+      if (!supportedVersions.has(meta.schemaVersion)) {
         throw new Error(
-          `Unsupported schema version ${meta.schemaVersion} only supporting version ${SCHEMA_VERSION_1}`
+          `Unsupported schema version ${meta.schemaVersion} only supporting ${supportedVersions}`
         );
       }
       break;
@@ -49,7 +51,7 @@ export class Master extends Base {
 
     if (!meta) {
       meta = {
-        schemaVersion: SCHEMA_VERSION_1
+        schemaVersion: SCHEMA_VERSION_CURRENT
       };
       await db.put(MASTER, JSON.stringify(meta));
     }
@@ -153,7 +155,7 @@ export class Master extends Base {
 
       m = line.match(/^\[(\w+)\s+"([^"]+)"\]/);
       if (m) {
-        this.schemaVersion = SCHEMA_VERSION_2;
+        this.schemaVersion = SCHEMA_VERSION_CURRENT;
 
         insert();
 
