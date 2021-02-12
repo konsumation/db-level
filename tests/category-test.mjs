@@ -6,10 +6,12 @@ import { Readable } from "stream";
 import { createWriteStream } from "fs";
 import { Master, Category } from "konsum-db";
 
-test("Category key", (t) =>
-  t.is(new Category("name1").key, "categories.name1"));
+test("Category key", t => t.is(new Category("name1").key, "categories.name1"));
 
-test("Category write / read / delete", async (t) => {
+test("Category value time 0", t =>
+  t.is(new Category("cat").valueKey(0), "values.cat.000000000000000"));
+
+test("Category write / read / delete", async t => {
   const master = await Master.initialize(
     await levelup(leveldown(tmp.tmpNameSync()))
   );
@@ -52,7 +54,7 @@ test("Category write / read / delete", async (t) => {
 
 const SECONDS_A_DAY = 60 * 60 * 24;
 
-test("values write / read", async (t) => {
+test("values write / read", async t => {
   const dbf = tmp.tmpNameSync();
   const master = await Master.initialize(await levelup(leveldown(dbf)));
 
@@ -94,7 +96,7 @@ test("values write / read", async (t) => {
   await master.close();
 });
 
-test("values delete", async (t) => {
+test("values delete", async t => {
   const dbf = tmp.tmpNameSync();
   const master = await Master.initialize(await levelup(leveldown(dbf)));
 
@@ -114,13 +116,13 @@ test("values delete", async (t) => {
   const ds = await c.getValue(master.db, first);
   t.is((await c.getValue(master.db, first)).toString(), "77.34");
   await c.deleteValue(master.db, first);
-    
-  t.is(await c.getValue(master.db,first), undefined);
+
+  t.is(await c.getValue(master.db, first), undefined);
 
   await master.close();
 });
 
-test("readStream", async (t) => {
+test("readStream", async t => {
   const dbf = tmp.tmpNameSync();
   const master = await Master.initialize(await levelup(leveldown(dbf)));
 
