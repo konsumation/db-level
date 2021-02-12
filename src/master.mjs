@@ -1,19 +1,34 @@
 import { Category } from "./category.mjs";
 import { Meter } from "./meter.mjs";
 import { Note } from "./note.mjs";
-import { MASTER, SCHEMA_VERSION_1, SCHEMA_VERSION_2, SCHEMA_VERSION_CURRENT } from "./consts.mjs";
+import {
+  MASTER,
+  VALUE_PREFIX,
+  SCHEMA_VERSION_1,
+  SCHEMA_VERSION_2,
+  SCHEMA_VERSION_CURRENT
+} from "./consts.mjs";
 import { Base } from "./base.mjs";
-import { pump } from "./util.mjs";
+import { pump, secondsAsString } from "./util.mjs";
 
-export { Category, Meter, Note, SCHEMA_VERSION_1, SCHEMA_VERSION_2 };
+export {
+  Category,
+  Meter,
+  Note,
+  secondsAsString,
+  SCHEMA_VERSION_1,
+  SCHEMA_VERSION_2,
+  VALUE_PREFIX
+};
 
 const supportedVersions = new Set([SCHEMA_VERSION_1, SCHEMA_VERSION_2]);
 
-function checkVersion(meta)
-{
+function checkVersion(meta) {
   if (!supportedVersions.has(meta.schemaVersion)) {
     throw new Error(
-      `Unsupported schema version ${meta.schemaVersion} only supporting ${[...supportedVersions]}`
+      `Unsupported schema version ${meta.schemaVersion} only supporting ${[
+        ...supportedVersions
+      ]}`
     );
   }
 }
@@ -111,12 +126,15 @@ export class Master extends Base {
       }
     }
 
-    return new Promise((resolve,reject) => {
-      out.end(undefined,(error) => {
-        if(error) { reject(error); }
-        else { resolve(); }
+    return new Promise((resolve, reject) => {
+      out.end(undefined, error => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve();
+        }
       });
-    }); 
+    });
   }
 
   /**
@@ -148,11 +166,10 @@ export class Master extends Base {
 
         name = undefined;
         lastValue = 0;
-      }
-      else {
-        if(factory === undefined) {
+      } else {
+        if (factory === undefined) {
           checkVersion(attributes);
-          Object.assign(this,attributes);
+          Object.assign(this, attributes);
         }
       }
     };
