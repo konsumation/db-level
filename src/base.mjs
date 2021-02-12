@@ -113,7 +113,7 @@ export class Base {
   }
 
   toString() {
-    return `${this.name}: ${this.unit}`;
+    return `${this.name}:`;
   }
 
   toJSON() {
