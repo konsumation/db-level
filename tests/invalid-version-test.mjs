@@ -3,7 +3,7 @@ import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
 
-import { Master, Category } from "konsum-db";
+import { Master } from "konsum-db";
 import { createReadStream } from "fs";
 
 test("restore invalid version", async t => {
