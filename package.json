@@ -39,7 +39,7 @@
     "c8": "^7.6.0",
     "documentation": "github:arlac77/documentation",
     "leveldown": "^5.6.0",
-    "semantic-release": "^17.4.1",
+    "semantic-release": "^17.4.2",
     "tmp": "0.2.1"
   },
   "engines": {
