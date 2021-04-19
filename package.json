@@ -32,7 +32,7 @@
     "lint:docs": "documentation lint ./src/**/*.mjs"
   },
   "dependencies": {
-    "levelup": "^4.4.0"
+    "levelup": "^5.0.0"
   },
   "devDependencies": {
     "ava": "^3.15.0",
