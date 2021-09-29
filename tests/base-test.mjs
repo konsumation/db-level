@@ -1,5 +1,5 @@
 import test from "ava";
-import { Base } from "../src/base.mjs";
+import { Base } from "@konsumation/db";
 
 test("Base typeName", t => t.is(Base.typeName, "base"));
 test("Base instance typeName", t => t.is(new Base("b1").typeName, "base"));

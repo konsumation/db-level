@@ -2,10 +2,9 @@ import test from "ava";
 import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
+import { createWriteStream } from "fs";
 
-import { Master, Category, Meter, SCHEMA_VERSION_2 } from "konsum-db";
-import { createWriteStream, createReadStream } from "fs";
-import { stat } from "fs/promises";
+import { Master, Category, Meter, SCHEMA_VERSION_2 } from "@konsumation/db";
 
 test("backup as version 2", async t => {
   const master = await Master.initialize(

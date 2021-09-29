@@ -3,7 +3,7 @@ import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
 import { secondsAsString } from "../src/util.mjs";
-import { Master, Category, Note } from "konsum-db";
+import { Master, Category, Note } from "@konsumation/db";
 
 test("create Note", async t => {
   const time = Date.now();

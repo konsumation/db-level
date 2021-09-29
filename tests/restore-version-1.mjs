@@ -2,9 +2,9 @@ import test from "ava";
 import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
-
-import { Master, Category } from "konsum-db";
 import { createReadStream } from "fs";
+
+import { Master, Category } from "@konsumation/db";
 
 test("restore version 1", async t => {
   const fixture = new URL("fixtures/database-version-1.txt", import.meta.url);

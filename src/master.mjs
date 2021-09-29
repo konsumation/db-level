@@ -12,6 +12,7 @@ import { Base } from "./base.mjs";
 import { pump, secondsAsString } from "./util.mjs";
 
 export {
+  Base,
   Category,
   Meter,
   Note,

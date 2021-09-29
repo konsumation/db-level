@@ -5,7 +5,7 @@ import { stat } from "fs/promises";
 
 import levelup from "levelup";
 import leveldown from "leveldown";
-import { Master, SCHEMA_VERSION_2 } from "konsum-db";
+import { Master, SCHEMA_VERSION_2 } from "@konsumation/db";
 
 test("restore version 2", async t => {
   const fixture = new URL("fixtures/database-version-2.txt", import.meta.url);

@@ -2,10 +2,10 @@ import test from "ava";
 import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
-
-import { Master, Category, Meter, SCHEMA_VERSION_2 } from "konsum-db";
 import { createWriteStream, createReadStream } from "fs";
 import { stat } from "fs/promises";
+
+import { Master, Category, Meter } from "@konsumation/db";
 
 test("initialize", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));
