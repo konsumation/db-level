@@ -1,5 +1,5 @@
 {
-  "name": "konsum-db",
+  "name": "@konsumation/db",
   "version": "0.0.0-semantic-release",
   "publishConfig": {
     "access": "public"
@@ -43,7 +43,7 @@
     "tmp": "0.2.1"
   },
   "engines": {
-    "node": ">=14.15.1"
+    "node": ">=14.17.1"
   },
   "repository": {
     "type": "git",
