@@ -39,7 +39,7 @@
     "c8": "^7.11.3",
     "documentation": "^13.2.5",
     "leveldown": "^6.1.1",
-    "semantic-release": "^19.0.2",
+    "semantic-release": "^19.0.3",
     "tmp": "0.2.1"
   },
   "engines": {
