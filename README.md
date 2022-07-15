@@ -1,6 +1,6 @@
 [![npm](https://img.shields.io/npm/v/@konsumation/db.svg)](https://www.npmjs.com/package/@konsumation/db)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
-[![minified size](https://badgen.net/bundlephobia/min/@konsumation/db)](https://bundlephobia.com/result?p=@konsumation/db)
+[![Open Bundle](https://bundlejs.com/badge-light.svg)](https://bundlejs.com/?q=@konsumation/db)
 [![downloads](http://img.shields.io/npm/dm/@konsumation/db.svg?style=flat-square)](https://npmjs.org/package/@konsumation/db)
 [![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fkonsumation%2Fkonsum-db%2Fbadge\&style=flat)](https://actions-badge.atrox.dev/konsumation/konsum-db/goto)
 [![Styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
