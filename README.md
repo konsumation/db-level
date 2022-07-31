@@ -41,61 +41,65 @@ example();
 
 ### Table of Contents
 
+*   [Attribute](#attribute)
+    *   [Properties](#properties)
 *   [definePropertiesFromOptions](#definepropertiesfromoptions)
     *   [Parameters](#parameters)
-*   [setAttribute](#setattribute)
+*   [defaultValues](#defaultvalues)
     *   [Parameters](#parameters-1)
-*   [getAttribute](#getattribute)
+*   [setAttribute](#setattribute)
     *   [Parameters](#parameters-2)
-*   [optionJSON](#optionjson)
+*   [getAttribute](#getattribute)
     *   [Parameters](#parameters-3)
-*   [mapAttributes](#mapattributes)
+*   [optionJSON](#optionjson)
     *   [Parameters](#parameters-4)
-*   [mapAttributesInverse](#mapattributesinverse)
+*   [mapAttributes](#mapattributes)
     *   [Parameters](#parameters-5)
-*   [Base](#base)
+*   [mapAttributesInverse](#mapattributesinverse)
     *   [Parameters](#parameters-6)
-    *   [Properties](#properties)
+*   [Base](#base)
+    *   [Parameters](#parameters-7)
+    *   [Properties](#properties-1)
     *   [key](#key)
     *   [write](#write)
-        *   [Parameters](#parameters-7)
-    *   [readDetails](#readdetails)
         *   [Parameters](#parameters-8)
-    *   [delete](#delete)
+    *   [readDetails](#readdetails)
         *   [Parameters](#parameters-9)
+    *   [delete](#delete)
+        *   [Parameters](#parameters-10)
     *   [keyPrefix](#keyprefix)
     *   [keyPrefixWith](#keyprefixwith)
-        *   [Parameters](#parameters-10)
+        *   [Parameters](#parameters-11)
     *   [typeName](#typename)
     *   [attributes](#attributes)
     *   [entries](#entries)
-        *   [Parameters](#parameters-11)
-    *   [entriesWith](#entrieswith)
         *   [Parameters](#parameters-12)
-    *   [entry](#entry)
+    *   [entriesWith](#entrieswith)
         *   [Parameters](#parameters-13)
+    *   [entry](#entry)
+        *   [Parameters](#parameters-14)
 *   [description](#description)
 *   [Category](#category)
-    *   [Parameters](#parameters-14)
-    *   [Properties](#properties-1)
+    *   [Parameters](#parameters-15)
+    *   [Properties](#properties-2)
     *   [valueKey](#valuekey)
-        *   [Parameters](#parameters-15)
-    *   [writeValue](#writevalue)
         *   [Parameters](#parameters-16)
-    *   [getValue](#getvalue)
+    *   [writeValue](#writevalue)
         *   [Parameters](#parameters-17)
-    *   [deleteValue](#deletevalue)
+    *   [getValue](#getvalue)
         *   [Parameters](#parameters-18)
-    *   [values](#values)
+    *   [deleteValue](#deletevalue)
         *   [Parameters](#parameters-19)
-    *   [readStream](#readstream)
+    *   [values](#values)
         *   [Parameters](#parameters-20)
-    *   [meters](#meters)
+    *   [readStream](#readstream)
         *   [Parameters](#parameters-21)
-    *   [notes](#notes)
+    *   [meters](#meters)
         *   [Parameters](#parameters-22)
-    *   [entries](#entries-1)
+    *   [notes](#notes)
         *   [Parameters](#parameters-23)
+    *   [entries](#entries-1)
+        *   [Parameters](#parameters-24)
 *   [MASTER](#master)
 *   [SCHEMA_VERSION\_1](#schema_version\_1)
 *   [SCHEMA_VERSION\_2](#schema_version\_2)
@@ -105,23 +109,39 @@ example();
 *   [unit](#unit)
 *   [fractionalDigits](#fractionaldigits)
 *   [Master](#master-1)
-    *   [Properties](#properties-2)
+    *   [Properties](#properties-3)
     *   [close](#close)
     *   [categories](#categories)
-        *   [Parameters](#parameters-24)
-    *   [backup](#backup)
         *   [Parameters](#parameters-25)
-    *   [restore](#restore)
+    *   [backup](#backup)
         *   [Parameters](#parameters-26)
-    *   [initialize](#initialize)
+    *   [restore](#restore)
         *   [Parameters](#parameters-27)
+    *   [initialize](#initialize)
+        *   [Parameters](#parameters-28)
 *   [Meter](#meter)
-    *   [Parameters](#parameters-28)
-    *   [Properties](#properties-3)
-*   [Note](#note)
     *   [Parameters](#parameters-29)
-*   [secondsAsString](#secondsasstring)
+    *   [Properties](#properties-4)
+*   [Note](#note)
     *   [Parameters](#parameters-30)
+*   [secondsAsString](#secondsasstring)
+    *   [Parameters](#parameters-31)
+
+## Attribute
+
+Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)
+
+### Properties
+
+*   `type` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+*   `writable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+*   `private` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** should the value be shown
+*   `depends` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** name of an attribute we depend on
+*   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+*   `default` **any?** the default value
+*   `set` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** set the value
+*   `get` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** get the value can be used to calculate default values
+*   `env` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>)?** environment variable use to provide the value
 
 ## definePropertiesFromOptions
 
@@ -151,6 +171,17 @@ Object.definedProperties(new aClass(),{ with_default: { value: 77 }})
 *   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** as passed to object constructor (optional, default `{}`)
 *   `properties` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** object properties (optional, default `{}`)
 *   `attributes` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `object.constructor.attributes||[]`)
+
+## defaultValues
+
+Get default values.
+
+### Parameters
+
+*   `attributes` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+*   `object`  
+
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** filled with default values
 
 ## setAttribute
 
@@ -184,7 +215,7 @@ In other words only produce key value pairs if value is defined.
 
 *   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 *   `initial` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
-*   `skip` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** keys not to put in the result (optional, default `[]`)
+*   `attributes` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** to operator on (optional, default `object.constructor.attributes`)
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** initial + defined values
 
