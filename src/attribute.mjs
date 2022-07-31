@@ -1,4 +1,18 @@
 /**
+ * @typedef {Object} Attribute
+ *
+ * @property {string} type
+ * @property {boolean} writable
+ * @property {boolean} [private] should the value be shown
+ * @property {string} [depends] name of an attribute we depend on
+ * @property {string} description
+ * @property {any} [default]  the default value
+ * @property {Function} [set] set the value
+ * @property {Function} [get] get the value can be used to calculate default values
+ * @property {string|string[]} [env] environment variable use to provide the value
+ */
+
+/**
  * Create properties from options and default options.
  * Already present properties (direct) are skipped.
  * The attribute list from the class will be applied to the
@@ -51,6 +65,11 @@ export function definePropertiesFromOptions(
       value = attribute.set(value);
     } else {
       switch (attribute.type) {
+        case "set":
+          if (Array.isArray(value)) {
+            value = new Set(value);
+          }
+          break;
         case "boolean":
           if (value !== undefined) {
             value =
@@ -93,6 +112,30 @@ export function definePropertiesFromOptions(
 }
 
 /**
+ * Get default values.
+ * @param {Object} attributes
+ * @return {Object} filled with default values
+ */
+export function defaultValues(attributes, object) {
+  return Object.fromEntries(
+    Object.entries(attributes).reduce((a, c) => {
+      const [name, attribute] = c;
+
+      if (attribute.default !== undefined) {
+        a.push([name, attribute.default]);
+      } else if (attribute.get !== undefined) {
+        const value = attribute.get(attribute, object);
+        if (value !== undefined) {
+          a.push([name, value]);
+        }
+      }
+
+      return a;
+    }, [])
+  );
+}
+
+/**
  * Set Object attribute.
  * The name may be a property path like 'a.b.c'.
  * @param {Object} object
@@ -104,7 +147,7 @@ export function setAttribute(object, name, value) {
   const last = parts.pop();
 
   for (const p of parts) {
-    if (object[p] === undefined) {
+    if (object[p] === undefined || typeof object[p] !== "object") {
       object[p] = {};
     }
     object = object[p];
@@ -123,6 +166,10 @@ export function setAttribute(object, name, value) {
 export function getAttribute(object, name) {
   let value = object;
 
+  if (value && value[name] !== undefined) {
+    return value[name];
+  }
+
   for (const p of name.split(/\./)) {
     if (value === undefined) {
       break;
@@ -138,19 +185,27 @@ export function getAttribute(object, name) {
  * In other words only produce key value pairs if value is defined.
  * @param {Object} object
  * @param {Object} initial
- * @param {string[]} skip keys not to put in the result
+ * @param {Object} attributes to operator on
  * @return {Object} initial + defined values
  */
-export function optionJSON(object, initial = {}, skip = []) {
-  return Object.keys(object.constructor.attributes || {})
-    .filter(key => skip.indexOf(key) < 0)
-    .reduce((a, c) => {
-      const value = object[c];
-      if (value !== undefined && !(value instanceof Function)) {
-        a[c] = value;
-      }
-      return a;
-    }, initial);
+export function optionJSON(
+  object,
+  initial = {},
+  attributes = object.constructor.attributes
+) {
+  return attributes
+    ? Object.keys(attributes).reduce((a, c) => {
+        const value = object[c];
+        if (value !== undefined && !(value instanceof Function)) {
+          if (value instanceof Set) {
+            a[c] = [...value];
+          } else {
+            a[c] = value;
+          }
+        }
+        return a;
+      }, initial)
+    : initial;
 }
 
 /**
