@@ -6,14 +6,16 @@ import { stat } from "fs/promises";
 import levelup from "levelup";
 import leveldown from "leveldown";
 import { Master, SCHEMA_VERSION_2 } from "@konsumation/db";
+import { fileURLToPath } from "url";
 
-test("restore version 2", async t => {
-  const fixture = new URL("fixtures/database-version-2.txt", import.meta.url);
+test("restore version 2", async (t) => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));
   const master = await Master.initialize(db);
 
-  const input = createReadStream(fixture.pathname, { encoding: "utf8" });
-
+  const input = createReadStream(
+    fileURLToPath(new URL("fixtures/database-version-2.txt", import.meta.url)),
+    { encoding: "utf8" }
+  );
   await master.restore(input);
 
   const categories = [];
@@ -22,7 +24,7 @@ test("restore version 2", async t => {
   }
 
   t.deepEqual(
-    categories.map(c => c.name),
+    categories.map((c) => c.name),
     ["CAT-0", "CAT-1", "CAT-2"]
   );
 
@@ -31,23 +33,21 @@ test("restore version 2", async t => {
     meters.push(m);
   }
   t.deepEqual(
-    meters.map(m => m.name),
+    meters.map((m) => m.name),
     ["M-0", "M-1"]
   );
 });
 
-test("read write version 2", async t => {
+test("read write version 2", async (t) => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));
   const master = await Master.initialize(db);
-
-  const fixture = new URL("fixtures/database-version-2.txt", import.meta.url);
-
+  const fixture = fileURLToPath(
+    new URL("fixtures/database-version-2.txt", import.meta.url)
+  );
   const fi = await stat(fixture);
 
-  await master.restore(
-    createReadStream(fixture.pathname, { encoding: "utf8" })
-  );
-  t.is(master.schemaVersion,SCHEMA_VERSION_2);
+  await master.restore(createReadStream(fixture, { encoding: "utf8" }));
+  t.is(master.schemaVersion, SCHEMA_VERSION_2);
 
   const ofn = tmp.tmpNameSync();
   //console.log(ofn);
@@ -56,5 +56,5 @@ test("read write version 2", async t => {
   const fo = await stat(ofn);
 
   t.is(fi.size, fo.size);
-  t.is(fi.size,  1021);
+  t.is(fi.size, 1021);
 });
