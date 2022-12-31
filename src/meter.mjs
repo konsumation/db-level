@@ -1,5 +1,6 @@
 import { Base } from "./base.mjs";
 import { METER_ATTRIBUTES } from "./consts.mjs";
+import { description, serial } from "./attributes.mjs";
 
 /**
  * Meter
@@ -18,9 +19,9 @@ import { METER_ATTRIBUTES } from "./consts.mjs";
 export class Meter extends Base {
   static get attributes() {
     return {
-      ...super.attributes,
-      ...METER_ATTRIBUTES,
-      serial: { type: "string", writable: true }
+      description,
+      serial,
+      ...METER_ATTRIBUTES
     };
   }
 

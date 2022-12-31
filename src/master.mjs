@@ -10,6 +10,7 @@ import {
 } from "./consts.mjs";
 import { Base } from "./base.mjs";
 import { pump, secondsAsString } from "./util.mjs";
+import { description, schemaVersion } from "./attributes.mjs";
 
 export {
   Base,
@@ -47,8 +48,8 @@ export class Master extends Base {
 
   static get attributes() {
     return {
-      ...super.attributes,
-      schemaVersion: { writable: true, type: "string" }
+      description,
+      schemaVersion
     };
   }
 

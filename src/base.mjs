@@ -1,6 +1,7 @@
 import { readStreamOptions } from "./util.mjs";
 import { definePropertiesFromOptions, optionJSON } from "./attribute.mjs";
 import { SCHEMA_VERSION_1 } from "./consts.mjs";
+import { description } from "./attributes.mjs";
 
 /**
  * Base
@@ -43,11 +44,7 @@ export class Base {
    */
   static get attributes() {
     return {
-      /**
-       * Description of the content.
-       * @return {string}
-       */
-      description: { type: "string", writable: true }
+      description
     };
   }
 
@@ -169,8 +166,9 @@ export class Base {
     for (const o of Object.keys(this.constructor.attributes)) {
       const v = this[o];
       if (v !== undefined) {
-        if(this.owner && this.owner[o] == v) {
-          continue; }
+        if (this.owner && this.owner[o] == v) {
+          continue;
+        }
         await out.write(`${o}=${v}\n`);
       }
     }

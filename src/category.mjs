@@ -4,6 +4,7 @@ import { Meter } from "./meter.mjs";
 import { Note } from "./note.mjs";
 import { secondsAsString, readStreamWithTimeOptions } from "./util.mjs";
 import { CATEGORY_PREFIX, VALUE_PREFIX, METER_ATTRIBUTES } from "./consts.mjs";
+import { description } from "./attributes.mjs";
 
 /**
  * Value Category.
@@ -21,7 +22,7 @@ import { CATEGORY_PREFIX, VALUE_PREFIX, METER_ATTRIBUTES } from "./consts.mjs";
 export class Category extends Base {
   static get attributes() {
     return {
-      ...super.attributes,
+      description,
       ...METER_ATTRIBUTES
     };
   }
@@ -41,7 +42,6 @@ export class Category extends Base {
     yield* super.entries(db, this.keyPrefix, gte, lte);
   }
 
-
   /**
    * Key for a given value.
    * @param {number} time seconds since epoch
@@ -60,7 +60,6 @@ export class Category extends Base {
   async writeValue(db, value, time) {
     return db.put(this.valueKey(time), value);
   }
-
 
   //TODO error handle if key doesn exists add some in catch block? now works...withouth catch abends
   //https://github.com/Level/levelup#get
