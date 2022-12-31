@@ -30,15 +30,11 @@ export class Meter extends Base {
   }
 
   get unit() {
-    if(this.category) {
-      return this.category.unit;
-    }
+    return this.category?.unit;
   }
 
   get fractionalDigits() {
-    if(this.category) {
-      return this.category.fractionalDigits;
-    }
+    return this.category?.fractionalDigits;
   }
 
   get keyPrefix() {
