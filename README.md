@@ -59,6 +59,7 @@ example();
     *   [Parameters](#parameters-6)
 *   [mapAttributesInverse](#mapattributesinverse)
     *   [Parameters](#parameters-7)
+*   [description](#description)
 *   [Base](#base)
     *   [Parameters](#parameters-8)
     *   [Properties](#properties-1)
@@ -80,7 +81,6 @@ example();
         *   [Parameters](#parameters-14)
     *   [entry](#entry)
         *   [Parameters](#parameters-15)
-*   [description](#description)
 *   [Category](#category)
     *   [Parameters](#parameters-16)
     *   [Properties](#properties-2)
@@ -259,6 +259,10 @@ Filters out null, undefined and empty strings
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** keys renamed after mapping
 
+## description
+
+Description of the content.
+
 ## Base
 
 Base
@@ -378,12 +382,6 @@ Get a single instance.
 *   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 Returns **[Base](#base)**&#x20;
-
-## description
-
-Description of the content.
-
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 ## Category
 
