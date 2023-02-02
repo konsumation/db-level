@@ -1,12 +1,11 @@
 import test from "ava";
 import tmp from "tmp";
-import { createReadStream, createWriteStream } from "fs";
-import { stat } from "fs/promises";
-
+import { createReadStream, createWriteStream } from "node:fs";
+import { stat } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
 import levelup from "levelup";
 import leveldown from "leveldown";
 import { Master, SCHEMA_VERSION_2 } from "@konsumation/db";
-import { fileURLToPath } from "url";
 
 test("restore version 2", async (t) => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));

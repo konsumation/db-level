@@ -1,10 +1,9 @@
 import test from "ava";
+import { createWriteStream, createReadStream } from "node:fs";
+import { stat } from "node:fs/promises";
 import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
-import { createWriteStream, createReadStream } from "fs";
-import { stat } from "fs/promises";
-
 import { Master, Category, Meter } from "@konsumation/db";
 
 test("initialize", async t => {

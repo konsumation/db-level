@@ -1,10 +1,10 @@
 import test from "ava";
+import { createReadStream } from "node:fs";
+import { fileURLToPath } from "node:url";
 import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
-import { createReadStream } from "fs";
 import { Master } from "@konsumation/db";
-import { fileURLToPath } from "url";
 
 test("restore invalid version", async (t) => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));

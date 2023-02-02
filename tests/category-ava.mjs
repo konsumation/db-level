@@ -1,9 +1,9 @@
 import test from "ava";
+import { Readable } from "node:stream";
+import { createWriteStream } from "node:fs";
 import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
-import { Readable } from "stream";
-import { createWriteStream } from "fs";
 import { Master, Category } from "@konsumation/db";
 
 test("Category key", t => t.is(new Category("name1").key, "categories.name1"));

@@ -1,8 +1,8 @@
 import test from "ava";
+import { createWriteStream } from "node:fs";
 import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
-import { createWriteStream } from "fs";
 
 import { Master, Category, Meter, SCHEMA_VERSION_2 } from "@konsumation/db";
 

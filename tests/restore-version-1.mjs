@@ -1,10 +1,9 @@
 import test from "ava";
+import { createReadStream } from "node:fs";
+import { fileURLToPath } from "node:url";
 import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
-import { createReadStream } from "fs";
-import { fileURLToPath } from "url";
-
 import { Master, Category } from "@konsumation/db";
 
 test("restore version 1", async (t) => {
