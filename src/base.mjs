@@ -1,5 +1,5 @@
 import { readStreamOptions } from "./util.mjs";
-import { definePropertiesFromOptions, optionJSON } from "./attribute.mjs";
+import { definePropertiesFromOptions, optionJSON } from "./attribute-extras.mjs";
 import { SCHEMA_VERSION_1 } from "./consts.mjs";
 import { description } from "./attributes.mjs";
 
