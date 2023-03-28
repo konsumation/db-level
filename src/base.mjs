@@ -166,7 +166,7 @@ export class Base {
     for (const o of Object.keys(this.constructor.attributes)) {
       const v = this[o];
       if (v !== undefined) {
-        if (this.owner && this.owner[o] == v) {
+        if (this.owner?.[o] == v) {
           continue;
         }
         await out.write(`${o}=${v}\n`);
