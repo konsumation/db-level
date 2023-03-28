@@ -150,7 +150,8 @@ export class Master extends Base {
     let owner = this;
     let c, name, factory, value, lastValue;
     let attributes = {};
-
+    let numberOfValues = 0;
+    
     const insert = () => {
       if (name) {
         if (attributes.category) {
@@ -222,6 +223,7 @@ export class Master extends Base {
         }
         lastValue = value;
         c.writeValue(this.db, parseFloat(m[2]), value);
+        numberOfValues += 1;
       }
     };
 
@@ -239,4 +241,6 @@ export class Master extends Base {
 
     process(last);
   }
+
+  return { numberOfValues, numberOfCategories: categories.size };
 }
