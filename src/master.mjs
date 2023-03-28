@@ -240,7 +240,7 @@ export class Master extends Base {
     }
 
     process(last);
-  }
 
-  return { numberOfValues, numberOfCategories: categories.size };
+    return { numberOfValues, numberOfCategories: categories.size };
+  }
 }
