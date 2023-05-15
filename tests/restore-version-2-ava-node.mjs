@@ -18,7 +18,7 @@ test("restore version 2", async (t) => {
   const { numberOfValues, numberOfCategories } = await master.restore(input);
 
   t.is(numberOfCategories, 3);
-  t.is(numberOfValues, 29);
+  t.is(numberOfValues, 3 * 10);
   
   const categories = [];
   for await (const c of master.categories()) {
