@@ -141,7 +141,7 @@ export class Category extends Base {
    * @param {string} options.gte time
    * @param {string} options.lte up to time
    * @param {boolean} options.reverse order
-   * @return {Iterator<Meter>}
+   * @return {AsyncIterator<Meter>}
    */
   async *notes(db, options) {
     yield* this.readDetails(Note, db, options);

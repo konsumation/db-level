@@ -69,7 +69,7 @@ export class Base {
   /**
    * Get instances with owner.
    * @param {levelup} db
-   * @param {Object} owner
+   * @param {Object} object
    * @param {string} gte lowest name
    * @param {string} lte highst name
    * @return {AsyncIterator<Base>}
@@ -91,7 +91,7 @@ export class Base {
    * Get a single instance.
    * @param {levelup} db
    * @param {string} key
-   * @return {Base}
+   * @return {Promise<Base>}
    */
   static async entry(db, key) {
     for await (const c of this.entries(db, key)) {
@@ -184,7 +184,7 @@ export class Base {
    * @param {string} options.gte from name
    * @param {string} options.lte up to name
    * @param {boolean} options.reverse order
-   * @return {Iterator<factory>}
+   * @return {AsyncIterator<factory>}
    */
   async *readDetails(factory, db, options) {
     const key = factory.keyPrefixWith(this);
