@@ -7,8 +7,6 @@ jobs:
       matrix:
         node-version:
           - 16.19.0
-          - 18.16.0
-          - 20.1.0
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3.6.0
@@ -28,6 +26,7 @@ jobs:
   release:
     needs:
       - test-node
+      - test-browser
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -53,3 +52,20 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: build/coverage/lcov.info
           parallel-finished: true
+  test-browser:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser:
+          - chromium
+          - firefox
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3.6.0
+        with:
+          node-version: 18.16.0
+          cache: npm
+      - run: npm ci
+      - run: npm run test:browser-ava --if-present
+        env:
+          BROWSER: ${{ matrix.browser }}
