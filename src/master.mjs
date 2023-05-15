@@ -57,7 +57,7 @@ export class Master extends Base {
    * Initialize database.
    * checks/writes master record.
    * @param {levelup} db
-   * @return {Master}
+   * @return {Promise<Master>}
    */
   static async initialize(db) {
     let meta;
