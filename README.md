@@ -311,7 +311,7 @@ Get detail objects.
     *   `options.lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** up to name
     *   `options.reverse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** order
 
-Returns **Iterator\<factory>**&#x20;
+Returns **AsyncIterator\<factory>**&#x20;
 
 ### delete
 
@@ -365,10 +365,9 @@ Get instances with owner.
 #### Parameters
 
 *   `db` **levelup**&#x20;
-*   `object` &#x20;
+*   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 *   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** lowest name (optional, default `"\u0000"`)
 *   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** highst name (optional, default `"\uFFFF"`)
-*   `owner` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 
 Returns **AsyncIterator<[Base](#base)>**&#x20;
 
@@ -381,7 +380,7 @@ Get a single instance.
 *   `db` **levelup**&#x20;
 *   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
-Returns **[Base](#base)**&#x20;
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)<[Base](#base)>**&#x20;
 
 ## Category
 
@@ -497,7 +496,7 @@ Get Notes of the category.
     *   `options.lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** up to time
     *   `options.reverse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** order
 
-Returns **Iterator<[Meter](#meter)>**&#x20;
+Returns **AsyncIterator<[Meter](#meter)>**&#x20;
 
 ### entries
 
@@ -608,7 +607,7 @@ checks/writes master record.
 
 *   `db` **levelup**&#x20;
 
-Returns **[Master](#master)**&#x20;
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)<[Master](#master)>**&#x20;
 
 ## Meter
 
