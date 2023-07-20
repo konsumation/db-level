@@ -41,8 +41,6 @@ example();
 
 ### Table of Contents
 
-*   [Attribute](#attribute)
-    *   [Properties](#properties)
 *   [definePropertiesFromOptions](#definepropertiesfromoptions)
     *   [Parameters](#parameters)
 *   [defaultValues](#defaultvalues)
@@ -54,7 +52,7 @@ example();
 *   [mapAttributesInverse](#mapattributesinverse)
     *   [Parameters](#parameters-4)
 *   [AttributeDefinition](#attributedefinition)
-    *   [Properties](#properties-1)
+    *   [Properties](#properties)
 *   [tokens](#tokens)
     *   [Parameters](#parameters-5)
 *   [setAttribute](#setattribute)
@@ -66,7 +64,7 @@ example();
 *   [description](#description)
 *   [Base](#base)
     *   [Parameters](#parameters-9)
-    *   [Properties](#properties-2)
+    *   [Properties](#properties-1)
     *   [key](#key)
     *   [write](#write)
         *   [Parameters](#parameters-10)
@@ -87,7 +85,7 @@ example();
         *   [Parameters](#parameters-16)
 *   [Category](#category)
     *   [Parameters](#parameters-17)
-    *   [Properties](#properties-3)
+    *   [Properties](#properties-2)
     *   [valueKey](#valuekey)
         *   [Parameters](#parameters-18)
     *   [writeValue](#writevalue)
@@ -115,7 +113,7 @@ example();
 *   [unit](#unit)
 *   [fractionalDigits](#fractionaldigits)
 *   [Master](#master-1)
-    *   [Properties](#properties-4)
+    *   [Properties](#properties-3)
     *   [close](#close)
     *   [categories](#categories)
         *   [Parameters](#parameters-27)
@@ -127,27 +125,11 @@ example();
         *   [Parameters](#parameters-30)
 *   [Meter](#meter)
     *   [Parameters](#parameters-31)
-    *   [Properties](#properties-5)
+    *   [Properties](#properties-4)
 *   [Note](#note)
     *   [Parameters](#parameters-32)
 *   [secondsAsString](#secondsasstring)
     *   [Parameters](#parameters-33)
-
-## Attribute
-
-Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)
-
-### Properties
-
-*   `type` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-*   `writable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**&#x20;
-*   `private` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** should the value be shown
-*   `depends` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** name of an attribute we depend on
-*   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-*   `default` **any?** the default value
-*   `set` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** set the value
-*   `get` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** get the value can be used to calculate default values
-*   `env` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>)?** environment variable use to provide the value
 
 ## definePropertiesFromOptions
 
@@ -176,7 +158,7 @@ Object.definedProperties(new aClass(),{ with_default: { value: 77 }})
 *   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** target object
 *   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** as passed to object constructor (optional, default `{}`)
 *   `properties` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** object properties (optional, default `{}`)
-*   `attributes` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `object.constructor.attributes||[]`)
+*   `attributes` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** attribute meta info (optional, default `object.constructor.attributes`)
 
 ## defaultValues
 
@@ -185,7 +167,7 @@ Get default values.
 ### Parameters
 
 *   `attributes` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-*   `object` &#x20;
+*   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** filled with default values
 
@@ -226,7 +208,7 @@ Filters out null, undefined and empty strings
 ### Parameters
 
 *   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-*   `mapping` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
+*   `mapping` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?**&#x20;
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** keys renamed after mapping
 
