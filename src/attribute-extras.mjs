@@ -1,19 +1,4 @@
-
 import { setAttribute, getAttribute } from "./attribute.mjs";
-
-/**
- * @typedef {Object} Attribute
- *
- * @property {string} type
- * @property {boolean} writable
- * @property {boolean} [private] should the value be shown
- * @property {string} [depends] name of an attribute we depend on
- * @property {string} description
- * @property {any} [default]  the default value
- * @property {Function} [set] set the value
- * @property {Function} [get] get the value can be used to calculate default values
- * @property {string|string[]} [env] environment variable use to provide the value
- */
 
 /**
  * Create properties from options and default options.
@@ -36,79 +21,85 @@ import { setAttribute, getAttribute } from "./attribute.mjs";
  * @param {Object} object target object
  * @param {Object} options as passed to object constructor
  * @param {Object} properties object properties
- * @param {Object} attributes
+ * @param {Object} [attributes] attribute meta info
  */
 export function definePropertiesFromOptions(
   object,
   options = {},
   properties = {},
-  attributes = object.constructor.attributes || []
+  attributes = object.constructor.attributes
 ) {
   const applyLater = {};
 
-  Object.entries(attributes).forEach(([name, attribute]) => {
-    const path = name.split(/\./);
-    const first = path.shift();
-    const property = properties[first];
+  if (attributes !== undefined) {
+    Object.entries(attributes).forEach(([name, attribute]) => {
+      let value = getAttribute(options, name);
 
-    let value = getAttribute(options, name);
-
-    if (value === undefined) {
-      if (attribute.get) {
-        value = attribute.get(attribute, object, properties);
-      } else if (
-        attribute.default !== undefined &&
-        attribute.default !== getAttribute(object, name)
-      ) {
-        value = attribute.default;
-      }
-    }
-
-    if (attribute.set) {
-      value = attribute.set(value);
-    } else {
-      switch (attribute.type) {
-        case "set":
-          if (Array.isArray(value)) {
-            value = new Set(value);
-          }
-          break;
-        case "boolean":
-          if (value !== undefined) {
-            value =
-              value === 0 || value === "0" || value === false ? false : true;
-          }
-          break;
-      }
-    }
-
-    if (path.length) {
-      const remaining = path.join(".");
-      if (property) {
-        setAttribute(property.value, remaining, value);
-      } else {
-        const slice = {};
-        setAttribute(slice, remaining, value);
-        properties[first] = { configurable: true, value: slice };
-      }
-    } else {
-      if (value !== undefined) {
-        const op = Object.getOwnPropertyDescriptor(
-          object.constructor.prototype,
-          first
-        );
-
-        if (op?.set || property?.set) {
-          applyLater[first] = value;
-        } else {
-          properties[first] = Object.assign(
-            { value, writable: attribute.writable },
-            property
-          );
+      if (value === undefined) {
+        if (attribute.get) {
+          value = attribute.get(attribute, object, properties);
+        } else if (
+          attribute.default !== undefined &&
+          attribute.default !== getAttribute(object, name)
+        ) {
+          value = attribute.default;
         }
       }
-    }
-  });
+
+      if (attribute.set) {
+        value = attribute.set(value);
+      } else {
+        switch (attribute.type) {
+          case "set":
+            if (Array.isArray(value)) {
+              value = new Set(value);
+            }
+            break;
+          case "boolean":
+            if (value !== undefined) {
+              value =
+                value === 0 || value === "0" || value === false ? false : true;
+            }
+            break;
+        }
+      }
+
+      const path = name.split(/\./);
+      const first = path.shift();
+
+      if (first !== undefined) {
+        const property = properties[first];
+
+        if (path.length) {
+          const remaining = path.join(".");
+
+          if (property) {
+            setAttribute(property.value, remaining, value);
+          } else {
+            const slice = {};
+            setAttribute(slice, remaining, value);
+            properties[first] = { configurable: true, value: slice };
+          }
+        } else {
+          if (value !== undefined) {
+            const op = Object.getOwnPropertyDescriptor(
+              object.constructor.prototype,
+              first
+            );
+
+            if (op?.set || property?.set) {
+              applyLater[first] = value;
+            } else {
+              properties[first] = Object.assign(
+                { value, writable: attribute.writable },
+                property
+              );
+            }
+          }
+        }
+      }
+    });
+  }
 
   Object.defineProperties(object, properties);
   Object.assign(object, applyLater);
@@ -117,6 +108,7 @@ export function definePropertiesFromOptions(
 /**
  * Get default values.
  * @param {Object} attributes
+ * @param {Object} object
  * @return {Object} filled with default values
  */
 export function defaultValues(attributes, object) {
@@ -155,11 +147,7 @@ export function optionJSON(
     ? Object.keys(attributes).reduce((a, c) => {
         const value = object[c];
         if (value !== undefined && !(value instanceof Function)) {
-          if (value instanceof Set) {
-            a[c] = [...value];
-          } else {
-            a[c] = value;
-          }
+          a[c] = value instanceof Set ? [...value] : value;
         }
         return a;
       }, initial)
@@ -195,7 +183,7 @@ export function mapAttributes(object, mapping) {
  * Same as mapAttributes but with the inverse mapping.
  * Filters out null, undefined and empty strings
  * @param {Object} object
- * @param {Object} mapping
+ * @param {Object} [mapping]
  * @return {Object} keys renamed after mapping
  */
 export function mapAttributesInverse(object, mapping) {
