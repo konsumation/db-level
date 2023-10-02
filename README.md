@@ -251,7 +251,7 @@ The name may be a property path like 'a.b.c'.
 ## getAttribute
 
 Deliver attribute value.
-The name may be a property path like 'a.b.c'.
+The name may be a property path like 'a.b.c' or a\[2]
 
 ### Parameters
 
