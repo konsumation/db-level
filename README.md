@@ -51,59 +51,49 @@ example();
     *   [Parameters](#parameters-3)
 *   [mapAttributesInverse](#mapattributesinverse)
     *   [Parameters](#parameters-4)
-*   [AttributeDefinition](#attributedefinition)
-    *   [Properties](#properties)
-*   [tokens](#tokens)
-    *   [Parameters](#parameters-5)
-*   [setAttribute](#setattribute)
-    *   [Parameters](#parameters-6)
-*   [getAttribute](#getattribute)
-    *   [Parameters](#parameters-7)
-*   [getAttributeAndOperator](#getattributeandoperator)
-    *   [Parameters](#parameters-8)
 *   [description](#description)
 *   [Base](#base)
-    *   [Parameters](#parameters-9)
-    *   [Properties](#properties-1)
+    *   [Parameters](#parameters-5)
+    *   [Properties](#properties)
     *   [key](#key)
     *   [write](#write)
-        *   [Parameters](#parameters-10)
+        *   [Parameters](#parameters-6)
     *   [readDetails](#readdetails)
-        *   [Parameters](#parameters-11)
+        *   [Parameters](#parameters-7)
     *   [delete](#delete)
-        *   [Parameters](#parameters-12)
+        *   [Parameters](#parameters-8)
     *   [keyPrefix](#keyprefix)
     *   [keyPrefixWith](#keyprefixwith)
-        *   [Parameters](#parameters-13)
+        *   [Parameters](#parameters-9)
     *   [typeName](#typename)
     *   [attributes](#attributes)
     *   [entries](#entries)
-        *   [Parameters](#parameters-14)
+        *   [Parameters](#parameters-10)
     *   [entriesWith](#entrieswith)
-        *   [Parameters](#parameters-15)
+        *   [Parameters](#parameters-11)
     *   [entry](#entry)
-        *   [Parameters](#parameters-16)
+        *   [Parameters](#parameters-12)
 *   [Category](#category)
-    *   [Parameters](#parameters-17)
-    *   [Properties](#properties-2)
+    *   [Parameters](#parameters-13)
+    *   [Properties](#properties-1)
     *   [valueKey](#valuekey)
-        *   [Parameters](#parameters-18)
+        *   [Parameters](#parameters-14)
     *   [writeValue](#writevalue)
-        *   [Parameters](#parameters-19)
+        *   [Parameters](#parameters-15)
     *   [getValue](#getvalue)
-        *   [Parameters](#parameters-20)
+        *   [Parameters](#parameters-16)
     *   [deleteValue](#deletevalue)
-        *   [Parameters](#parameters-21)
+        *   [Parameters](#parameters-17)
     *   [values](#values)
-        *   [Parameters](#parameters-22)
+        *   [Parameters](#parameters-18)
     *   [readStream](#readstream)
-        *   [Parameters](#parameters-23)
+        *   [Parameters](#parameters-19)
     *   [meters](#meters)
-        *   [Parameters](#parameters-24)
+        *   [Parameters](#parameters-20)
     *   [notes](#notes)
-        *   [Parameters](#parameters-25)
+        *   [Parameters](#parameters-21)
     *   [entries](#entries-1)
-        *   [Parameters](#parameters-26)
+        *   [Parameters](#parameters-22)
 *   [MASTER](#master)
 *   [SCHEMA\_VERSION\_1](#schema_version_1)
 *   [SCHEMA\_VERSION\_2](#schema_version_2)
@@ -113,23 +103,23 @@ example();
 *   [unit](#unit)
 *   [fractionalDigits](#fractionaldigits)
 *   [Master](#master-1)
-    *   [Properties](#properties-3)
+    *   [Properties](#properties-2)
     *   [close](#close)
     *   [categories](#categories)
-        *   [Parameters](#parameters-27)
+        *   [Parameters](#parameters-23)
     *   [backup](#backup)
-        *   [Parameters](#parameters-28)
+        *   [Parameters](#parameters-24)
     *   [restore](#restore)
-        *   [Parameters](#parameters-29)
+        *   [Parameters](#parameters-25)
     *   [initialize](#initialize)
-        *   [Parameters](#parameters-30)
+        *   [Parameters](#parameters-26)
 *   [Meter](#meter)
-    *   [Parameters](#parameters-31)
-    *   [Properties](#properties-4)
+    *   [Parameters](#parameters-27)
+    *   [Properties](#properties-3)
 *   [Note](#note)
-    *   [Parameters](#parameters-32)
+    *   [Parameters](#parameters-28)
 *   [secondsAsString](#secondsasstring)
-    *   [Parameters](#parameters-33)
+    *   [Parameters](#parameters-29)
 
 ## definePropertiesFromOptions
 
@@ -211,67 +201,6 @@ Filters out null, undefined and empty strings
 *   `mapping` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?**&#x20;
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** keys renamed after mapping
-
-## AttributeDefinition
-
-Type: [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)
-
-### Properties
-
-*   `type` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-*   `writable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**&#x20;
-*   `private` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** should the value be shown
-*   `depends` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** name of an attribute we depend on
-*   `additionalAttributes` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** extra attributes that are present in case our attribute is set
-*   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-*   `default` **any?** the default value
-*   `set` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** set the value
-*   `get` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** get the value can be used to calculate default values
-*   `env` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)> | [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))?** environment variable use to provide the value
-
-## tokens
-
-Split property path into tokens
-
-### Parameters
-
-*   `string` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-
-## setAttribute
-
-Set Object attribute.
-The name may be a property path like 'a.b.c'.
-
-### Parameters
-
-*   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-*   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-*   `value` **any**&#x20;
-
-## getAttribute
-
-Deliver attribute value.
-The name may be a property path like 'a.b.c' or a\[2]
-
-### Parameters
-
-*   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-*   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-
-Returns **any** value associated with the given property name
-
-## getAttributeAndOperator
-
-Deliver attribute value and operator.
-The name may be a property path like 'a.b.c <='.
-
-### Parameters
-
-*   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-*   `expression` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-*   `getters`   (optional, default `{}`)
-
-Returns **\[any, [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)]** value associated with the given property name
 
 ## description
 
