@@ -15,7 +15,7 @@ export function secondsAsString(seconds) {
   return s.slice(s.length - 15);
 }
 
-export function readStreamOptions(key, options = {}) {
+export function readStreamOptions(key, options) {
   return {
     ...options,
     gte: key + "\u0000",
@@ -23,7 +23,7 @@ export function readStreamOptions(key, options = {}) {
   };
 }
 
-export function readStreamWithTimeOptions(key, options = {}) {
+export function readStreamWithTimeOptions(key, options={}) {
   return {
     ...options,
     gte: key + secondsAsString(options.gte || 0),
