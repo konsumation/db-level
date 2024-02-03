@@ -50,7 +50,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/konsumation/konsum-db"
+    "url": "git+https://github.com/konsumation/konsum-db.git"
   },
   "bugs": {
     "url": "https://github.com/konsumation/konsum-db/issues"
