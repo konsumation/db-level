@@ -84,6 +84,8 @@ export class Master extends Base {
     return master;
   }
 
+  db;
+  
   /**
    * Close the underlaying database.
    */
@@ -141,7 +143,7 @@ export class Master extends Base {
 
   /**
    * Restore database from input stream.
-   * @param {Readable} input data from backup
+   * @param {ReadableStream} input data from backup
    */
   async restore(input) {
     const categories = new Map();

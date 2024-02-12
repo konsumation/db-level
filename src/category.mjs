@@ -34,9 +34,9 @@ export class Category extends Base {
   /**
    * Get categories.
    * @param {levelup} db
-   * @param {string} gte lowest name
-   * @param {string} lte highst name
-   * @return {AsyncIterator<Category>}
+   * @param {string|undefined} gte lowest name
+   * @param {string|undefined} lte highst name
+   * @return {AsyncIterable<Category>}
    */
   static async *entries(db, gte, lte) {
     yield* super.entries(db, this.keyPrefix, gte, lte);
@@ -88,7 +88,7 @@ export class Category extends Base {
    * @param {string} options.gte time of earliest value
    * @param {string} options.lte time of latest value
    * @param {boolean} options.reverse order
-   * @return {Iterator<Object>}
+   * @return {AsyncIterable<Object>}
    */
   async *values(db, options) {
     const key = VALUE_PREFIX + this.name + ".";
@@ -128,7 +128,7 @@ export class Category extends Base {
    * @param {string} options.gte from name
    * @param {string} options.lte up to name
    * @param {boolean} options.reverse order
-   * @return {Iterator<Meter>}
+   * @return {AsyncIterable<Meter>}
    */
   async *meters(db, options) {
     yield* this.readDetails(Meter, db, options);
@@ -141,7 +141,7 @@ export class Category extends Base {
    * @param {string} options.gte time
    * @param {string} options.lte up to time
    * @param {boolean} options.reverse order
-   * @return {AsyncIterator<Meter>}
+   * @return {AsyncIterable<Meter>}
    */
   async *notes(db, options) {
     yield* this.readDetails(Note, db, options);

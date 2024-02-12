@@ -54,7 +54,7 @@ export class Base {
    * @param {string} prefix
    * @param {string} gte lowest name
    * @param {string} lte highst name
-   * @return {AsyncIterator<Base>}
+   * @return {AsyncIterable<Base>}
    */
   static async *entries(db, prefix, gte = "\u0000", lte = "\uFFFF") {
     for await (const data of db.createReadStream({
@@ -72,7 +72,7 @@ export class Base {
    * @param {Object} object
    * @param {string} gte lowest name
    * @param {string} lte highst name
-   * @return {AsyncIterator<Base>}
+   * @return {AsyncIterable<Base>}
    */
   static async *entriesWith(db, object, gte = "\u0000", lte = "\uFFFF") {
     const prefix = this.keyPrefixWith(object);
@@ -184,7 +184,7 @@ export class Base {
    * @param {string} options.gte from name
    * @param {string} options.lte up to name
    * @param {boolean} options.reverse order
-   * @return {AsyncIterator<factory>}
+   * @return {AsyncIterable<factory>}
    */
   async *readDetails(factory, db, options) {
     const key = factory.keyPrefixWith(this);
