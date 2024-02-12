@@ -246,7 +246,7 @@ Get detail objects.
 
 #### Parameters
 
-*   `factory` **Class**&#x20;
+*   `factory` &#x20;
 *   `db` **levelup**&#x20;
 *   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 
@@ -254,7 +254,7 @@ Get detail objects.
     *   `options.lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** up to name
     *   `options.reverse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** order
 
-Returns **AsyncIterator\<factory>**&#x20;
+Returns **AsyncIterable\<factory>**&#x20;
 
 ### delete
 
@@ -299,7 +299,7 @@ Get instances without owner.
 *   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** lowest name (optional, default `"\u0000"`)
 *   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** highst name (optional, default `"\uFFFF"`)
 
-Returns **AsyncIterator<[Base](#base)>**&#x20;
+Returns **AsyncIterable<[Base](#base)>**&#x20;
 
 ### entriesWith
 
@@ -312,7 +312,7 @@ Get instances with owner.
 *   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** lowest name (optional, default `"\u0000"`)
 *   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** highst name (optional, default `"\uFFFF"`)
 
-Returns **AsyncIterator<[Base](#base)>**&#x20;
+Returns **AsyncIterable<[Base](#base)>**&#x20;
 
 ### entry
 
@@ -323,7 +323,7 @@ Get a single instance.
 *   `db` **levelup**&#x20;
 *   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)<[Base](#base)>**&#x20;
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)<([Base](#base) | [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))>**&#x20;
 
 ## Category
 
@@ -394,7 +394,7 @@ Get values of the category.
     *   `options.lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** time of latest value
     *   `options.reverse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** order
 
-Returns **Iterator<[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>**&#x20;
+Returns **AsyncIterable<[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>**&#x20;
 
 ### readStream
 
@@ -424,7 +424,7 @@ Get Meters of the category.
     *   `options.lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** up to name
     *   `options.reverse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** order
 
-Returns **Iterator<[Meter](#meter)>**&#x20;
+Returns **AsyncIterable<[Meter](#meter)>**&#x20;
 
 ### notes
 
@@ -439,7 +439,7 @@ Get Notes of the category.
     *   `options.lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** up to time
     *   `options.reverse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** order
 
-Returns **AsyncIterator<[Meter](#meter)>**&#x20;
+Returns **AsyncIterable<[Meter](#meter)>**&#x20;
 
 ### entries
 
@@ -448,10 +448,10 @@ Get categories.
 #### Parameters
 
 *   `db` **levelup**&#x20;
-*   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** lowest name
-*   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** highst name
+*   `gte` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** lowest name
+*   `lte` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** highst name
 
-Returns **AsyncIterator<[Category](#category)>**&#x20;
+Returns **AsyncIterable<[Category](#category)>**&#x20;
 
 ## MASTER
 
@@ -539,7 +539,7 @@ Restore database from input stream.
 
 #### Parameters
 
-*   `input` **Readable** data from backup
+*   `input` **ReadableStream** data from backup
 
 ### initialize
 
