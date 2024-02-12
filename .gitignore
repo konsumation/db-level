@@ -7,3 +7,4 @@ bun.lockb
 .DS_Store
 .test
 .tmp
+types

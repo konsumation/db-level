@@ -91,7 +91,7 @@ export class Base {
    * Get a single instance.
    * @param {levelup} db
    * @param {string} key
-   * @return {Promise<Base>}
+   * @return {Promise<Base|undefined>}
    */
   static async entry(db, key) {
     for await (const c of this.entries(db, key)) {
@@ -103,10 +103,10 @@ export class Base {
     if (!name.match(/^[\_\-\w]+$/)) {
       throw new Error("only letters digits '-' and '_' are allowed in names");
     }
-    definePropertiesFromOptions(this, options, {
-      name: { value: name },
-      owner: { value: owner }
-    });
+
+    this.name = name;
+    this.owner = owner;
+    definePropertiesFromOptions(this, options);
   }
 
   toString() {
@@ -178,7 +178,7 @@ export class Base {
 
   /**
    * Get detail objects.
-   * @param {Class} factory
+   * @param {new (string,owner:Object,data:Object) => factory} factory
    * @param {levelup} db
    * @param {Object} options
    * @param {string} options.gte from name
