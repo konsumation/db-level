@@ -51,7 +51,7 @@
     "leveldown": "^6.1.1",
     "semantic-release": "^23.0.2",
     "tmp": "0.2.3",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.2"
   },
   "engines": {
     "node": ">=20.11.1"
