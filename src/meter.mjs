@@ -1,4 +1,5 @@
 import { Base } from "./base.mjs";
+import { Category } from "./category.mjs";
 import { METER_ATTRIBUTES } from "./consts.mjs";
 import { description, serial } from "./attributes.mjs";
 
