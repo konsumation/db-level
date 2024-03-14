@@ -61,9 +61,9 @@
     "url": "git+https://github.com/konsumation/konsum-db-level.git"
   },
   "bugs": {
-    "url": "https://github.com/konsumation/konsum-db/issues"
+    "url": "https://github.com/konsumation/konsum-db-level/issues"
   },
-  "homepage": "https://github.com/konsumation/konsum-db#readme",
+  "homepage": "https://github.com/konsumation/konsum-db-level#readme",
   "template": {
     "inheritFrom": [
       "arlac77/template-browser-ava",
