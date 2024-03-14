@@ -58,7 +58,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/konsumation/konsum-db.git"
+    "url": "git+https://github.com/konsumation/konsum-db-level.git"
   },
   "bugs": {
     "url": "https://github.com/konsumation/konsum-db/issues"
