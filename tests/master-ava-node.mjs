@@ -4,7 +4,7 @@ import { stat } from "node:fs/promises";
 import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
-import { Master, Category, Meter } from "@konsumation/db";
+import { Master, Category, Meter } from "@konsumation/db-level";
 
 test("initialize", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));

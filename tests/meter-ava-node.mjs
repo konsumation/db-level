@@ -2,7 +2,7 @@ import test from "ava";
 import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
-import { Master, Category, Meter } from "@konsumation/db";
+import { Master, Category, Meter } from "@konsumation/db-level";
 
 test("create Meter", async t => {
   const master = {};

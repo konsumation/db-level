@@ -3,8 +3,12 @@ import { createWriteStream } from "node:fs";
 import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
-
-import { Master, Category, Meter, SCHEMA_VERSION_2 } from "@konsumation/db";
+import {
+  Master,
+  Category,
+  Meter,
+  SCHEMA_VERSION_2
+} from "@konsumation/db-level";
 
 test("backup as version 2", async t => {
   const master = await Master.initialize(

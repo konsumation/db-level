@@ -4,9 +4,9 @@ import { fileURLToPath } from "node:url";
 import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
-import { Master, Category } from "@konsumation/db";
+import { Master, Category } from "@konsumation/db-level";
 
-test("restore version 1", async (t) => {
+test("restore version 1", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));
   const master = await Master.initialize(db);
 
@@ -22,7 +22,7 @@ test("restore version 1", async (t) => {
   }
 
   t.deepEqual(
-    categories.map((c) => c.name),
+    categories.map(c => c.name),
     ["CAT-0", "CAT-1", "CAT-2"]
   );
 });

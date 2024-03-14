@@ -4,7 +4,7 @@ import { createWriteStream } from "node:fs";
 import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
-import { Master, Category } from "@konsumation/db";
+import { Master, Category } from "@konsumation/db-level";
 
 test("Category key", t => t.is(new Category("name1").key, "categories.name1"));
 

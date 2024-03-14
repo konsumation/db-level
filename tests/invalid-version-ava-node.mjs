@@ -4,9 +4,9 @@ import { fileURLToPath } from "node:url";
 import tmp from "tmp";
 import levelup from "levelup";
 import leveldown from "leveldown";
-import { Master } from "@konsumation/db";
+import { Master } from "@konsumation/db-level";
 
-test("restore invalid version", async (t) => {
+test("restore invalid version", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));
   const master = await Master.initialize(db);
   const input = createReadStream(

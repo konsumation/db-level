@@ -5,9 +5,9 @@ import { stat } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import levelup from "levelup";
 import leveldown from "leveldown";
-import { Master, SCHEMA_VERSION_2 } from "@konsumation/db";
+import { Master, SCHEMA_VERSION_2 } from "@konsumation/db-level";
 
-test("restore version 2", async (t) => {
+test("restore version 2", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));
   const master = await Master.initialize(db);
 
@@ -19,14 +19,14 @@ test("restore version 2", async (t) => {
 
   t.is(numberOfCategories, 3);
   t.is(numberOfValues, 3 * 10);
-  
+
   const categories = [];
   for await (const c of master.categories()) {
     categories.push(c);
   }
 
   t.deepEqual(
-    categories.map((c) => c.name),
+    categories.map(c => c.name),
     ["CAT-0", "CAT-1", "CAT-2"]
   );
 
@@ -35,12 +35,12 @@ test("restore version 2", async (t) => {
     meters.push(m);
   }
   t.deepEqual(
-    meters.map((m) => m.name),
+    meters.map(m => m.name),
     ["M-0", "M-1"]
   );
 });
 
-test("read write version 2", async (t) => {
+test("read write version 2", async t => {
   const db = await levelup(leveldown(tmp.tmpNameSync()));
   const master = await Master.initialize(db);
   const fixture = fileURLToPath(

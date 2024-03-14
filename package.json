@@ -1,5 +1,5 @@
 {
-  "name": "@konsumation/db",
+  "name": "@konsumation/db-level",
   "version": "0.0.0-semantic-release",
   "publishConfig": {
     "access": "public",
