@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "levelup": "^5.1.1",
-    "pacc": "^3.1.5"
+    "pacc": "^3.1.6"
   },
   "devDependencies": {
     "ava": "^6.1.2",
