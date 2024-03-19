@@ -1,4 +1,5 @@
 import { Readable } from "node:stream";
+import { ClassicLevel } from "classic-level";
 import { Base } from "./base.mjs";
 import { Meter } from "./meter.mjs";
 import { Note } from "./note.mjs";
@@ -33,7 +34,7 @@ export class Category extends Base {
 
   /**
    * Get categories.
-   * @param {levelup} db
+   * @param {ClassicLevel} db
    * @param {string|undefined} gte lowest name
    * @param {string|undefined} lte highst name
    * @return {AsyncIterable<Category>}
@@ -53,7 +54,7 @@ export class Category extends Base {
 
   /**
    * Write a time/value pair.
-   * @param {levelup} db
+   * @param {ClassicLevel} db
    * @param {number} value
    * @param {number} time seconds since epoch
    */
@@ -65,7 +66,7 @@ export class Category extends Base {
   //https://github.com/Level/levelup#get
   /**
    *
-   * @param {levelup} db
+   * @param {ClassicLevel} db
    * @param {number} time seconds since epoch
    */
   async getValue(db, time) {
@@ -74,7 +75,7 @@ export class Category extends Base {
 
   /**
    *
-   * @param {levelup} db
+   * @param {ClassicLevel} db
    * @param {number} time seconds since epoch
    */
   async deleteValue(db, time) {
@@ -83,29 +84,30 @@ export class Category extends Base {
 
   /**
    * Get values of the category.
-   * @param {levelup} db
+   * @param {ClassicLevel} db
    * @param {Object} options
    * @param {string} options.gte time of earliest value
    * @param {string} options.lte time of latest value
    * @param {boolean} options.reverse order
-   * @return {AsyncIterable<Object>}
+   * @return {AsyncIterable<{value:number, time: number}>}
    */
   async *values(db, options) {
     const key = VALUE_PREFIX + this.name + ".";
     const prefixLength = key.length;
 
-    for await (const data of db.values(
+    for await (const [k, v] of db.values(
       readStreamWithTimeOptions(key, options)
     )) {
-      const value = parseFloat(data.value.toString());
-      const time = parseInt(data.key.toString().slice(prefixLength), 10);
+      const value = parseFloat(v);
+      const time = parseInt(k.slice(prefixLength), 10);
+
       yield { value, time };
     }
   }
 
   /**
    * Get values of the category as ascii text stream with time and value on each line.
-   * @param {levelup} db
+   * @param {ClassicLevel} db
    * @param {Object} options
    * @param {string} options.gte time of earliest value
    * @param {string} options.lte time of latest value
@@ -123,7 +125,7 @@ export class Category extends Base {
 
   /**
    * Get Meters of the category.
-   * @param {levelup} db
+   * @param {ClassicLevel} db
    * @param {Object} options
    * @param {string} options.gte from name
    * @param {string} options.lte up to name
@@ -136,7 +138,7 @@ export class Category extends Base {
 
   /**
    * Get Notes of the category.
-   * @param {levelup} db
+   * @param {ClassicLevel} db
    * @param {Object} options
    * @param {string} options.gte time
    * @param {string} options.lte up to time

@@ -62,8 +62,8 @@ export class Base {
       gte: prefix + gte,
       lte: prefix + lte
     })) {
-      const name = key.toString().slice(prefix.length);
-      yield new this(name, undefined, JSON.parse(value.toString()));
+      const name = key.slice(prefix.length);
+      yield new this(name, undefined, JSON.parse(value));
     }
   }
 
@@ -82,9 +82,8 @@ export class Base {
       gte: prefix + gte,
       lte: prefix + lte
     })) {
-      const name = key.toString().slice(prefix.length);
-
-      yield new this(name, object, JSON.parse(value.toString()));
+      const name = key.slice(prefix.length);
+      yield new this(name, object, JSON.parse(value));
     }
   }
 
@@ -193,8 +192,8 @@ export class Base {
     for await (const [k,value] of db.iterator(
       readStreamOptions(key, options)
     )) {
-      const name = k.toString().slice(key.length);
-      yield new factory(name, this, JSON.parse(value.toString()));
+      const name = k.slice(key.length);
+      yield new factory(name, this, JSON.parse(value));
     }
   }
 

@@ -70,8 +70,7 @@ export class Master extends Base {
         gte: MASTER,
         lte: MASTER
       })) {
-        console.log(key);
-        meta = JSON.parse(value.value.toString());value
+        meta = JSON.parse(value);
       }
     } catch (err) {
       console.error(err)
