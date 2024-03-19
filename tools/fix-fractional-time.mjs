@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 
-import levelup from "levelup";
-import leveldown from "leveldown";
+import { ClassicLevel } from "classic-level";
 import { Master, VALUE_PREFIX, secondsAsString } from "konsum-db";
 
 /**
  * remove fractional seconds from key
  */
 async function execute() {
-  const master = await Master.initialize(await levelup(leveldown("db")));
+  const master = await Master.initialize(new ClassicLevel(tmp.tmpNameSync()));
   const db = master.db;
 
   for await (const data of db.createReadStream({

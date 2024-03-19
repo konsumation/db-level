@@ -1,3 +1,4 @@
+import { ClassicLevel } from "classic-level";
 import { readStreamOptions } from "./util.mjs";
 import { definePropertiesFromOptions, optionJSON } from "./attribute-extras.mjs";
 import { SCHEMA_VERSION_1 } from "./consts.mjs";
@@ -25,7 +26,7 @@ export class Base {
 
   /**
    * @param {Base} object
-   * @return {String} prefix for a given (master) object
+   * @return {string} prefix for a given (master) object
    */
   static keyPrefixWith(object) {
     return this.keyPrefix + object.name + ".";
@@ -50,25 +51,25 @@ export class Base {
 
   /**
    * Get instances without owner.
-   * @param {levelup} db
+   * @param {ClassicLevel} db
    * @param {string} prefix
    * @param {string} gte lowest name
    * @param {string} lte highst name
    * @return {AsyncIterable<Base>}
    */
   static async *entries(db, prefix, gte = "\u0000", lte = "\uFFFF") {
-    for await (const data of db.createReadStream({
+    for await (const [key,value] of db.iterator({
       gte: prefix + gte,
       lte: prefix + lte
     })) {
-      const name = data.key.toString().slice(prefix.length);
-      yield new this(name, undefined, JSON.parse(data.value.toString()));
+      const name = key.toString().slice(prefix.length);
+      yield new this(name, undefined, JSON.parse(value.toString()));
     }
   }
 
   /**
    * Get instances with owner.
-   * @param {levelup} db
+   * @param {ClassicLevel} db
    * @param {Object} object
    * @param {string} gte lowest name
    * @param {string} lte highst name
@@ -77,19 +78,19 @@ export class Base {
   static async *entriesWith(db, object, gte = "\u0000", lte = "\uFFFF") {
     const prefix = this.keyPrefixWith(object);
 
-    for await (const data of db.createReadStream({
+    for await (const [key,value] of db.iterator({
       gte: prefix + gte,
       lte: prefix + lte
     })) {
-      const name = data.key.toString().slice(prefix.length);
+      const name = key.toString().slice(prefix.length);
 
-      yield new this(name, object, JSON.parse(data.value.toString()));
+      yield new this(name, object, JSON.parse(value.toString()));
     }
   }
 
   /**
    * Get a single instance.
-   * @param {levelup} db
+   * @param {ClassicLevel} db
    * @param {string} key
    * @return {Promise<Base|undefined>}
    */
@@ -101,7 +102,7 @@ export class Base {
 
   constructor(name, owner, options) {
     if (!name.match(/^[\_\-\w]+$/)) {
-      throw new Error("only letters digits '-' and '_' are allowed in names");
+      throw new Error("only letters digits '-' and '_' are allowed in names", name);
     }
 
     this.name = name;
@@ -138,7 +139,7 @@ export class Base {
    * Writes object into database.
    * Leaves all other entries alone.
    * @see {key}
-   * @param {levelup} db
+   * @param {ClassicLevel} db
    */
   async write(db) {
     const values = {};
@@ -179,7 +180,7 @@ export class Base {
   /**
    * Get detail objects.
    * @param {new (string,owner:Object,data:Object) => factory} factory
-   * @param {levelup} db
+   * @param {ClassicLevel} db
    * @param {Object} options
    * @param {string} options.gte from name
    * @param {string} options.lte up to name
@@ -189,17 +190,17 @@ export class Base {
   async *readDetails(factory, db, options) {
     const key = factory.keyPrefixWith(this);
 
-    for await (const data of db.createReadStream(
+    for await (const [k,value] of db.iterator(
       readStreamOptions(key, options)
     )) {
-      const name = data.key.toString().slice(key.length);
-      yield new factory(name, this, JSON.parse(data.value.toString()));
+      const name = k.toString().slice(key.length);
+      yield new factory(name, this, JSON.parse(value.toString()));
     }
   }
 
   /**
    * Delete record from database.
-   * @param {levelup} db
+   * @param {ClassicLevel} db
    */
   async delete(db) {
     return db.del(this.key);

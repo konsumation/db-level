@@ -2,16 +2,13 @@ import test from "ava";
 import { createWriteStream, createReadStream } from "node:fs";
 import { stat } from "node:fs/promises";
 import tmp from "tmp";
-import levelup from "levelup";
-import leveldown from "leveldown";
 import { Master, Category, Meter } from "@konsumation/db-level";
 
 test("initialize", async t => {
-  const db = await levelup(leveldown(tmp.tmpNameSync()));
-  const master = await Master.initialize(db);
+  const master = await Master.initialize(tmp.tmpNameSync());
 
   t.is(master.schemaVersion, "2");
-  t.is(master.db, db);
+  t.truthy(master.db);
 
   const categories = [];
   for await (const c of master.categories()) {
@@ -19,15 +16,13 @@ test("initialize", async t => {
   }
   t.deepEqual(categories, []);
 
-  db.close();
+  master.db.close();
 });
 
 const SECONDS_A_DAY = 60 * 60 * 24;
 
 test("backup as version 2", async t => {
-  const master = await Master.initialize(
-    await levelup(leveldown(tmp.tmpNameSync()))
-  );
+  const master = await Master.initialize(tmp.tmpNameSync());
 
   //master.schemaVersion = SCHEMA_VERSION_2;
 
@@ -67,9 +62,7 @@ test("backup as version 2", async t => {
   t.is(s.size, 1070);
   master.close();
 
-  const master2 = await Master.initialize(
-    await levelup(leveldown(tmp.tmpNameSync()))
-  );
+  const master2 = await Master.initialize(tmp.tmpNameSync());
   const input = createReadStream(ofn, { encoding: "utf8" });
 
   await master2.restore(input);

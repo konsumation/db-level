@@ -3,13 +3,10 @@ import tmp from "tmp";
 import { createReadStream, createWriteStream } from "node:fs";
 import { stat } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import levelup from "levelup";
-import leveldown from "leveldown";
 import { Master, SCHEMA_VERSION_2 } from "@konsumation/db-level";
 
 test("restore version 2", async t => {
-  const db = await levelup(leveldown(tmp.tmpNameSync()));
-  const master = await Master.initialize(db);
+  const master = await Master.initialize(tmp.tmpNameSync());
 
   const input = createReadStream(
     fileURLToPath(new URL("fixtures/database-version-2.txt", import.meta.url)),
@@ -31,7 +28,7 @@ test("restore version 2", async t => {
   );
 
   const meters = [];
-  for await (const m of categories[0].meters(db)) {
+  for await (const m of categories[0].meters(master.db)) {
     meters.push(m);
   }
   t.deepEqual(
@@ -41,8 +38,7 @@ test("restore version 2", async t => {
 });
 
 test("read write version 2", async t => {
-  const db = await levelup(leveldown(tmp.tmpNameSync()));
-  const master = await Master.initialize(db);
+  const master = await Master.initialize(tmp.tmpNameSync());
   const fixture = fileURLToPath(
     new URL("fixtures/database-version-2.txt", import.meta.url)
   );

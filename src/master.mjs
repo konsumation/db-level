@@ -1,3 +1,4 @@
+import { ClassicLevel } from "classic-level";
 import { Category } from "./category.mjs";
 import { Meter } from "./meter.mjs";
 import { Note } from "./note.mjs";
@@ -56,18 +57,24 @@ export class Master extends Base {
   /**
    * Initialize database.
    * checks/writes master record.
-   * @param {levelup} db
+   * @param {string} directory
    * @return {Promise<Master>}
    */
-  static async initialize(db) {
+  static async initialize(directory) {
+
+    const db = new ClassicLevel(directory);
     let meta;
 
-    for await (const data of db.createReadStream({
-      gte: MASTER,
-      lte: MASTER
-    })) {
-      meta = JSON.parse(data.value.toString());
-      break;
+    try {
+      for await (const [key, value] of db.iterator({
+        gte: MASTER,
+        lte: MASTER
+      })) {
+        console.log(key);
+        meta = JSON.parse(value.value.toString());value
+      }
+    } catch (err) {
+      console.error(err)
     }
 
     if (!meta) {
@@ -84,7 +91,7 @@ export class Master extends Base {
     return master;
   }
 
-  db;
+  /** @type {ClassicLevel} */ db;
   
   /**
    * Close the underlaying database.

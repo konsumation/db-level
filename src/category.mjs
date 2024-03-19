@@ -94,7 +94,7 @@ export class Category extends Base {
     const key = VALUE_PREFIX + this.name + ".";
     const prefixLength = key.length;
 
-    for await (const data of db.createReadStream(
+    for await (const data of db.values(
       readStreamWithTimeOptions(key, options)
     )) {
       const value = parseFloat(data.value.toString());
@@ -151,10 +151,8 @@ export class Category extends Base {
 class CategoryValueReadStream extends Readable {
   constructor(iterator, prefixLength) {
     super();
-    Object.defineProperties(this, {
-      iterator: { value: iterator },
-      prefixLength: { value: prefixLength }
-    });
+    this.iterator = iterator;
+    this.prefixLength = prefixLength;
   }
   _read() {
     if (this.destroyed) return;

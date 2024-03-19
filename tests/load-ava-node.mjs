@@ -1,8 +1,6 @@
 import test from "ava";
 import { createWriteStream } from "node:fs";
 import tmp from "tmp";
-import levelup from "levelup";
-import leveldown from "leveldown";
 import {
   Master,
   Category,
@@ -11,8 +9,7 @@ import {
 } from "@konsumation/db-level";
 
 test("backup as version 2", async t => {
-  const master = await Master.initialize(
-    await levelup(leveldown(tmp.tmpNameSync()))
+  const master = await Master.initialize(tmp.tmpNameSync()
   );
 
   master.schemaVersion = SCHEMA_VERSION_2;

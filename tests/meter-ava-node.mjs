@@ -1,7 +1,5 @@
 import test from "ava";
 import tmp from "tmp";
-import levelup from "levelup";
-import leveldown from "leveldown";
 import { Master, Category, Meter } from "@konsumation/db-level";
 
 test("create Meter", async t => {
@@ -34,9 +32,7 @@ test("create Meter with unit", async t => {
 });
 
 test("Meter write / read", async t => {
-  const master = await Master.initialize(
-    await levelup(leveldown(tmp.tmpNameSync()))
-  );
+  const master = await Master.initialize(tmp.tmpNameSync());
 
   const c = new Category("CAT-1", master, { unit: "kWh", fractionalDigits: 3 });
   await c.write(master.db);

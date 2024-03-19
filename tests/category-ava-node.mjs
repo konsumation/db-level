@@ -2,8 +2,6 @@ import test from "ava";
 import { Readable } from "node:stream";
 import { createWriteStream } from "node:fs";
 import tmp from "tmp";
-import levelup from "levelup";
-import leveldown from "leveldown";
 import { Master, Category } from "@konsumation/db-level";
 
 test("Category key", t => t.is(new Category("name1").key, "categories.name1"));
@@ -11,10 +9,8 @@ test("Category key", t => t.is(new Category("name1").key, "categories.name1"));
 test("Category value time 0", t =>
   t.is(new Category("cat").valueKey(0), "values.cat.000000000000000"));
 
-test("Category write / read / delete", async t => {
-  const master = await Master.initialize(
-    await levelup(leveldown(tmp.tmpNameSync()))
-  );
+test.only("Category write / read / delete", async t => {
+  const master = await Master.initialize(tmp.tmpNameSync());
 
   for (let i = 0; i < 10; i++) {
     const c = new Category(`CAT-${i}`, master, {
@@ -56,7 +52,7 @@ const SECONDS_A_DAY = 60 * 60 * 24;
 
 test("values write / read", async t => {
   const dbf = tmp.tmpNameSync();
-  const master = await Master.initialize(await levelup(leveldown(dbf)));
+  const master = await Master.initialize(dbf);
 
   const c = new Category(`CAT-1`, master, { unit: "kWh" });
   await c.write(master.db);
@@ -98,7 +94,7 @@ test("values write / read", async t => {
 
 test("values delete", async t => {
   const dbf = tmp.tmpNameSync();
-  const master = await Master.initialize(await levelup(leveldown(dbf)));
+  const master = await Master.initialize(dbf);
 
   const c = new Category(`CAT-2`, master, { unit: "kWh" });
   await c.write(master.db);
@@ -124,7 +120,7 @@ test("values delete", async t => {
 
 test("readStream", async t => {
   const dbf = tmp.tmpNameSync();
-  const master = await Master.initialize(await levelup(leveldown(dbf)));
+  const master = await Master.initialize(dbf);
 
   const c = new Category(`CAT-1`, master, { unit: "kWh", fractionalDigits: 2 });
   await c.write(master.db);

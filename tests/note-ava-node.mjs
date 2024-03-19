@@ -1,7 +1,5 @@
 import test from "ava";
 import tmp from "tmp";
-import levelup from "levelup";
-import leveldown from "leveldown";
 import { secondsAsString } from "../src/util.mjs";
 import { Master, Category, Note } from "@konsumation/db-level";
 
@@ -18,9 +16,7 @@ test("create Note", async t => {
 });
 
 test("Note write / read", async t => {
-  const master = await Master.initialize(
-    await levelup(leveldown(tmp.tmpNameSync()))
-  );
+  const master = await Master.initialize(tmp.tmpNameSync());
 
   const c = new Category("CAT-1", master, { unit: "kWh", fractionalDigits: 3 });
   await c.write(master.db);

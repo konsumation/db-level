@@ -30,6 +30,9 @@ export const CATEGORY_PREFIX = "categories.";
  */
 export const VALUE_PREFIX = "values.";
 
+/**
+ * 
+ */
 export const METER_ATTRIBUTES = {
   /**
    * Physical unit.
