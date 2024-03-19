@@ -101,10 +101,12 @@ example();
 *   [SCHEMA\_VERSION\_CURRENT](#schema_version_current)
 *   [CATEGORY\_PREFIX](#category_prefix)
 *   [VALUE\_PREFIX](#value_prefix)
-*   [unit](#unit)
-*   [fractionalDigits](#fractionaldigits)
+*   [METER\_ATTRIBUTES](#meter_attributes)
+    *   [unit](#unit)
+    *   [fractionalDigits](#fractionaldigits)
 *   [Master](#master-1)
     *   [Properties](#properties-2)
+    *   [db](#db)
     *   [close](#close)
     *   [categories](#categories)
         *   [Parameters](#parameters-23)
@@ -239,7 +241,7 @@ Leaves all other entries alone.
 
 #### Parameters
 
-*   `db` **levelup**&#x20;
+*   `db` **ClassicLevel**&#x20;
 
 ### readDetails
 
@@ -248,7 +250,7 @@ Get detail objects.
 #### Parameters
 
 *   `factory` &#x20;
-*   `db` **levelup**&#x20;
+*   `db` **ClassicLevel**&#x20;
 *   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 
     *   `options.gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** from name
@@ -263,7 +265,7 @@ Delete record from database.
 
 #### Parameters
 
-*   `db` **levelup**&#x20;
+*   `db` **ClassicLevel**&#x20;
 
 ### keyPrefix
 
@@ -277,7 +279,7 @@ Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 *   `object` **[Base](#base)**&#x20;
 
-Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** prefix for a given (master) object
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** prefix for a given (master) object
 
 ### typeName
 
@@ -295,7 +297,7 @@ Get instances without owner.
 
 #### Parameters
 
-*   `db` **levelup**&#x20;
+*   `db` **ClassicLevel**&#x20;
 *   `prefix` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 *   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** lowest name (optional, default `"\u0000"`)
 *   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** highst name (optional, default `"\uFFFF"`)
@@ -308,7 +310,7 @@ Get instances with owner.
 
 #### Parameters
 
-*   `db` **levelup**&#x20;
+*   `db` **ClassicLevel**&#x20;
 *   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 *   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** lowest name (optional, default `"\u0000"`)
 *   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** highst name (optional, default `"\uFFFF"`)
@@ -321,7 +323,7 @@ Get a single instance.
 
 #### Parameters
 
-*   `db` **levelup**&#x20;
+*   `db` **ClassicLevel**&#x20;
 *   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)<([Base](#base) | [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))>**&#x20;
@@ -364,7 +366,7 @@ Write a time/value pair.
 
 #### Parameters
 
-*   `db` **levelup**&#x20;
+*   `db` **ClassicLevel**&#x20;
 *   `value` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
 *   `time` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** seconds since epoch
 
@@ -372,14 +374,14 @@ Write a time/value pair.
 
 #### Parameters
 
-*   `db` **levelup**&#x20;
+*   `db` **ClassicLevel**&#x20;
 *   `time` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** seconds since epoch
 
 ### deleteValue
 
 #### Parameters
 
-*   `db` **levelup**&#x20;
+*   `db` **ClassicLevel**&#x20;
 *   `time` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** seconds since epoch
 
 ### values
@@ -388,14 +390,14 @@ Get values of the category.
 
 #### Parameters
 
-*   `db` **levelup**&#x20;
+*   `db` **ClassicLevel**&#x20;
 *   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 
     *   `options.gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** time of earliest value
     *   `options.lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** time of latest value
     *   `options.reverse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** order
 
-Returns **AsyncIterable<[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>**&#x20;
+Returns **AsyncIterable<{value: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), time: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)}>**&#x20;
 
 ### readStream
 
@@ -403,7 +405,7 @@ Get values of the category as ascii text stream with time and value on each line
 
 #### Parameters
 
-*   `db` **levelup**&#x20;
+*   `db` **ClassicLevel**&#x20;
 *   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 
     *   `options.gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** time of earliest value
@@ -418,7 +420,7 @@ Get Meters of the category.
 
 #### Parameters
 
-*   `db` **levelup**&#x20;
+*   `db` **ClassicLevel**&#x20;
 *   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 
     *   `options.gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** from name
@@ -433,7 +435,7 @@ Get Notes of the category.
 
 #### Parameters
 
-*   `db` **levelup**&#x20;
+*   `db` **ClassicLevel**&#x20;
 *   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 
     *   `options.gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** time
@@ -448,7 +450,7 @@ Get categories.
 
 #### Parameters
 
-*   `db` **levelup**&#x20;
+*   `db` **ClassicLevel**&#x20;
 *   `gte` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** lowest name
 *   `lte` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** highst name
 
@@ -490,13 +492,15 @@ Will be followed by the category name
 
 Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
 
-## unit
+## METER\_ATTRIBUTES
+
+### unit
 
 Physical unit.
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
-## fractionalDigits
+### fractionalDigits
 
 Precission
 
@@ -512,6 +516,10 @@ Holds schema version.
 ### Properties
 
 *   `schemaVersion` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+
+### db
+
+Type: ClassicLevel
 
 ### close
 
@@ -549,7 +557,7 @@ checks/writes master record.
 
 #### Parameters
 
-*   `db` **levelup**&#x20;
+*   `directory` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)<[Master](#master)>**&#x20;
 
