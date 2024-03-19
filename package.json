@@ -66,7 +66,6 @@
   "homepage": "https://github.com/konsumation/konsum-db-level#readme",
   "template": {
     "inheritFrom": [
-      "arlac77/template-browser-ava",
       "arlac77/template-github-action",
       "arlac77/template-javascript-component",
       "arlac77/template-typescript",
