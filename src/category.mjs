@@ -99,8 +99,9 @@ export class Category extends Base {
       readStreamWithTimeOptions(key, options)
     )) {
       const value = parseFloat(v);
-      const time = parseInt(k.slice(prefixLength), 10);
+      const time = parseInt(k /*k.slice(prefixLength)*/, 10);
 
+      //console.log(key, k, v, prefixLength, `:${k.slice(prefixLength)}:`);
       yield { value, time };
     }
   }
@@ -169,10 +170,7 @@ class CategoryValueReadStream extends Readable {
         this.push(null);
       } else {
         this.push(
-          `${parseInt(
-            key.toString().slice(this.prefixLength),
-            10
-          )} ${parseFloat(value.toString())}\n`
+          `${parseInt(key.slice(this.prefixLength), 10)} ${parseFloat(value)}\n`
         );
       }
     });
