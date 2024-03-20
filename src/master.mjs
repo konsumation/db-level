@@ -21,6 +21,7 @@ export {
   secondsAsString,
   SCHEMA_VERSION_1,
   SCHEMA_VERSION_2,
+  SCHEMA_VERSION_CURRENT,
   VALUE_PREFIX
 };
 
