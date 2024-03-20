@@ -2,12 +2,13 @@ import test from "ava";
 import { createWriteStream, createReadStream } from "node:fs";
 import { stat } from "node:fs/promises";
 import tmp from "tmp";
-import { Master, Category, Meter } from "@konsumation/db-level";
+import { Master, Category, Meter, SCHEMA_VERSION_CURRENT } from "@konsumation/db-level";
 
-test("initialize", async t => {
-  const master = await Master.initialize(tmp.tmpNameSync());
+test("initialize and reopen", async t => {
+  const instance = tmp.tmpNameSync();
+  const master = await Master.initialize(instance);
 
-  t.is(master.schemaVersion, "2");
+  t.is(master.schemaVersion, SCHEMA_VERSION_CURRENT);
   t.truthy(master.db);
 
   const categories = [];
@@ -17,6 +18,10 @@ test("initialize", async t => {
   t.deepEqual(categories, []);
 
   master.db.close();
+
+  const master2 = await Master.initialize(instance);
+  t.is(master2.schemaVersion, SCHEMA_VERSION_CURRENT);
+  t.truthy(master2.db);
 });
 
 const SECONDS_A_DAY = 60 * 60 * 24;
