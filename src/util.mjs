@@ -23,11 +23,11 @@ export function readStreamOptions(key, options) {
   };
 }
 
-export function readStreamWithTimeOptions(key, options={}) {
+export function readStreamWithTimeOptions(key, options) {
   return {
     ...options,
-    gte: key + secondsAsString(options.gte || 0),
-    lte: key + secondsAsString(options.lte || 999999999999999)
+    gte: key + secondsAsString(options?.gte || 0),
+    lte: key + secondsAsString(options?.lte || 999999999999999)
   };
 }
 

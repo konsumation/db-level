@@ -70,7 +70,9 @@ export class Category extends Base {
    * @param {number} time seconds since epoch
    */
   async getValue(db, time) {
-    return db.get(this.valueKey(time), { asBuffer: false }).catch(err => {});
+    return db
+      .get(this.valueKey(time) /* { asBuffer: false }*/)
+      .catch(err => {});
   }
 
   /**
@@ -95,14 +97,10 @@ export class Category extends Base {
     const key = VALUE_PREFIX + this.name + ".";
     const prefixLength = key.length;
 
-    for await (const [k, v] of db.values(
+    for await (const [k, v] of db.iterator(
       readStreamWithTimeOptions(key, options)
     )) {
-      const value = parseFloat(v);
-      const time = parseInt(k /*k.slice(prefixLength)*/, 10);
-
-      //console.log(key, k, v, prefixLength, `:${k.slice(prefixLength)}:`);
-      yield { value, time };
+      yield { value: parseFloat(v), time: parseInt(k.slice(prefixLength), 10) };
     }
   }
 
@@ -163,7 +161,7 @@ class CategoryValueReadStream extends Readable {
     this.iterator.next((err, key, value) => {
       if (this.destroyed) return;
       if (err) {
-        return this.iterator.end(err2 => callback(err || err2));
+        throw new Error(err);
       }
 
       if (key === undefined && value === undefined) {

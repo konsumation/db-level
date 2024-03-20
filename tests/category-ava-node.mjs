@@ -9,7 +9,7 @@ test("Category key", t => t.is(new Category("name1").key, "categories.name1"));
 test("Category value time 0", t =>
   t.is(new Category("cat").valueKey(0), "values.cat.000000000000000"));
 
-test.only("Category write / read / delete", async t => {
+test("Category write / read / delete", async t => {
   const master = await Master.initialize(tmp.tmpNameSync());
 
   for (let i = 0; i < 10; i++) {
@@ -84,7 +84,7 @@ test("values write / read", async t => {
   })) {
     values.push({ value, time });
   }
-  //t.log("VALUES", values);
+  t.log("VALUES", values);
 
   t.is(values.length, 1);
   t.deepEqual(values[0], { value: lastValue, time: last });
@@ -146,5 +146,5 @@ test("readStream", async t => {
 
   t.true(stream instanceof Readable);
 
-  master.close();
+  //master.close();
 });
