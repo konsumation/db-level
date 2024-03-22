@@ -17,7 +17,7 @@ test("initialize and reopen", async t => {
   }
   t.deepEqual(categories, []);
 
-  master.db.close();
+  master.close();
 
   const master2 = await Master.initialize(instance);
   t.is(master2.schemaVersion, SCHEMA_VERSION_CURRENT);
