@@ -96,9 +96,6 @@ example();
     *   [entries](#entries-1)
         *   [Parameters](#parameters-22)
 *   [MASTER](#master)
-*   [SCHEMA\_VERSION\_1](#schema_version_1)
-*   [SCHEMA\_VERSION\_2](#schema_version_2)
-*   [SCHEMA\_VERSION\_CURRENT](#schema_version_current)
 *   [CATEGORY\_PREFIX](#category_prefix)
 *   [VALUE\_PREFIX](#value_prefix)
 *   [METER\_ATTRIBUTES](#meter_attributes)
@@ -461,22 +458,6 @@ Returns **AsyncIterable<[Category](#category)>**&#x20;
 Prefix of the master record
 
 Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
-
-## SCHEMA\_VERSION\_1
-
-Outdated schema version
-
-Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
-
-## SCHEMA\_VERSION\_2
-
-Schema with type + name
-
-Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
-
-## SCHEMA\_VERSION\_CURRENT
-
-Schema version for newly created databases
 
 ## CATEGORY\_PREFIX
 
