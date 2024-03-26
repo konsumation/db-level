@@ -3,7 +3,8 @@ import tmp from "tmp";
 import { createReadStream, createWriteStream } from "node:fs";
 import { stat } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import { Master, SCHEMA_VERSION_2 } from "@konsumation/db-level";
+import { SCHEMA_VERSION_2 } from "@konsumation/model";
+import { Master } from "@konsumation/db-level";
 
 test("restore version 2", async t => {
   const master = await Master.initialize(tmp.tmpNameSync());

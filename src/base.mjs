@@ -1,7 +1,7 @@
 import { ClassicLevel } from "classic-level";
 import { readStreamOptions } from "./util.mjs";
 import { definePropertiesFromOptions, optionJSON } from "./attribute-extras.mjs";
-import { SCHEMA_VERSION_1 } from "./consts.mjs";
+import { SCHEMA_VERSION_1 } from "@konsumation/model";
 import { description } from "./attributes.mjs";
 
 /**

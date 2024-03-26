@@ -1,14 +1,14 @@
 import { ClassicLevel } from "classic-level";
-import { Category } from "./category.mjs";
-import { Meter } from "./meter.mjs";
-import { Note } from "./note.mjs";
 import {
-  MASTER,
-  VALUE_PREFIX,
   SCHEMA_VERSION_1,
   SCHEMA_VERSION_2,
   SCHEMA_VERSION_CURRENT
-} from "./consts.mjs";
+} from "@konsumation/model";
+
+import { Category } from "./category.mjs";
+import { Meter } from "./meter.mjs";
+import { Note } from "./note.mjs";
+import { MASTER, VALUE_PREFIX } from "./consts.mjs";
 import { Base } from "./base.mjs";
 import { pump, secondsAsString } from "./util.mjs";
 import { description, schemaVersion } from "./attributes.mjs";
@@ -62,7 +62,6 @@ export class Master extends Base {
    * @return {Promise<Master>}
    */
   static async initialize(directory) {
-
     const db = new ClassicLevel(directory);
     let meta;
 
@@ -74,7 +73,7 @@ export class Master extends Base {
         meta = JSON.parse(value);
       }
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
 
     if (!meta) {
@@ -92,7 +91,7 @@ export class Master extends Base {
   }
 
   /** @type {ClassicLevel} */ db;
-  
+
   /**
    * Close the underlaying database.
    */
@@ -160,7 +159,7 @@ export class Master extends Base {
     let c, name, factory, value, lastValue;
     let attributes = {};
     let numberOfValues = 0;
-    
+
     const insert = () => {
       if (name) {
         if (attributes.category) {
