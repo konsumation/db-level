@@ -2,9 +2,12 @@ import test from "ava";
 import { Readable } from "node:stream";
 import { createWriteStream } from "node:fs";
 import tmp from "tmp";
+import { testCategoryConstructor } from "@konsumation/db-test";
 import { Master, Category } from "@konsumation/db-level";
 
 test("Category key", t => t.is(new Category("name1").key, "categories.name1"));
+test.skip("Category constructor", t => testCategoryConstructor(t, Category));
+
 
 test("Category value time 0", t =>
   t.is(new Category("cat").valueKey(0), "values.cat.000000000000000"));
