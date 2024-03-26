@@ -52,7 +52,6 @@ example();
     *   [Parameters](#parameters-3)
 *   [mapAttributesInverse](#mapattributesinverse)
     *   [Parameters](#parameters-4)
-*   [description](#description)
 *   [Base](#base)
     *   [Parameters](#parameters-5)
     *   [Properties](#properties)
@@ -98,9 +97,6 @@ example();
 *   [MASTER](#master)
 *   [CATEGORY\_PREFIX](#category_prefix)
 *   [VALUE\_PREFIX](#value_prefix)
-*   [METER\_ATTRIBUTES](#meter_attributes)
-    *   [unit](#unit)
-    *   [fractionalDigits](#fractionaldigits)
 *   [Master](#master-1)
     *   [Properties](#properties-2)
     *   [db](#db)
@@ -201,10 +197,6 @@ Filters out null, undefined and empty strings
 *   `mapping` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?**&#x20;
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** keys renamed after mapping
-
-## description
-
-Description of the content.
 
 ## Base
 
@@ -472,20 +464,6 @@ Prefix of the values.
 Will be followed by the category name
 
 Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
-
-## METER\_ATTRIBUTES
-
-### unit
-
-Physical unit.
-
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-
-### fractionalDigits
-
-Precission
-
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
 
 ## Master
 
