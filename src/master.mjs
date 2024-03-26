@@ -2,7 +2,9 @@ import { ClassicLevel } from "classic-level";
 import {
   SCHEMA_VERSION_1,
   SCHEMA_VERSION_2,
-  SCHEMA_VERSION_CURRENT
+  SCHEMA_VERSION_CURRENT,
+  description,
+  schemaVersion
 } from "@konsumation/model";
 
 import { Category } from "./category.mjs";
@@ -11,7 +13,6 @@ import { Note } from "./note.mjs";
 import { MASTER, VALUE_PREFIX } from "./consts.mjs";
 import { Base } from "./base.mjs";
 import { pump, secondsAsString } from "./util.mjs";
-import { description, schemaVersion } from "./attributes.mjs";
 
 export {
   Base,

@@ -1,11 +1,11 @@
 import { Readable } from "node:stream";
 import { ClassicLevel } from "classic-level";
+import { description, unit, fractionalDigits } from "@konsumation/model";
 import { Base } from "./base.mjs";
 import { Meter } from "./meter.mjs";
 import { Note } from "./note.mjs";
 import { secondsAsString, readStreamWithTimeOptions } from "./util.mjs";
-import { CATEGORY_PREFIX, VALUE_PREFIX, METER_ATTRIBUTES } from "./consts.mjs";
-import { description } from "./attributes.mjs";
+import { CATEGORY_PREFIX, VALUE_PREFIX } from "./consts.mjs";
 
 /**
  * Value Category.
@@ -24,7 +24,8 @@ export class Category extends Base {
   static get attributes() {
     return {
       description,
-      ...METER_ATTRIBUTES
+      unit,
+      fractionalDigits
     };
   }
 

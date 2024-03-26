@@ -1,7 +1,11 @@
+import {
+  description,
+  serial,
+  unit,
+  fractionalDigits
+} from "@konsumation/model";
 import { Base } from "./base.mjs";
 import { Category } from "./category.mjs";
-import { METER_ATTRIBUTES } from "./consts.mjs";
-import { description, serial } from "./attributes.mjs";
 
 /**
  * Meter
@@ -22,7 +26,8 @@ export class Meter extends Base {
     return {
       description,
       serial,
-      ...METER_ATTRIBUTES
+      unit,
+      fractionalDigits
     };
   }
 
