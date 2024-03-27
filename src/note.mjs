@@ -1,5 +1,6 @@
 import { Base } from "./base.mjs";
 import { secondsAsString } from "./util.mjs";
+import { NOTE_PREFIX } from "./consts.mjs";
 
 /**
  * Hints placed on a category at a specific time.
@@ -14,6 +15,6 @@ export class Note extends Base {
   }
 
   get keyPrefix() {
-    return super.keyPrefix + this.category.name + ".";
+    return NOTE_PREFIX + this.category.name + ".";
   }
 }

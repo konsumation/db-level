@@ -6,6 +6,7 @@ import {
 } from "@konsumation/model";
 import { Base } from "./base.mjs";
 import { Category } from "./category.mjs";
+import { METER_PREFIX } from "./consts.mjs";
 
 /**
  * Meter
@@ -44,6 +45,6 @@ export class Meter extends Base {
   }
 
   get keyPrefix() {
-    return super.keyPrefix + this.category.name + ".";
+    return METER_PREFIX + this.category.name + ".";
   }
 }
