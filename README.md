@@ -97,6 +97,8 @@ example();
 *   [MASTER](#master)
 *   [CATEGORY\_PREFIX](#category_prefix)
 *   [VALUE\_PREFIX](#value_prefix)
+*   [METER\_PREFIX](#meter_prefix)
+*   [NOTE\_PREFIX](#note_prefix)
 *   [Master](#master-1)
     *   [Properties](#properties-2)
     *   [db](#db)
@@ -461,6 +463,20 @@ Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 ## VALUE\_PREFIX
 
 Prefix of the values.
+Will be followed by the category name
+
+Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+## METER\_PREFIX
+
+Prefix of the meters.
+Will be followed by the category name
+
+Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+## NOTE\_PREFIX
+
+Prefix of the notes.
 Will be followed by the category name
 
 Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
