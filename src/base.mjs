@@ -1,6 +1,9 @@
 import { ClassicLevel } from "classic-level";
 import { readStreamOptions } from "./util.mjs";
-import { definePropertiesFromOptions, optionJSON } from "./attribute-extras.mjs";
+import {
+  definePropertiesFromOptions,
+  optionJSON
+} from "./attribute-extras.mjs";
 import { SCHEMA_VERSION_1, description } from "@konsumation/model";
 
 /**
@@ -57,7 +60,7 @@ export class Base {
    * @return {AsyncIterable<Base>}
    */
   static async *entries(db, prefix, gte = "\u0000", lte = "\uFFFF") {
-    for await (const [key,value] of db.iterator({
+    for await (const [key, value] of db.iterator({
       gte: prefix + gte,
       lte: prefix + lte
     })) {
@@ -77,7 +80,7 @@ export class Base {
   static async *entriesWith(db, object, gte = "\u0000", lte = "\uFFFF") {
     const prefix = this.keyPrefixWith(object);
 
-    for await (const [key,value] of db.iterator({
+    for await (const [key, value] of db.iterator({
       gte: prefix + gte,
       lte: prefix + lte
     })) {
@@ -100,7 +103,10 @@ export class Base {
 
   constructor(name, owner, options) {
     if (!name.match(/^[\_\-\w]+$/)) {
-      throw new Error("only letters digits '-' and '_' are allowed in names", name);
+      throw new Error(
+        "only letters digits '-' and '_' are allowed in names",
+        name
+      );
     }
 
     this.name = name;
@@ -188,7 +194,7 @@ export class Base {
   async *readDetails(factory, db, options) {
     const key = factory.keyPrefixWith(this);
 
-    for await (const [k,value] of db.iterator(
+    for await (const [k, value] of db.iterator(
       readStreamOptions(key, options)
     )) {
       const name = k.slice(key.length);
