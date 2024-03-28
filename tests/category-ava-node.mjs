@@ -5,6 +5,10 @@ import tmp from "tmp";
 import { testCategoryConstructor } from "@konsumation/db-test";
 import { Master, Category } from "@konsumation/db-level";
 
+
+test("Category typeName", t => t.is(Category.typeName, "category"));
+test("Category instance typeName", t => t.is(new Category("c1").typeName, "category"));
+
 test("Category key", t => t.is(new Category("name1").key, "categories.name1"));
 test.skip("Category constructor", t => testCategoryConstructor(t, Category));
 

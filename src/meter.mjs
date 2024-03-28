@@ -32,6 +32,10 @@ export class Meter extends Base {
     };
   }
 
+  static get typeName() {
+    return "meter";
+  }
+
   get category() {
     return this.owner;
   }

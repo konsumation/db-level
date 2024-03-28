@@ -4,7 +4,6 @@ import {
   definePropertiesFromOptions,
   optionJSON
 } from "./attribute-extras.mjs";
-import { description } from "@konsumation/model";
 
 /**
  * Base
@@ -40,15 +39,6 @@ export class Base {
    */
   static get typeName() {
     return this.name.toLowerCase();
-  }
-
-  /**
-   * Additional attributes to be persisted
-   */
-  static get attributes() {
-    return {
-      description
-    };
   }
 
   /**

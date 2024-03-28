@@ -29,6 +29,10 @@ export class Category extends Base {
     };
   }
 
+  static get typeName() {
+    return "category";
+  }
+
   static get keyPrefix() {
     return CATEGORY_PREFIX;
   }
