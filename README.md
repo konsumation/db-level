@@ -99,7 +99,7 @@ example();
 *   [VALUE\_PREFIX](#value_prefix)
 *   [METER\_PREFIX](#meter_prefix)
 *   [NOTE\_PREFIX](#note_prefix)
-*   [Master](#master-1)
+*   [LevelMaster](#levelmaster)
     *   [Properties](#properties-2)
     *   [db](#db)
     *   [close](#close)
@@ -481,9 +481,9 @@ Will be followed by the category name
 
 Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
 
-## Master
+## LevelMaster
 
-**Extends Base**
+**Extends Master**
 
 Master record.
 Holds schema version.
@@ -534,7 +534,7 @@ checks/writes master record.
 
 *   `directory` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)<[Master](#master)>**&#x20;
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<Master>**&#x20;
 
 ## Meter
 
