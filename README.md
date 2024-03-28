@@ -66,7 +66,6 @@ example();
     *   [keyPrefixWith](#keyprefixwith)
         *   [Parameters](#parameters-9)
     *   [typeName](#typename)
-    *   [attributes](#attributes)
     *   [entries](#entries)
         *   [Parameters](#parameters-10)
     *   [entriesWith](#entrieswith)
@@ -116,6 +115,7 @@ example();
     *   [Properties](#properties-3)
 *   [Note](#note)
     *   [Parameters](#parameters-28)
+    *   [attributes](#attributes)
 *   [secondsAsString](#secondsasstring)
     *   [Parameters](#parameters-29)
 
@@ -277,10 +277,6 @@ Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 Name of the type in text dump
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-
-### attributes
-
-Additional attributes to be persisted
 
 ### entries
 
@@ -570,6 +566,10 @@ Hints placed on a category at a specific time.
 *   `time` &#x20;
 *   `owner` &#x20;
 *   `options` &#x20;
+
+### attributes
+
+Additional attributes to be persisted
 
 ## secondsAsString
 
