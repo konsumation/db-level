@@ -4,18 +4,17 @@ import {
   SCHEMA_VERSION_3,
   SCHEMA_VERSION_CURRENT,
   description,
-  schemaVersion
+  schemaVersion,
+  Master
 } from "@konsumation/model";
 
 import { Category } from "./category.mjs";
 import { Meter } from "./meter.mjs";
 import { Note } from "./note.mjs";
 import { MASTER, VALUE_PREFIX } from "./consts.mjs";
-import { Base } from "./base.mjs";
 import { pump, secondsAsString } from "./util.mjs";
 
 export {
-  Base,
   Category,
   Meter,
   Note,
@@ -38,13 +37,15 @@ function checkVersion(meta) {
   }
 }
 
+export { LevelMaster as Master };
+
 /**
  * Master record.
  * Holds schema version.
  *
  * @property {string} schemaVersion
  */
-export class Master extends Base {
+class LevelMaster extends Master {
   static get keyPrefix() {
     return MASTER;
   }
@@ -85,7 +86,7 @@ export class Master extends Base {
       await db.put(MASTER, JSON.stringify(meta));
     }
 
-    const master = new Master("unnamed", undefined, meta);
+    const master = new LevelMaster(meta);
     master.db = db;
 
     return master;
