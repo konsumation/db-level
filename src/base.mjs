@@ -4,7 +4,7 @@ import {
   definePropertiesFromOptions,
   optionJSON
 } from "./attribute-extras.mjs";
-import { SCHEMA_VERSION_1, description } from "@konsumation/model";
+import { description } from "@konsumation/model";
 
 /**
  * Base
@@ -158,11 +158,7 @@ export class Base {
   }
 
   async writeAsText(out, name, master) {
-    await out.write(
-      master.schemaVersion === SCHEMA_VERSION_1
-        ? `[${name}]\n`
-        : `[${this.typeName} "${name}"]\n`
-    );
+    await out.write(`[${this.typeName} "${name}"]\n`);
 
     if (this.owner) {
       await out.write(`${this.owner.typeName}=${this.owner.name}\n`);

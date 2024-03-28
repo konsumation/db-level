@@ -15,6 +15,6 @@ test("restore invalid version", async t => {
     await master.restore(input);
     t.fail("should throw");
   } catch (e) {
-    t.is(e.message, "Unsupported schema version 0 only supporting 1,2,3");
+    t.is(e.message, "Unsupported schema version 0 only supporting 2,3");
   }
 });
