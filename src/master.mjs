@@ -2,6 +2,7 @@ import { ClassicLevel } from "classic-level";
 import {
   SCHEMA_VERSION_1,
   SCHEMA_VERSION_2,
+  SCHEMA_VERSION_3,
   SCHEMA_VERSION_CURRENT,
   description,
   schemaVersion
@@ -22,11 +23,12 @@ export {
   secondsAsString,
   SCHEMA_VERSION_1,
   SCHEMA_VERSION_2,
+  SCHEMA_VERSION_3,
   SCHEMA_VERSION_CURRENT,
   VALUE_PREFIX
 };
 
-const supportedVersions = new Set([SCHEMA_VERSION_1, SCHEMA_VERSION_2]);
+const supportedVersions = new Set([SCHEMA_VERSION_1, SCHEMA_VERSION_2, SCHEMA_VERSION_3]);
 
 function checkVersion(meta) {
   if (!supportedVersions.has(meta.schemaVersion)) {
