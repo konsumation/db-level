@@ -36,6 +36,14 @@ export class Meter extends Base {
     return "meter";
   }
 
+  static get keyPrefix() {
+    return METER_PREFIX;
+  }
+  
+  static keyPrefixWith(object) {
+    return this.keyPrefix + object.name + ".";
+  }
+
   get category() {
     return this.owner;
   }

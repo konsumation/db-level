@@ -18,30 +18,6 @@ import {
  */
 export class Base {
   /**
-   * Prefix of the key
-   * @return {string}
-   */
-  static get keyPrefix() {
-    return this.typeName + "s.";
-  }
-
-  /**
-   * @param {Base} object
-   * @return {string} prefix for a given (master) object
-   */
-  static keyPrefixWith(object) {
-    return this.keyPrefix + object.name + ".";
-  }
-
-  /**
-   * Name of the type in text dump
-   * @return {string}
-   */
-  static get typeName() {
-    return this.name.toLowerCase();
-  }
-
-  /**
    * Get instances without owner.
    * @param {ClassicLevel} db
    * @param {string} prefix

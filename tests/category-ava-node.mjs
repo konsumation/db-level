@@ -4,14 +4,17 @@ import { createWriteStream } from "node:fs";
 import tmp from "tmp";
 import { testCategoryConstructor } from "@konsumation/db-test";
 import { Master, Category } from "@konsumation/db-level";
+import { CATEGORY_PREFIX } from "../src/consts.mjs";
 
 
 test("Category typeName", t => t.is(Category.typeName, "category"));
 test("Category instance typeName", t => t.is(new Category("c1").typeName, "category"));
 
+test("Category keyPrefix", t => t.is(Category.keyPrefix, CATEGORY_PREFIX));
+test("Category instance keyPrefix", t => t.is(new Category("c1").keyPrefix, CATEGORY_PREFIX));
+
 test("Category key", t => t.is(new Category("name1").key, "categories.name1"));
 test.skip("Category constructor", t => testCategoryConstructor(t, Category));
-
 
 test("Category value time 0", t =>
   t.is(new Category("cat").valueKey(0), "values.cat.000000000000000"));

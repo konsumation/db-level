@@ -36,6 +36,10 @@ export class Category extends Base {
   static get keyPrefix() {
     return CATEGORY_PREFIX;
   }
+  
+  static keyPrefixWith(object) {
+    return this.keyPrefix + object.name + ".";
+  }
 
   /**
    * Get categories.

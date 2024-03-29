@@ -11,6 +11,14 @@ export class Note extends Base {
     return "note";
   }
 
+  static get keyPrefix() {
+    return NOTE_PREFIX;
+  }
+  
+  static keyPrefixWith(object) {
+    return this.keyPrefix + object.name + ".";
+  }
+
   /**
    * Additional attributes to be persisted
    */
