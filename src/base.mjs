@@ -1,9 +1,6 @@
 import { ClassicLevel } from "classic-level";
 import { readStreamOptions } from "./util.mjs";
-import {
-  definePropertiesFromOptions,
-  optionJSON
-} from "./attribute-extras.mjs";
+import { definePropertiesFromOptions } from "./attribute-extras.mjs";
 
 /**
  * Base
@@ -82,27 +79,6 @@ export class Base {
 
   toString() {
     return `${this.name}:`;
-  }
-
-  toJSON() {
-    return optionJSON(this, {
-      name: this.name
-    });
-  }
-
-  get typeName() {
-    return this.constructor.typeName;
-  }
-
-  get keyPrefix() {
-    return this.constructor.keyPrefix;
-  }
-
-  /**
-   * @return {string}
-   */
-  get key() {
-    return this.keyPrefix + this.name;
   }
 
   /**

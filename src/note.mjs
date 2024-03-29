@@ -14,7 +14,7 @@ export class Note extends Base {
   static get keyPrefix() {
     return NOTE_PREFIX;
   }
-  
+
   static keyPrefixWith(object) {
     return this.keyPrefix + object.name + ".";
   }
@@ -30,6 +30,21 @@ export class Note extends Base {
 
   constructor(time, owner, options) {
     super(secondsAsString(time), owner, options);
+  }
+
+  get typeName() {
+    return this.constructor.typeName;
+  }
+
+  get keyPrefix() {
+    return this.constructor.keyPrefix;
+  }
+
+  /**
+   * @return {string}
+   */
+  get key() {
+    return this.keyPrefix + this.name;
   }
 
   get category() {
