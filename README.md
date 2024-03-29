@@ -55,7 +55,6 @@ example();
 *   [Base](#base)
     *   [Parameters](#parameters-5)
     *   [Properties](#properties)
-    *   [key](#key)
     *   [write](#write)
         *   [Parameters](#parameters-6)
     *   [readDetails](#readdetails)
@@ -71,6 +70,7 @@ example();
 *   [Category](#category)
     *   [Parameters](#parameters-12)
     *   [Properties](#properties-1)
+    *   [key](#key)
     *   [valueKey](#valuekey)
         *   [Parameters](#parameters-13)
     *   [writeValue](#writevalue)
@@ -109,8 +109,10 @@ example();
 *   [Meter](#meter)
     *   [Parameters](#parameters-26)
     *   [Properties](#properties-3)
+    *   [key](#key-1)
 *   [Note](#note)
     *   [Parameters](#parameters-27)
+    *   [key](#key-2)
     *   [attributes](#attributes)
 *   [secondsAsString](#secondsasstring)
     *   [Parameters](#parameters-28)
@@ -215,10 +217,6 @@ Base
 *   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 *   `unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit
 
-### key
-
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-
 ### write
 
 *   **See**: {key}
@@ -312,6 +310,10 @@ Value Category.
 *   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 *   `unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit
 *   `fractionalDigits` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** display precission
+
+### key
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 ### valueKey
 
@@ -531,6 +533,10 @@ Meter
 *   `unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit
 *   `fractionalDigits` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** display precission
 
+### key
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+
 ## Note
 
 **Extends Base**
@@ -542,6 +548,10 @@ Hints placed on a category at a specific time.
 *   `time` &#x20;
 *   `owner` &#x20;
 *   `options` &#x20;
+
+### key
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 ### attributes
 
