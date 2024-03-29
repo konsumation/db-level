@@ -62,37 +62,33 @@ example();
         *   [Parameters](#parameters-7)
     *   [delete](#delete)
         *   [Parameters](#parameters-8)
-    *   [keyPrefix](#keyprefix)
-    *   [keyPrefixWith](#keyprefixwith)
-        *   [Parameters](#parameters-9)
-    *   [typeName](#typename)
     *   [entries](#entries)
-        *   [Parameters](#parameters-10)
+        *   [Parameters](#parameters-9)
     *   [entriesWith](#entrieswith)
-        *   [Parameters](#parameters-11)
+        *   [Parameters](#parameters-10)
     *   [entry](#entry)
-        *   [Parameters](#parameters-12)
+        *   [Parameters](#parameters-11)
 *   [Category](#category)
-    *   [Parameters](#parameters-13)
+    *   [Parameters](#parameters-12)
     *   [Properties](#properties-1)
     *   [valueKey](#valuekey)
-        *   [Parameters](#parameters-14)
+        *   [Parameters](#parameters-13)
     *   [writeValue](#writevalue)
-        *   [Parameters](#parameters-15)
+        *   [Parameters](#parameters-14)
     *   [getValue](#getvalue)
-        *   [Parameters](#parameters-16)
+        *   [Parameters](#parameters-15)
     *   [deleteValue](#deletevalue)
-        *   [Parameters](#parameters-17)
+        *   [Parameters](#parameters-16)
     *   [values](#values)
-        *   [Parameters](#parameters-18)
+        *   [Parameters](#parameters-17)
     *   [readStream](#readstream)
-        *   [Parameters](#parameters-19)
+        *   [Parameters](#parameters-18)
     *   [meters](#meters)
-        *   [Parameters](#parameters-20)
+        *   [Parameters](#parameters-19)
     *   [notes](#notes)
-        *   [Parameters](#parameters-21)
+        *   [Parameters](#parameters-20)
     *   [entries](#entries-1)
-        *   [Parameters](#parameters-22)
+        *   [Parameters](#parameters-21)
 *   [MASTER](#master)
 *   [CATEGORY\_PREFIX](#category_prefix)
 *   [VALUE\_PREFIX](#value_prefix)
@@ -103,21 +99,21 @@ example();
     *   [db](#db)
     *   [close](#close)
     *   [categories](#categories)
-        *   [Parameters](#parameters-23)
+        *   [Parameters](#parameters-22)
     *   [backup](#backup)
-        *   [Parameters](#parameters-24)
+        *   [Parameters](#parameters-23)
     *   [restore](#restore)
-        *   [Parameters](#parameters-25)
+        *   [Parameters](#parameters-24)
     *   [initialize](#initialize)
-        *   [Parameters](#parameters-26)
+        *   [Parameters](#parameters-25)
 *   [Meter](#meter)
-    *   [Parameters](#parameters-27)
+    *   [Parameters](#parameters-26)
     *   [Properties](#properties-3)
 *   [Note](#note)
-    *   [Parameters](#parameters-28)
+    *   [Parameters](#parameters-27)
     *   [attributes](#attributes)
 *   [secondsAsString](#secondsasstring)
-    *   [Parameters](#parameters-29)
+    *   [Parameters](#parameters-28)
 
 ## definePropertiesFromOptions
 
@@ -257,26 +253,6 @@ Delete record from database.
 #### Parameters
 
 *   `db` **ClassicLevel**&#x20;
-
-### keyPrefix
-
-Prefix of the key
-
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-
-### keyPrefixWith
-
-#### Parameters
-
-*   `object` **[Base](#base)**&#x20;
-
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** prefix for a given (master) object
-
-### typeName
-
-Name of the type in text dump
-
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 ### entries
 
