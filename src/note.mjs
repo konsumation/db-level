@@ -32,12 +32,12 @@ export class Note extends Base {
     super(secondsAsString(time), owner, options);
   }
 
-  get typeName() {
-    return this.constructor.typeName;
+  get category() {
+    return this.owner;
   }
 
   get keyPrefix() {
-    return this.constructor.keyPrefix;
+    return NOTE_PREFIX + this.category.name + ".";
   }
 
   /**
@@ -45,13 +45,5 @@ export class Note extends Base {
    */
   get key() {
     return this.keyPrefix + this.name;
-  }
-
-  get category() {
-    return this.owner;
-  }
-
-  get keyPrefix() {
-    return NOTE_PREFIX + this.category.name + ".";
   }
 }

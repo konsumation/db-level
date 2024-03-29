@@ -38,7 +38,7 @@ export class Category extends Base {
   }
 
   static keyPrefixWith(object) {
-    return this.keyPrefix + object.name + ".";
+    return CATEGORY_PREFIX + object.name + ".";
   }
 
   /**
@@ -52,12 +52,8 @@ export class Category extends Base {
     yield* super.entries(db, this.keyPrefix, gte, lte);
   }
 
-  get typeName() {
-    return this.constructor.typeName;
-  }
-
   get keyPrefix() {
-    return this.constructor.keyPrefix;
+    return CATEGORY_PREFIX;
   }
 
   /**

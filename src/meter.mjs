@@ -44,21 +44,6 @@ export class Meter extends Base {
     return this.keyPrefix + object.name + ".";
   }
 
-  get typeName() {
-    return this.constructor.typeName;
-  }
-
-  get keyPrefix() {
-    return this.constructor.keyPrefix;
-  }
-
-  /**
-   * @return {string}
-   */
-  get key() {
-    return this.keyPrefix + this.name;
-  }
-
   get category() {
     return this.owner;
   }
@@ -73,5 +58,12 @@ export class Meter extends Base {
 
   get keyPrefix() {
     return METER_PREFIX + this.category.name + ".";
+  }
+
+  /**
+   * @return {string}
+   */
+  get key() {
+    return this.keyPrefix + this.name;
   }
 }

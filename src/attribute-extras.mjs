@@ -131,30 +131,6 @@ export function defaultValues(attributes, object) {
 }
 
 /**
- * Create json based on present options.
- * In other words only produce key value pairs if value is defined.
- * @param {Object} object
- * @param {Object} initial
- * @param {Object} attributes to operator on
- * @return {Object} initial + defined values
- */
-export function optionJSON(
-  object,
-  initial = {},
-  attributes = object.constructor.attributes
-) {
-  return attributes
-    ? Object.keys(attributes).reduce((a, c) => {
-        const value = object[c];
-        if (value !== undefined && !(value instanceof Function)) {
-          a[c] = value instanceof Set ? [...value] : value;
-        }
-        return a;
-      }, initial)
-    : initial;
-}
-
-/**
  * Rename attributes.
  * Filters out null, undefined and empty strings.
  * ```js

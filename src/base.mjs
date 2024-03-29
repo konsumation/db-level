@@ -1,6 +1,7 @@
 import { ClassicLevel } from "classic-level";
 import { readStreamOptions } from "./util.mjs";
 import { definePropertiesFromOptions } from "./attribute-extras.mjs";
+import { Base as ModelBase } from "@konsumation/model";
 
 /**
  * Base
@@ -13,7 +14,7 @@ import { definePropertiesFromOptions } from "./attribute-extras.mjs";
  * @property {string} description
  * @property {string} unit physical unit
  */
-export class Base {
+export class Base extends ModelBase {
   /**
    * Get instances without owner.
    * @param {ClassicLevel} db
@@ -65,6 +66,7 @@ export class Base {
   }
 
   constructor(name, owner, options) {
+    super();
     if (!name.match(/^[\_\-\w]+$/)) {
       throw new Error(
         "only letters digits '-' and '_' are allowed in names",
