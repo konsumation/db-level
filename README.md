@@ -46,47 +46,49 @@ example();
     *   [Parameters](#parameters)
 *   [defaultValues](#defaultvalues)
     *   [Parameters](#parameters-1)
-*   [mapAttributes](#mapattributes)
+*   [optionJSON](#optionjson)
     *   [Parameters](#parameters-2)
-*   [mapAttributesInverse](#mapattributesinverse)
+*   [mapAttributes](#mapattributes)
     *   [Parameters](#parameters-3)
-*   [Base](#base)
+*   [mapAttributesInverse](#mapattributesinverse)
     *   [Parameters](#parameters-4)
+*   [Base](#base)
+    *   [Parameters](#parameters-5)
     *   [Properties](#properties)
     *   [write](#write)
-        *   [Parameters](#parameters-5)
-    *   [readDetails](#readdetails)
         *   [Parameters](#parameters-6)
-    *   [delete](#delete)
+    *   [readDetails](#readdetails)
         *   [Parameters](#parameters-7)
-    *   [entries](#entries)
+    *   [delete](#delete)
         *   [Parameters](#parameters-8)
-    *   [entriesWith](#entrieswith)
+    *   [entries](#entries)
         *   [Parameters](#parameters-9)
-    *   [entry](#entry)
+    *   [entriesWith](#entrieswith)
         *   [Parameters](#parameters-10)
+    *   [entry](#entry)
+        *   [Parameters](#parameters-11)
 *   [Category](#category)
-    *   [Parameters](#parameters-11)
+    *   [Parameters](#parameters-12)
     *   [Properties](#properties-1)
     *   [key](#key)
     *   [valueKey](#valuekey)
-        *   [Parameters](#parameters-12)
-    *   [writeValue](#writevalue)
         *   [Parameters](#parameters-13)
-    *   [getValue](#getvalue)
+    *   [writeValue](#writevalue)
         *   [Parameters](#parameters-14)
-    *   [deleteValue](#deletevalue)
+    *   [getValue](#getvalue)
         *   [Parameters](#parameters-15)
-    *   [values](#values)
+    *   [deleteValue](#deletevalue)
         *   [Parameters](#parameters-16)
-    *   [readStream](#readstream)
+    *   [values](#values)
         *   [Parameters](#parameters-17)
-    *   [meters](#meters)
+    *   [readStream](#readstream)
         *   [Parameters](#parameters-18)
-    *   [notes](#notes)
+    *   [meters](#meters)
         *   [Parameters](#parameters-19)
-    *   [entries](#entries-1)
+    *   [notes](#notes)
         *   [Parameters](#parameters-20)
+    *   [entries](#entries-1)
+        *   [Parameters](#parameters-21)
 *   [MASTER](#master)
 *   [CATEGORY\_PREFIX](#category_prefix)
 *   [VALUE\_PREFIX](#value_prefix)
@@ -97,23 +99,23 @@ example();
     *   [db](#db)
     *   [close](#close)
     *   [categories](#categories)
-        *   [Parameters](#parameters-21)
-    *   [backup](#backup)
         *   [Parameters](#parameters-22)
-    *   [restore](#restore)
+    *   [backup](#backup)
         *   [Parameters](#parameters-23)
-    *   [initialize](#initialize)
+    *   [restore](#restore)
         *   [Parameters](#parameters-24)
+    *   [initialize](#initialize)
+        *   [Parameters](#parameters-25)
 *   [Meter](#meter)
-    *   [Parameters](#parameters-25)
+    *   [Parameters](#parameters-26)
     *   [Properties](#properties-3)
     *   [key](#key-1)
 *   [Note](#note)
-    *   [Parameters](#parameters-26)
+    *   [Parameters](#parameters-27)
     *   [key](#key-2)
     *   [attributes](#attributes)
 *   [secondsAsString](#secondsasstring)
-    *   [Parameters](#parameters-27)
+    *   [Parameters](#parameters-28)
 
 ## definePropertiesFromOptions
 
@@ -155,6 +157,19 @@ Get default values.
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** filled with default values
 
+## optionJSON
+
+Create json based on present options.
+In other words only produce key value pairs if value is defined.
+
+### Parameters
+
+*   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
+*   `initial` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
+*   `attributes` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** to operator on (optional, default `object.constructor.attributes`)
+
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** initial + defined values
+
 ## mapAttributes
 
 Rename attributes.
@@ -184,8 +199,6 @@ Filters out null, undefined and empty strings
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** keys renamed after mapping
 
 ## Base
-
-**Extends ModelBase**
 
 Base
 
