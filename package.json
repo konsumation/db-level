@@ -59,17 +59,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/konsumation/konsum-db-level.git"
+    "url": "git+https://github.com/konsumation/db-level.git"
   },
   "bugs": {
-    "url": "https://github.com/konsumation/konsum-db-level/issues"
+    "url": "https://github.com/konsumation/db-level/issues"
   },
-  "homepage": "https://github.com/konsumation/konsum-db-level#readme",
+  "homepage": "https://github.com/konsumation/db-level#readme",
   "template": {
     "inheritFrom": [
       "arlac77/template-github-action",
       "arlac77/template-javascript-component",
       "arlac77/template-typescript",
+      "arlac77/template-vscode",
       "konsumation/template"
     ]
   }
