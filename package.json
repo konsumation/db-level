@@ -44,7 +44,7 @@
     "pacc": "^3.1.6"
   },
   "devDependencies": {
-    "@konsumation/db-test": "^1.9.0",
+    "@konsumation/db-test": "^1.9.1",
     "@types/node": "^20.11.30",
     "ava": "^6.1.2",
     "browser-ava": "^2.2.4",
