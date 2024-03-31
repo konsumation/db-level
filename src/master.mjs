@@ -25,7 +25,7 @@ export {
   VALUE_PREFIX
 };
 
-const supportedVersions = new Set([ SCHEMA_VERSION_2, SCHEMA_VERSION_3]);
+const supportedVersions = new Set([SCHEMA_VERSION_2, SCHEMA_VERSION_3]);
 
 function checkVersion(meta) {
   if (!supportedVersions.has(meta.schemaVersion)) {
@@ -46,6 +46,10 @@ export { LevelMaster as Master };
  * @property {string} schemaVersion
  */
 class LevelMaster extends Master {
+  static get name() {
+    return "level";
+  }
+
   static get keyPrefix() {
     return MASTER;
   }
@@ -99,6 +103,10 @@ class LevelMaster extends Master {
    */
   close() {
     return this.db.close();
+  }
+
+  addCategory(values) {
+    return new Category(values);
   }
 
   /**
