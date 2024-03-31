@@ -1,9 +1,7 @@
 import test from "ava";
 import tmp from "tmp";
-import { createReadStream, createWriteStream } from "node:fs";
-import { stat } from "node:fs/promises";
+import { createReadStream  } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { SCHEMA_VERSION_2 } from "@konsumation/model";
 import { Master } from "@konsumation/db-level";
 
 test("restore version 2", async t => {
