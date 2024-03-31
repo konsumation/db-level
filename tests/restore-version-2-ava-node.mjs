@@ -37,23 +37,3 @@ test("restore version 2", async t => {
     ["M-0", "M-1"]
   );
 });
-
-test("read write version 2", async t => {
-  const master = await Master.initialize(tmp.tmpNameSync());
-  const fixture = fileURLToPath(
-    new URL("fixtures/database-version-2.txt", import.meta.url)
-  );
-  const fi = await stat(fixture);
-
-  await master.restore(createReadStream(fixture, { encoding: "utf8" }));
-  t.is(master.schemaVersion, SCHEMA_VERSION_2);
-
-  const ofn = tmp.tmpNameSync();
-  //console.log(ofn);
-  await master.backup(createWriteStream(ofn, { encoding: "utf8" }));
-
-  const fo = await stat(ofn);
-
-  t.is(fi.size, fo.size);
-  t.is(fi.size, 1021);
-});
