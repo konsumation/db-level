@@ -86,9 +86,9 @@ test.only("values write / read", async t => {
   let lastValue = firstValue;
 
   for (let i = 0; i < 100; i++) {
-    last = new Date(first + SECONDS_A_DAY * i).getTime();
+    last = new Date(first + SECONDS_A_DAY * i);
     lastValue = firstValue + i;
-    await meter.writeValue(master.context, lastValue, last);
+    await meter.writeValue(master.context, last, lastValue);
   }
 
   let values = [];

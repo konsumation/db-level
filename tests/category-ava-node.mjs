@@ -40,7 +40,7 @@ test("Category write / read / delete", async t => {
   category = await LevelCategory.entry(master.context, "CAT-12");
   await category.delete(master.context);
 
-  for await(const line of master.text(master.context)) {
+  for await(const line of master.text()) {
     console.log(line);
   }
 

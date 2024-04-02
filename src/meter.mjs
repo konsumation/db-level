@@ -1,5 +1,5 @@
 import { Category, Meter } from "@konsumation/model";
-import { secondsAsString, readStreamWithTimeOptions } from "./util.mjs";
+import { secondsAsString, readStreamWithTimeOptions, readStreamOptions } from "./util.mjs";
 import { VALUE_PREFIX, METER_PREFIX } from "./consts.mjs";
 import { LevelNote } from "./note.mjs";
 
@@ -60,20 +60,20 @@ export class LevelMeter extends Meter {
 
   /**
    * Key for a given value.
-   * @param {number} time seconds since epoch
+   * @param {Date} time seconds since epoch
    * @return {string} key
    */
   valueKey(time) {
-    return VALUE_PREFIX + this.name + "." + secondsAsString(time);
+    return VALUE_PREFIX + this.name + "." + secondsAsString(time.getTime());
   }
 
   /**
    * Write a time/value pair.
    * @param {ClassicLevel} db
+   * @param {Date} time seconds since epoch
    * @param {number} value
-   * @param {number} time seconds since epoch
    */
-  async writeValue(db, value, time) {
+  async writeValue(db, time, value) {
     return db.put(this.valueKey(time), value);
   }
 
