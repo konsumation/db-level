@@ -1,12 +1,7 @@
-import {
-  description,
-  serial,
-  unit,
-  fractionalDigits
-} from "@konsumation/model";
-import { Base } from "./base.mjs";
-import { Category } from "./category.mjs";
-import { METER_PREFIX } from "./consts.mjs";
+import { Category, Meter } from "@konsumation/model";
+import { secondsAsString, readStreamWithTimeOptions } from "./util.mjs";
+import { VALUE_PREFIX, METER_PREFIX } from "./consts.mjs";
+import { LevelNote } from "./note.mjs";
 
 /**
  * Meter
@@ -22,38 +17,104 @@ import { METER_PREFIX } from "./consts.mjs";
  * @property {string} unit physical unit
  * @property {number} fractionalDigits display precission
  */
-export class Meter extends Base {
-  static get attributes() {
+export class LevelMeter extends Meter {
+  static get factories() {
     return {
-      description,
-      serial,
-      unit,
-      fractionalDigits
+      [LevelNote.typeName]: LevelNote
     };
-  }
-
-  static get typeName() {
-    return "meter";
   }
 
   static get keyPrefix() {
     return METER_PREFIX;
   }
 
-  static keyPrefixWith(object) {
-    return this.keyPrefix + object.name + ".";
+  static async *entriesWith(db, object, gte = "\u0000", lte = "\uFFFF") {
+    const prefix = this.keyPrefixWith(object);
+
+    for await (const [key, value] of db.iterator({
+      gte: prefix + gte,
+      lte: prefix + lte
+    })) {
+      const values = JSON.parse(value);
+      values.name = key.slice(prefix.length);
+      values[object.typeName] = object;
+      yield new this(values);
+    }
   }
 
-  get category() {
-    return this.owner;
+  async write(db) {
+    return db.put(this.key, JSON.stringify(this.attributeValues));
   }
 
-  get unit() {
-    return this.category?.unit;
+  async *notes(db, options) {
+    const key = LevelNote.keyPrefixWith(this);
+
+    for await (const [k, value] of db.iterator(
+      readStreamOptions(key, options)
+    )) {
+      const values = JSON.parse(value);
+      values.name = k.slice(key.length);
+      yield new LevelNote(values);
+    }
   }
 
-  get fractionalDigits() {
-    return this.category?.fractionalDigits;
+  /**
+   * Key for a given value.
+   * @param {number} time seconds since epoch
+   * @return {string} key
+   */
+  valueKey(time) {
+    return VALUE_PREFIX + this.name + "." + secondsAsString(time);
+  }
+
+  /**
+   * Write a time/value pair.
+   * @param {ClassicLevel} db
+   * @param {number} value
+   * @param {number} time seconds since epoch
+   */
+  async writeValue(db, value, time) {
+    return db.put(this.valueKey(time), value);
+  }
+
+  /**
+   *
+   * @param {ClassicLevel} db
+   * @param {number} time seconds since epoch
+   */
+  async getValue(db, time) {
+    return db
+      .get(this.valueKey(time) /* { asBuffer: false }*/)
+      .catch(err => {});
+  }
+
+  /**
+   *
+   * @param {ClassicLevel} db
+   * @param {number} time seconds since epoch
+   */
+  async deleteValue(db, time) {
+    return db.del(this.valueKey(time));
+  }
+
+  /**
+   * Get values of the category.
+   * @param {ClassicLevel} db
+   * @param {Object} options
+   * @param {string} options.gte time of earliest value
+   * @param {string} options.lte time of latest value
+   * @param {boolean} options.reverse order
+   * @return {AsyncIterable<{value:number, time: number}>}
+   */
+  async *values(db, options) {
+    const key = VALUE_PREFIX + this.name + ".";
+    const prefixLength = key.length;
+
+    for await (const [k, v] of db.iterator(
+      readStreamWithTimeOptions(key, options)
+    )) {
+      yield { value: parseFloat(v), time: parseInt(k.slice(prefixLength), 10) };
+    }
   }
 
   get keyPrefix() {
@@ -64,6 +125,6 @@ export class Meter extends Base {
    * @return {string}
    */
   get key() {
-    return this.keyPrefix + this.name;
+    return METER_PREFIX + this.category.name + "." + this.name;
   }
 }

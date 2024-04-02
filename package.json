@@ -40,8 +40,7 @@
   },
   "dependencies": {
     "@konsumation/model": "^1.23.2",
-    "classic-level": "^1.4.1",
-    "pacc": "^3.1.6"
+    "classic-level": "^1.4.1"
   },
   "devDependencies": {
     "@konsumation/db-test": "^2.2.3",

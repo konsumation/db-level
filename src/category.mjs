@@ -1,11 +1,8 @@
-import { Readable } from "node:stream";
 import { ClassicLevel } from "classic-level";
-import { description, unit, fractionalDigits } from "@konsumation/model";
-import { Base } from "./base.mjs";
-import { Meter } from "./meter.mjs";
-import { Note } from "./note.mjs";
-import { secondsAsString, readStreamWithTimeOptions } from "./util.mjs";
-import { CATEGORY_PREFIX, VALUE_PREFIX } from "./consts.mjs";
+import { Category } from "@konsumation/model";
+import { CATEGORY_PREFIX } from "./consts.mjs";
+import { LevelMeter } from "./meter.mjs";
+import { readStreamOptions } from "./util.mjs";
 
 /**
  * Value Category.
@@ -20,25 +17,15 @@ import { CATEGORY_PREFIX, VALUE_PREFIX } from "./consts.mjs";
  * @property {string} unit physical unit
  * @property {number} fractionalDigits display precission
  */
-export class Category extends Base {
-  static get attributes() {
+export class LevelCategory extends Category {
+  static get factories() {
     return {
-      description,
-      unit,
-      fractionalDigits
+      [LevelMeter.typeName]: LevelMeter
     };
-  }
-
-  static get typeName() {
-    return "category";
   }
 
   static get keyPrefix() {
     return CATEGORY_PREFIX;
-  }
-
-  static keyPrefixWith(object) {
-    return CATEGORY_PREFIX + object.name + ".";
   }
 
   /**
@@ -48,8 +35,25 @@ export class Category extends Base {
    * @param {string|undefined} lte highst name
    * @return {AsyncIterable<Category>}
    */
-  static async *entries(db, gte, lte) {
-    yield* super.entries(db, this.keyPrefix, gte, lte);
+  static async *entries(db, gte = "\u0000", lte = "\uFFFF") {
+    for await (const [key, value] of db.iterator({
+      gte: CATEGORY_PREFIX + gte,
+      lte: CATEGORY_PREFIX + lte
+    })) {
+      const values = JSON.parse(value);
+      values.name = key.slice(CATEGORY_PREFIX.length);
+      yield new this(values);
+    }
+  }
+
+  /**
+   * Writes object into database.
+   * Leaves all other entries alone.
+   * @see {key}
+   * @param {ClassicLevel} db
+   */
+  async write(db) {
+    return db.put(this.key, JSON.stringify(this.attributeValues));
   }
 
   get keyPrefix() {
@@ -60,86 +64,7 @@ export class Category extends Base {
    * @return {string}
    */
   get key() {
-    return this.keyPrefix + this.name;
-  }
-
-  /**
-   * Key for a given value.
-   * @param {number} time seconds since epoch
-   * @return {string} key
-   */
-  valueKey(time) {
-    return VALUE_PREFIX + this.name + "." + secondsAsString(time);
-  }
-
-  /**
-   * Write a time/value pair.
-   * @param {ClassicLevel} db
-   * @param {number} value
-   * @param {number} time seconds since epoch
-   */
-  async writeValue(db, value, time) {
-    return db.put(this.valueKey(time), value);
-  }
-
-  //TODO error handle if key doesn exists add some in catch block? now works...withouth catch abends
-  //https://github.com/Level/levelup#get
-  /**
-   *
-   * @param {ClassicLevel} db
-   * @param {number} time seconds since epoch
-   */
-  async getValue(db, time) {
-    return db
-      .get(this.valueKey(time) /* { asBuffer: false }*/)
-      .catch(err => {});
-  }
-
-  /**
-   *
-   * @param {ClassicLevel} db
-   * @param {number} time seconds since epoch
-   */
-  async deleteValue(db, time) {
-    return db.del(this.valueKey(time));
-  }
-
-  /**
-   * Get values of the category.
-   * @param {ClassicLevel} db
-   * @param {Object} options
-   * @param {string} options.gte time of earliest value
-   * @param {string} options.lte time of latest value
-   * @param {boolean} options.reverse order
-   * @return {AsyncIterable<{value:number, time: number}>}
-   */
-  async *values(db, options) {
-    const key = VALUE_PREFIX + this.name + ".";
-    const prefixLength = key.length;
-
-    for await (const [k, v] of db.iterator(
-      readStreamWithTimeOptions(key, options)
-    )) {
-      yield { value: parseFloat(v), time: parseInt(k.slice(prefixLength), 10) };
-    }
-  }
-
-  /**
-   * Get values of the category as ascii text stream with time and value on each line.
-   * @param {ClassicLevel} db
-   * @param {Object} options
-   * @param {string} options.gte time of earliest value
-   * @param {string} options.lte time of latest value
-   * @param {boolean} options.reverse order
-   * @return {Readable}
-   */
-  readStream(db, options) {
-    const key = VALUE_PREFIX + this.name + ".";
-
-    return new CategoryValueReadStream(
-      db.iterator(readStreamWithTimeOptions(key, options)),
-      key.length
-    );
+    return CATEGORY_PREFIX + this.name;
   }
 
   /**
@@ -152,45 +77,14 @@ export class Category extends Base {
    * @return {AsyncIterable<Meter>}
    */
   async *meters(db, options) {
-    yield* this.readDetails(Meter, db, options);
-  }
+    const key = LevelMeter.keyPrefixWith(this);
 
-  /**
-   * Get Notes of the category.
-   * @param {ClassicLevel} db
-   * @param {Object} options
-   * @param {string} options.gte time
-   * @param {string} options.lte up to time
-   * @param {boolean} options.reverse order
-   * @return {AsyncIterable<Meter>}
-   */
-  async *notes(db, options) {
-    yield* this.readDetails(Note, db, options);
-  }
-}
-
-class CategoryValueReadStream extends Readable {
-  constructor(iterator, prefixLength) {
-    super();
-    this.iterator = iterator;
-    this.prefixLength = prefixLength;
-  }
-  _read() {
-    if (this.destroyed) return;
-
-    this.iterator.next((err, key, value) => {
-      if (this.destroyed) return;
-      if (err) {
-        throw new Error(err);
-      }
-
-      if (key === undefined && value === undefined) {
-        this.push(null);
-      } else {
-        this.push(
-          `${parseInt(key.slice(this.prefixLength), 10)} ${parseFloat(value)}\n`
-        );
-      }
-    });
+    for await (const [k, value] of db.iterator(
+      readStreamOptions(key, options)
+    )) {
+      const values = JSON.parse(value);
+      values.name = k.slice(key.length);
+      yield new LevelMeter(values);
+    }
   }
 }

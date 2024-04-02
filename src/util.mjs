@@ -30,12 +30,3 @@ export function readStreamWithTimeOptions(key, options) {
     lte: key + secondsAsString(options?.lte || 999999999999999)
   };
 }
-
-export async function pump(stream, dest) {
-  return new Promise((resolve, reject) => {
-    const s = stream.pipe(dest, { end: false });
-    stream.on("finish", () => resolve());
-    stream.on("end", () => resolve());
-    s.on("error", err => reject(err));
-  });
-}
