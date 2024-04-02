@@ -245,7 +245,7 @@ Key for a given value.
 
 #### Parameters
 
-*   `time` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** seconds since epoch
+*   `time` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** seconds since epoch
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** key
 
@@ -256,8 +256,8 @@ Write a time/value pair.
 #### Parameters
 
 *   `db` **ClassicLevel**&#x20;
+*   `time` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** seconds since epoch
 *   `value` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
-*   `time` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** seconds since epoch
 
 ### getValue
 
