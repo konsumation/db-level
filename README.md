@@ -42,243 +42,50 @@ example();
 
 ### Table of Contents
 
-*   [definePropertiesFromOptions](#definepropertiesfromoptions)
+*   [LevelCategory](#levelcategory)
     *   [Parameters](#parameters)
-*   [defaultValues](#defaultvalues)
-    *   [Parameters](#parameters-1)
-*   [mapAttributes](#mapattributes)
-    *   [Parameters](#parameters-2)
-*   [mapAttributesInverse](#mapattributesinverse)
-    *   [Parameters](#parameters-3)
-*   [Base](#base)
-    *   [Parameters](#parameters-4)
     *   [Properties](#properties)
     *   [write](#write)
-        *   [Parameters](#parameters-5)
-    *   [readDetails](#readdetails)
-        *   [Parameters](#parameters-6)
-    *   [delete](#delete)
-        *   [Parameters](#parameters-7)
-    *   [entries](#entries)
-        *   [Parameters](#parameters-8)
-    *   [entriesWith](#entrieswith)
-        *   [Parameters](#parameters-9)
-    *   [entry](#entry)
-        *   [Parameters](#parameters-10)
-*   [Category](#category)
-    *   [Parameters](#parameters-11)
-    *   [Properties](#properties-1)
+        *   [Parameters](#parameters-1)
     *   [key](#key)
-    *   [valueKey](#valuekey)
-        *   [Parameters](#parameters-12)
-    *   [writeValue](#writevalue)
-        *   [Parameters](#parameters-13)
-    *   [getValue](#getvalue)
-        *   [Parameters](#parameters-14)
-    *   [deleteValue](#deletevalue)
-        *   [Parameters](#parameters-15)
-    *   [values](#values)
-        *   [Parameters](#parameters-16)
-    *   [readStream](#readstream)
-        *   [Parameters](#parameters-17)
     *   [meters](#meters)
-        *   [Parameters](#parameters-18)
-    *   [notes](#notes)
-        *   [Parameters](#parameters-19)
-    *   [entries](#entries-1)
-        *   [Parameters](#parameters-20)
+        *   [Parameters](#parameters-2)
+    *   [entries](#entries)
+        *   [Parameters](#parameters-3)
 *   [MASTER](#master)
 *   [CATEGORY\_PREFIX](#category_prefix)
 *   [VALUE\_PREFIX](#value_prefix)
 *   [METER\_PREFIX](#meter_prefix)
 *   [NOTE\_PREFIX](#note_prefix)
 *   [LevelMaster](#levelmaster)
-    *   [Properties](#properties-2)
-    *   [db](#db)
+    *   [Properties](#properties-1)
     *   [close](#close)
     *   [categories](#categories)
-        *   [Parameters](#parameters-21)
-    *   [backup](#backup)
-        *   [Parameters](#parameters-22)
-    *   [restore](#restore)
-        *   [Parameters](#parameters-23)
+        *   [Parameters](#parameters-4)
     *   [initialize](#initialize)
-        *   [Parameters](#parameters-24)
-*   [Meter](#meter)
-    *   [Parameters](#parameters-25)
-    *   [Properties](#properties-3)
+        *   [Parameters](#parameters-5)
+*   [LevelMeter](#levelmeter)
+    *   [Parameters](#parameters-6)
+    *   [Properties](#properties-2)
+    *   [valueKey](#valuekey)
+        *   [Parameters](#parameters-7)
+    *   [writeValue](#writevalue)
+        *   [Parameters](#parameters-8)
+    *   [getValue](#getvalue)
+        *   [Parameters](#parameters-9)
+    *   [deleteValue](#deletevalue)
+        *   [Parameters](#parameters-10)
+    *   [values](#values)
+        *   [Parameters](#parameters-11)
     *   [key](#key-1)
-*   [Note](#note)
-    *   [Parameters](#parameters-26)
+*   [LevelNote](#levelnote)
     *   [key](#key-2)
-    *   [attributes](#attributes)
 *   [secondsAsString](#secondsasstring)
-    *   [Parameters](#parameters-27)
+    *   [Parameters](#parameters-12)
 
-## definePropertiesFromOptions
+## LevelCategory
 
-*   **See**: Object.definedProperties()
-*   **See**: Object.getOwnPropertyDescriptor()
-
-Create properties from options and default options.
-Already present properties (direct) are skipped.
-The attribute list from the class will be applied to the
-options and merged with the given set of properties.
-
-```js
-class aClass {
-  static get attributes() {
-    return { with_default: { default: 77 }};
-  }
-}
-
-definePropertiesFromOptions(new aClass());
-// equivalent to
-Object.definedProperties(new aClass(),{ with_default: { value: 77 }})
-```
-
-### Parameters
-
-*   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** target object
-*   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** as passed to object constructor (optional, default `{}`)
-*   `properties` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** object properties (optional, default `{}`)
-*   `attributes` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** attribute meta info (optional, default `object.constructor.attributes`)
-
-## defaultValues
-
-Get default values.
-
-### Parameters
-
-*   `attributes` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-*   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** filled with default values
-
-## mapAttributes
-
-Rename attributes.
-Filters out null, undefined and empty strings.
-
-```js
-mapAttributes({a:1},{a:"a'"}) // {"a'": 1}
-```
-
-### Parameters
-
-*   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-*   `mapping` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** keys renamed after mapping
-
-## mapAttributesInverse
-
-Same as mapAttributes but with the inverse mapping.
-Filters out null, undefined and empty strings
-
-### Parameters
-
-*   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-*   `mapping` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?**&#x20;
-
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** keys renamed after mapping
-
-## Base
-
-**Extends ModelBase**
-
-Base
-
-### Parameters
-
-*   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** meter name
-*   `owner` &#x20;
-*   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-
-    *   `options.description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-    *   `options.unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit like kWh or m3
-
-### Properties
-
-*   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** category name
-*   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-*   `unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit
-
-### write
-
-*   **See**: {key}
-
-Writes object into database.
-Leaves all other entries alone.
-
-#### Parameters
-
-*   `db` **ClassicLevel**&#x20;
-
-### readDetails
-
-Get detail objects.
-
-#### Parameters
-
-*   `factory` &#x20;
-*   `db` **ClassicLevel**&#x20;
-*   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-
-    *   `options.gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** from name
-    *   `options.lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** up to name
-    *   `options.reverse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** order
-
-Returns **AsyncIterable\<factory>**&#x20;
-
-### delete
-
-Delete record from database.
-
-#### Parameters
-
-*   `db` **ClassicLevel**&#x20;
-
-### entries
-
-Get instances without owner.
-
-#### Parameters
-
-*   `db` **ClassicLevel**&#x20;
-*   `prefix` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-*   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** lowest name (optional, default `"\u0000"`)
-*   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** highst name (optional, default `"\uFFFF"`)
-
-Returns **AsyncIterable<[Base](#base)>**&#x20;
-
-### entriesWith
-
-Get instances with owner.
-
-#### Parameters
-
-*   `db` **ClassicLevel**&#x20;
-*   `object` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-*   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** lowest name (optional, default `"\u0000"`)
-*   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** highst name (optional, default `"\uFFFF"`)
-
-Returns **AsyncIterable<[Base](#base)>**&#x20;
-
-### entry
-
-Get a single instance.
-
-#### Parameters
-
-*   `db` **ClassicLevel**&#x20;
-*   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)<([Base](#base) | [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))>**&#x20;
-
-## Category
-
-**Extends Base**
+**Extends Category**
 
 Value Category.
 
@@ -298,9 +105,139 @@ Value Category.
 *   `unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit
 *   `fractionalDigits` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** display precission
 
+### write
+
+*   **See**: {key}
+
+Writes object into database.
+Leaves all other entries alone.
+
+#### Parameters
+
+*   `db` **ClassicLevel**&#x20;
+
 ### key
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+
+### meters
+
+Get Meters of the category.
+
+#### Parameters
+
+*   `db` **ClassicLevel**&#x20;
+*   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
+
+    *   `options.gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** from name
+    *   `options.lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** up to name
+    *   `options.reverse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** order
+
+Returns **AsyncIterable\<Meter>**&#x20;
+
+### entries
+
+Get categories.
+
+#### Parameters
+
+*   `db` **ClassicLevel**&#x20;
+*   `gte` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** lowest name (optional, default `"\u0000"`)
+*   `lte` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** highst name (optional, default `"\uFFFF"`)
+
+Returns **AsyncIterable\<Category>**&#x20;
+
+## MASTER
+
+Prefix of the master record
+
+Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+## CATEGORY\_PREFIX
+
+Prefix of the categories.
+Will be followed by the category name
+
+Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+## VALUE\_PREFIX
+
+Prefix of the values.
+Will be followed by the category name
+
+Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+## METER\_PREFIX
+
+Prefix of the meters.
+Will be followed by the category name
+
+Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+## NOTE\_PREFIX
+
+Prefix of the notes.
+Will be followed by the category name
+
+Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+## LevelMaster
+
+**Extends Master**
+
+Master record.
+Holds schema version.
+
+### Properties
+
+*   `schemaVersion` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+
+### close
+
+Close the underlaying database.
+
+### categories
+
+List Categories.
+
+#### Parameters
+
+*   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+*   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+
+### initialize
+
+Initialize database.
+checks/writes master record.
+
+#### Parameters
+
+*   `directory` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<Master>**&#x20;
+
+## LevelMeter
+
+**Extends Meter**
+
+Meter
+
+### Parameters
+
+*   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** meter name
+*   `category` **Category**&#x20;
+*   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
+
+    *   `options.description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+    *   `options.unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit like kWh or m3
+    *   `options.fractionalDigits` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** display precission
+
+### Properties
+
+*   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** category name
+*   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+*   `unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit
+*   `fractionalDigits` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** display precission
 
 ### valueKey
 
@@ -351,198 +288,19 @@ Get values of the category.
 
 Returns **AsyncIterable<{value: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), time: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)}>**&#x20;
 
-### readStream
-
-Get values of the category as ascii text stream with time and value on each line.
-
-#### Parameters
-
-*   `db` **ClassicLevel**&#x20;
-*   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-
-    *   `options.gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** time of earliest value
-    *   `options.lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** time of latest value
-    *   `options.reverse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** order
-
-Returns **Readable**&#x20;
-
-### meters
-
-Get Meters of the category.
-
-#### Parameters
-
-*   `db` **ClassicLevel**&#x20;
-*   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-
-    *   `options.gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** from name
-    *   `options.lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** up to name
-    *   `options.reverse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** order
-
-Returns **AsyncIterable<[Meter](#meter)>**&#x20;
-
-### notes
-
-Get Notes of the category.
-
-#### Parameters
-
-*   `db` **ClassicLevel**&#x20;
-*   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-
-    *   `options.gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** time
-    *   `options.lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** up to time
-    *   `options.reverse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** order
-
-Returns **AsyncIterable<[Meter](#meter)>**&#x20;
-
-### entries
-
-Get categories.
-
-#### Parameters
-
-*   `db` **ClassicLevel**&#x20;
-*   `gte` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** lowest name
-*   `lte` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** highst name
-
-Returns **AsyncIterable<[Category](#category)>**&#x20;
-
-## MASTER
-
-Prefix of the master record
-
-Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
-
-## CATEGORY\_PREFIX
-
-Prefix of the categories.
-Will be followed by the category name
-
-Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
-
-## VALUE\_PREFIX
-
-Prefix of the values.
-Will be followed by the category name
-
-Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
-
-## METER\_PREFIX
-
-Prefix of the meters.
-Will be followed by the category name
-
-Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
-
-## NOTE\_PREFIX
-
-Prefix of the notes.
-Will be followed by the category name
-
-Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
-
-## LevelMaster
-
-**Extends Master**
-
-Master record.
-Holds schema version.
-
-### Properties
-
-*   `schemaVersion` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-
-### db
-
-Type: ClassicLevel
-
-### close
-
-Close the underlaying database.
-
-### categories
-
-List Categories.
-
-#### Parameters
-
-*   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-*   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-
-### backup
-
-Copy all data into out stream as long time text data.
-
-#### Parameters
-
-*   `out` **Writeable**&#x20;
-
-### restore
-
-Restore database from input stream.
-
-#### Parameters
-
-*   `input` **ReadableStream** data from backup
-
-### initialize
-
-Initialize database.
-checks/writes master record.
-
-#### Parameters
-
-*   `directory` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<Master>**&#x20;
-
-## Meter
-
-**Extends Base**
-
-Meter
-
-### Parameters
-
-*   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** meter name
-*   `category` **[Category](#category)**&#x20;
-*   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-
-    *   `options.description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-    *   `options.unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit like kWh or m3
-    *   `options.fractionalDigits` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** display precission
-
-### Properties
-
-*   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** category name
-*   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-*   `unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit
-*   `fractionalDigits` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** display precission
-
 ### key
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
-## Note
+## LevelNote
 
-**Extends Base**
+**Extends Note**
 
 Hints placed on a category at a specific time.
 
-### Parameters
-
-*   `time` &#x20;
-*   `owner` &#x20;
-*   `options` &#x20;
-
 ### key
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-
-### attributes
-
-Additional attributes to be persisted
 
 ## secondsAsString
 
