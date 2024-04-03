@@ -127,11 +127,11 @@ Get Meters of the category.
 #### Parameters
 
 *   `db` **ClassicLevel**&#x20;
-*   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
+*   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?**&#x20;
 
-    *   `options.gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** from name
-    *   `options.lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** up to name
-    *   `options.reverse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** order
+    *   `options.gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** from name
+    *   `options.lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** up to name
+    *   `options.reverse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** order
 
 Returns **AsyncIterable\<Meter>**&#x20;
 
@@ -202,8 +202,8 @@ List Categories.
 
 #### Parameters
 
-*   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-*   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+*   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**&#x20;
+*   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**&#x20;
 
 ### initialize
 
@@ -245,7 +245,7 @@ Key for a given value.
 
 #### Parameters
 
-*   `time` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** seconds since epoch
+*   `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)**&#x20;
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** key
 
@@ -256,7 +256,7 @@ Write a time/value pair.
 #### Parameters
 
 *   `db` **ClassicLevel**&#x20;
-*   `time` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** seconds since epoch
+*   `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)**&#x20;
 *   `value` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
 
 ### getValue
@@ -264,14 +264,14 @@ Write a time/value pair.
 #### Parameters
 
 *   `db` **ClassicLevel**&#x20;
-*   `time` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** seconds since epoch
+*   `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)**&#x20;
 
 ### deleteValue
 
 #### Parameters
 
 *   `db` **ClassicLevel**&#x20;
-*   `time` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** seconds since epoch
+*   `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)**&#x20;
 
 ### values
 
@@ -286,7 +286,7 @@ Get values of the category.
     *   `options.lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** time of latest value
     *   `options.reverse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** order
 
-Returns **AsyncIterable<{value: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), time: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)}>**&#x20;
+Returns **AsyncIterable<{value: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), date: [Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)}>**&#x20;
 
 ### key
 
