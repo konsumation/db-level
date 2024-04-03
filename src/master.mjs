@@ -33,9 +33,7 @@ export {
 export class LevelMaster extends Master {
   static get factories() {
     return {
-      [LevelCategory.typeName]: LevelCategory,
-      [LevelMeter.typeName]: LevelMeter,
-      [LevelNote.typeName]: LevelNote
+      [LevelCategory.typeName]: LevelCategory
     };
   }
 
@@ -106,11 +104,15 @@ export class LevelMaster extends Master {
   }
 }
 
+// @ts-ignore
 Base.keyPrefixWith = function (object) {
+  // @ts-ignore
   return this.keyPrefix + object.name + ".";
 };
 
+// @ts-ignore
 Base.entry = async function entry(db, key) {
+  // @ts-ignore
   for await (const object of this.entries(db, key)) {
     return object;
   }

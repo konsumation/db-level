@@ -1,5 +1,10 @@
+import { ClassicLevel } from "classic-level";
 import { Category, Meter } from "@konsumation/model";
-import { secondsAsString, readStreamWithTimeOptions, readStreamOptions } from "./util.mjs";
+import {
+  secondsAsString,
+  readStreamWithTimeOptions,
+  readStreamOptions
+} from "./util.mjs";
 import { VALUE_PREFIX, METER_PREFIX } from "./consts.mjs";
 import { LevelNote } from "./note.mjs";
 
@@ -29,6 +34,7 @@ export class LevelMeter extends Meter {
   }
 
   static async *entriesWith(db, object, gte = "\u0000", lte = "\uFFFF") {
+    // @ts-ignore
     const prefix = this.keyPrefixWith(object);
 
     for await (const [key, value] of db.iterator({
@@ -47,6 +53,7 @@ export class LevelMeter extends Meter {
   }
 
   async *notes(db, options) {
+    // @ts-ignore
     const key = LevelNote.keyPrefixWith(this);
 
     for await (const [k, value] of db.iterator(
@@ -64,7 +71,9 @@ export class LevelMeter extends Meter {
    * @return {string} key
    */
   valueKey(date) {
-    return VALUE_PREFIX + this.name + "." + secondsAsString(date.getTime() / 1000);
+    return (
+      VALUE_PREFIX + this.name + "." + secondsAsString(date.getTime() / 1000)
+    );
   }
 
   /**
@@ -74,6 +83,7 @@ export class LevelMeter extends Meter {
    * @param {number} value
    */
   async writeValue(db, date, value) {
+    // @ts-ignore
     return db.put(this.valueKey(date), value);
   }
 
@@ -83,9 +93,7 @@ export class LevelMeter extends Meter {
    * @param {Date} date
    */
   async getValue(db, date) {
-    return db
-      .get(this.valueKey(date))
-      .catch(err => {});
+    return db.get(this.valueKey(date)).catch(err => {});
   }
 
   /**
@@ -113,7 +121,10 @@ export class LevelMeter extends Meter {
     for await (const [k, v] of db.iterator(
       readStreamWithTimeOptions(key, options)
     )) {
-      yield { value: parseFloat(v), date: new Date(parseInt(k.slice(prefixLength), 10) * 1000) };
+      yield {
+        value: parseFloat(v),
+        date: new Date(parseInt(k.slice(prefixLength), 10) * 1000)
+      };
     }
   }
 

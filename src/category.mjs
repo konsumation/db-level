@@ -77,6 +77,7 @@ export class LevelCategory extends Category {
    * @return {AsyncIterable<Meter>}
    */
   async *meters(db, options) {
+    // @ts-ignore
     const key = LevelMeter.keyPrefixWith(this);
 
     for await (const [k, value] of db.iterator(
