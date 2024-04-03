@@ -67,21 +67,23 @@ example();
 *   [LevelMeter](#levelmeter)
     *   [Parameters](#parameters-6)
     *   [Properties](#properties-2)
-    *   [valueKey](#valuekey)
+    *   [notes](#notes)
         *   [Parameters](#parameters-7)
-    *   [writeValue](#writevalue)
+    *   [valueKey](#valuekey)
         *   [Parameters](#parameters-8)
-    *   [getValue](#getvalue)
+    *   [writeValue](#writevalue)
         *   [Parameters](#parameters-9)
-    *   [deleteValue](#deletevalue)
+    *   [getValue](#getvalue)
         *   [Parameters](#parameters-10)
-    *   [values](#values)
+    *   [deleteValue](#deletevalue)
         *   [Parameters](#parameters-11)
+    *   [values](#values)
+        *   [Parameters](#parameters-12)
     *   [key](#key-1)
 *   [LevelNote](#levelnote)
     *   [key](#key-2)
 *   [secondsAsString](#secondsasstring)
-    *   [Parameters](#parameters-12)
+    *   [Parameters](#parameters-13)
 
 ## LevelCategory
 
@@ -238,6 +240,17 @@ Meter
 *   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 *   `unit` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** physical unit
 *   `fractionalDigits` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** display precission
+
+### notes
+
+List assigned Notes.
+
+#### Parameters
+
+*   `db` **any**&#x20;
+*   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?**&#x20;
+
+Returns **AsyncIterable<[LevelNote](#levelnote)>**&#x20;
 
 ### valueKey
 
