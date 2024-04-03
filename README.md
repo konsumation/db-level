@@ -275,11 +275,11 @@ Write a time/value pair.
 
 ### values
 
-Get values of the category.
+Get values of the meter.
 
 #### Parameters
 
-*   `db` **ClassicLevel**&#x20;
+*   `db` **any**&#x20;
 *   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?**&#x20;
 
     *   `options.gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** time of earliest value
