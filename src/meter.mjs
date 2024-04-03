@@ -98,8 +98,8 @@ export class LevelMeter extends Meter {
   }
 
   /**
-   * Get values of the category.
-   * @param {ClassicLevel} db
+   * Get values of the meter.
+   * @param {any} db
    * @param {Object} [options]
    * @param {string} [options.gte] time of earliest value
    * @param {string} [options.lte] time of latest value
