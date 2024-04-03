@@ -43,7 +43,7 @@ export class LevelMeter extends Meter {
   }
 
   async write(db) {
-    return db.put(this.key, JSON.stringify(this.attributeValues));
+    return db.put(this.key, JSON.stringify(this.getAttributes()));
   }
 
   async *notes(db, options) {
