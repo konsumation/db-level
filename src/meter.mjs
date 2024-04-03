@@ -100,10 +100,10 @@ export class LevelMeter extends Meter {
   /**
    * Get values of the category.
    * @param {ClassicLevel} db
-   * @param {Object} options
-   * @param {string} options.gte time of earliest value
-   * @param {string} options.lte time of latest value
-   * @param {boolean} options.reverse order
+   * @param {Object} [options]
+   * @param {string} [options.gte] time of earliest value
+   * @param {string} [options.lte] time of latest value
+   * @param {boolean} [options.reverse] order
    * @return {AsyncIterable<{value:number, date: Date}>}
    */
   async *values(db, options) {
