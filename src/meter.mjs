@@ -52,6 +52,12 @@ export class LevelMeter extends Meter {
     return db.put(this.key, JSON.stringify(this.getAttributes()));
   }
 
+  /**
+   * List assigned Notes.
+   * @param {any} db
+   * @param {Object} [options]
+   * @return {AsyncIterable<LevelNote>}
+   */
   async *notes(db, options) {
     // @ts-ignore
     const key = LevelNote.keyPrefixWith(this);
