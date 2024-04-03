@@ -1,5 +1,5 @@
 import { ClassicLevel } from "classic-level";
-import { Category } from "@konsumation/model";
+import { Category, Meter } from "@konsumation/model";
 import { CATEGORY_PREFIX } from "./consts.mjs";
 import { LevelMeter } from "./meter.mjs";
 import { readStreamOptions } from "./util.mjs";
@@ -70,10 +70,10 @@ export class LevelCategory extends Category {
   /**
    * Get Meters of the category.
    * @param {ClassicLevel} db
-   * @param {Object} options
-   * @param {string} options.gte from name
-   * @param {string} options.lte up to name
-   * @param {boolean} options.reverse order
+   * @param {Object} [options]
+   * @param {string} [options.gte] from name
+   * @param {string} [options.lte] up to name
+   * @param {boolean} [options.reverse] order
    * @return {AsyncIterable<Meter>}
    */
   async *meters(db, options) {
@@ -84,6 +84,7 @@ export class LevelCategory extends Category {
     )) {
       const values = JSON.parse(value);
       values.name = k.slice(key.length);
+      values.category = this;
       yield new LevelMeter(values);
     }
   }

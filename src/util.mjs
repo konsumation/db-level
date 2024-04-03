@@ -4,13 +4,11 @@
  * @return {string} padded seconds
  */
 export function secondsAsString(seconds) {
-  if (!Number.isInteger(seconds)) {
-    if (typeof seconds === "string") {
-      seconds = parseInt(seconds);
-    } else {
-      throw new Error(`Seconds must be an integer ${seconds}`);
-    }
+  if (typeof seconds === "string") {
+    seconds = parseFloat(seconds);
   }
+  seconds = Math.floor(seconds);
+
   const s = `000000000000000000${seconds}`;
   return s.slice(s.length - 15);
 }

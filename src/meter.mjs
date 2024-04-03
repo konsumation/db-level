@@ -60,41 +60,41 @@ export class LevelMeter extends Meter {
 
   /**
    * Key for a given value.
-   * @param {Date} time seconds since epoch
+   * @param {Date} date
    * @return {string} key
    */
-  valueKey(time) {
-    return VALUE_PREFIX + this.name + "." + secondsAsString(time.getTime());
+  valueKey(date) {
+    return VALUE_PREFIX + this.name + "." + secondsAsString(date.getTime() / 1000);
   }
 
   /**
    * Write a time/value pair.
    * @param {ClassicLevel} db
-   * @param {Date} time seconds since epoch
+   * @param {Date} date
    * @param {number} value
    */
-  async writeValue(db, time, value) {
-    return db.put(this.valueKey(time), value);
+  async writeValue(db, date, value) {
+    return db.put(this.valueKey(date), value);
   }
 
   /**
    *
    * @param {ClassicLevel} db
-   * @param {number} time seconds since epoch
+   * @param {Date} date
    */
-  async getValue(db, time) {
+  async getValue(db, date) {
     return db
-      .get(this.valueKey(time) /* { asBuffer: false }*/)
+      .get(this.valueKey(date))
       .catch(err => {});
   }
 
   /**
    *
    * @param {ClassicLevel} db
-   * @param {number} time seconds since epoch
+   * @param {Date} date
    */
-  async deleteValue(db, time) {
-    return db.del(this.valueKey(time));
+  async deleteValue(db, date) {
+    return db.del(this.valueKey(date));
   }
 
   /**
@@ -104,7 +104,7 @@ export class LevelMeter extends Meter {
    * @param {string} options.gte time of earliest value
    * @param {string} options.lte time of latest value
    * @param {boolean} options.reverse order
-   * @return {AsyncIterable<{value:number, time: number}>}
+   * @return {AsyncIterable<{value:number, date: Date}>}
    */
   async *values(db, options) {
     const key = VALUE_PREFIX + this.name + ".";
@@ -113,7 +113,7 @@ export class LevelMeter extends Meter {
     for await (const [k, v] of db.iterator(
       readStreamWithTimeOptions(key, options)
     )) {
-      yield { value: parseFloat(v), time: parseInt(k.slice(prefixLength), 10) };
+      yield { value: parseFloat(v), date: new Date(parseInt(k.slice(prefixLength), 10) * 1000) };
     }
   }
 

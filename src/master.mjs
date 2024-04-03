@@ -92,8 +92,8 @@ export class LevelMaster extends Master {
 
   /**
    * List Categories.
-   * @param {string} gte
-   * @param {string} lte
+   * @param {string} [gte]
+   * @param {string} [lte]
    */
   async *categories(gte, lte) {
     yield* LevelCategory.entries(this.context, gte, lte);
