@@ -1,28 +1,11 @@
 import { ClassicLevel } from "classic-level";
-import {
-  SCHEMA_VERSION_2,
-  SCHEMA_VERSION_3,
-  SCHEMA_VERSION_CURRENT,
-  Master,
-  Base
-} from "@konsumation/model";
-
+import { SCHEMA_VERSION_CURRENT, Master, Base } from "@konsumation/model";
 import { LevelCategory } from "./category.mjs";
 import { LevelMeter } from "./meter.mjs";
 import { LevelNote } from "./note.mjs";
-import { MASTER, VALUE_PREFIX } from "./consts.mjs";
-import { secondsAsString } from "./util.mjs";
+import { MASTER } from "./consts.mjs";
 
-export {
-  LevelCategory,
-  LevelMeter,
-  LevelNote,
-  secondsAsString,
-  SCHEMA_VERSION_2,
-  SCHEMA_VERSION_3,
-  SCHEMA_VERSION_CURRENT,
-  VALUE_PREFIX
-};
+export { LevelCategory, LevelMeter, LevelNote };
 
 /**
  * Master record.
@@ -117,3 +100,5 @@ Base.entry = async function entry(db, key) {
     return object;
   }
 };
+
+export default LevelMaster;

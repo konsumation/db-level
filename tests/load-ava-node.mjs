@@ -2,10 +2,10 @@ import test from "ava";
 import { createWriteStream } from "node:fs";
 import tmp from "tmp";
 import { createData } from "@konsumation/db-test";
-import { LevelMaster } from "@konsumation/db-level";
+import Master from "@konsumation/db-level";
 
 test("backup", async t => {
-  const master = await LevelMaster.initialize(tmp.tmpNameSync());
+  const master = await Master.initialize(tmp.tmpNameSync());
 
   createData(
     master,
