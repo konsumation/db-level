@@ -59,33 +59,31 @@ example();
 *   [NOTE\_PREFIX](#note_prefix)
 *   [LevelMaster](#levelmaster)
     *   [Properties](#properties-1)
-    *   [write](#write-1)
-        *   [Parameters](#parameters-4)
     *   [close](#close)
     *   [categories](#categories)
-        *   [Parameters](#parameters-5)
+        *   [Parameters](#parameters-4)
     *   [initialize](#initialize)
-        *   [Parameters](#parameters-6)
+        *   [Parameters](#parameters-5)
 *   [LevelMeter](#levelmeter)
-    *   [Parameters](#parameters-7)
+    *   [Parameters](#parameters-6)
     *   [Properties](#properties-2)
     *   [notes](#notes)
-        *   [Parameters](#parameters-8)
+        *   [Parameters](#parameters-7)
     *   [valueKey](#valuekey)
-        *   [Parameters](#parameters-9)
+        *   [Parameters](#parameters-8)
     *   [writeValue](#writevalue)
-        *   [Parameters](#parameters-10)
+        *   [Parameters](#parameters-9)
     *   [getValue](#getvalue)
-        *   [Parameters](#parameters-11)
+        *   [Parameters](#parameters-10)
     *   [deleteValue](#deletevalue)
-        *   [Parameters](#parameters-12)
+        *   [Parameters](#parameters-11)
     *   [values](#values)
-        *   [Parameters](#parameters-13)
+        *   [Parameters](#parameters-12)
     *   [key](#key-1)
 *   [LevelNote](#levelnote)
     *   [key](#key-2)
 *   [secondsAsString](#secondsasstring)
-    *   [Parameters](#parameters-14)
+    *   [Parameters](#parameters-13)
 
 ## LevelCategory
 
@@ -195,17 +193,6 @@ Holds schema version.
 ### Properties
 
 *   `schemaVersion` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
-
-### write
-
-*   **See**: {key}
-
-Writes object into database.
-Leaves all other entries alone.
-
-#### Parameters
-
-*   `db` **ClassicLevel**&#x20;
 
 ### close
 
