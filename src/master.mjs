@@ -79,12 +79,6 @@ export class LevelMaster extends Master {
   async *categories(gte, lte) {
     yield* LevelCategory.entries(this.context, gte, lte);
   }
-
-  async category(name) {
-    for await (const category of this.categories(name, name)) {
-      return category;
-    }
-  }
 }
 
 // @ts-ignore
