@@ -38,15 +38,11 @@ export class LevelMaster extends Master {
     const context = new ClassicLevel(directory);
     let values;
 
-    try {
-      for await (const [key, value] of context.iterator({
-        gte: MASTER,
-        lte: MASTER
-      })) {
-        values = JSON.parse(value);
-      }
-    } catch (err) {
-      console.error(err);
+    for await (const [key, value] of context.iterator({
+      gte: MASTER,
+      lte: MASTER
+    })) {
+      values = JSON.parse(value);
     }
 
     if (!values) {
@@ -61,6 +57,16 @@ export class LevelMaster extends Master {
     master.context = context;
 
     return master;
+  }
+
+  /**
+   * Writes object into database.
+   * Leaves all other entries alone.
+   * @see {key}
+   * @param {ClassicLevel} db
+   */
+  async write(db) {
+    return db.put(MASTER, JSON.stringify(this.getAttributes()));
   }
 
   /**
