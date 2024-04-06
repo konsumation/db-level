@@ -16,7 +16,7 @@ export { LevelCategory, LevelMeter, LevelNote };
 export class LevelMaster extends Master {
   static get factories() {
     return {
-      [LevelCategory.typeName]: LevelCategory
+      [LevelCategory.type]: LevelCategory
     };
   }
 

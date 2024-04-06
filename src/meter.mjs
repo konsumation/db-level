@@ -25,7 +25,7 @@ import { LevelNote } from "./note.mjs";
 export class LevelMeter extends Meter {
   static get factories() {
     return {
-      [LevelNote.typeName]: LevelNote
+      [LevelNote.type]: LevelNote
     };
   }
 
@@ -43,7 +43,7 @@ export class LevelMeter extends Meter {
     })) {
       const values = JSON.parse(value);
       values.name = key.slice(prefix.length);
-      values[object.typeName] = object;
+      values[object.type] = object;
       yield new this(values);
     }
   }

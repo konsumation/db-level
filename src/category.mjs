@@ -20,7 +20,7 @@ import { readStreamOptions } from "./util.mjs";
 export class LevelCategory extends Category {
   static get factories() {
     return {
-      [LevelMeter.typeName]: LevelMeter
+      [LevelMeter.type]: LevelMeter
     };
   }
 
