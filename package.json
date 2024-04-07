@@ -39,11 +39,11 @@
     "lint:typescript": "tsc --allowJs --checkJs --noEmit --resolveJsonModule -t esnext -m esnext --module nodenext --moduleResolution nodenext ./src**/*.mjs"
   },
   "dependencies": {
-    "@konsumation/model": "^3.3.0",
+    "@konsumation/model": "^3.3.1",
     "classic-level": "^1.4.1"
   },
   "devDependencies": {
-    "@konsumation/db-test": "^3.1.4",
+    "@konsumation/db-test": "^3.1.5",
     "@types/node": "^20.12.5",
     "ava": "^6.1.2",
     "browser-ava": "^2.2.4",
