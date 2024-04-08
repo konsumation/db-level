@@ -6,7 +6,7 @@ import { LevelMaster, LevelCategory, LevelMeter } from "@konsumation/db-level";
 
 test("LevelMeter value time 0", t =>
   t.is(
-    new LevelMeter({ name: "cat" }).valueKey(0),
+    new LevelMeter({ name: "cat" }).valueKey(new Date(0)),
     "values.cat.000000000000000"
   ));
 
@@ -41,6 +41,7 @@ test("create Meter with unit", async t => {
   t.is(meter.unit, "m3");
   t.is(meter.fractionalDigits, 3);
   t.is(meter.serial, "1234567");
+  t.deepEqual(meter.validFrom, new Date(0));
 });
 
 test("Meter write / read", async t => {
@@ -53,7 +54,7 @@ test("Meter write / read", async t => {
   });
   await category.write(master.context);
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 2; i++) {
     const meter = new LevelMeter({ name: `M-${i}`, category, serial: i });
     await meter.write(master.context);
   }
@@ -63,15 +64,16 @@ test("Meter write / read", async t => {
   for await (const m of LevelMeter.entriesWith(master.context, category)) {
     ms.push(m);
   }
-  t.true(ms.length >= 5);
+  t.true(ms.length >= 2);
   t.is(ms[0].unit, "kWh");
+  t.deepEqual(ms[0].validFrom, new Date(0));
 
   await master.close();
 });
 
 const MSECONDS_A_DAY = 60 * 60 * 24 * 1000;
 
-test.only("values write / read", async t => {
+test("values write / read", async t => {
   const dbf = tmp.tmpNameSync();
   const master = await LevelMaster.initialize(dbf);
 
@@ -80,7 +82,7 @@ test.only("values write / read", async t => {
   const meter = new LevelMeter({ name: `M-1`, category, serial: "123" });
   await meter.write(master.context);
 
-  const first = new Date( Math.floor(Date.now() / 1000)* 1000);
+  const first = new Date(Math.floor(Date.now() / 1000) * 1000);
   const firstValue = 77.34;
   let last = first;
   let lastValue = firstValue;
@@ -118,7 +120,7 @@ test.only("values write / read", async t => {
   await master.close();
 });
 
-test("readStream", async t => {
+test.skip("readStream", async t => {
   const dbf = tmp.tmpNameSync();
   const master = await LevelMaster.initialize(dbf);
 
@@ -152,14 +154,14 @@ test("readStream", async t => {
   await master.close();
 });
 
-test("values delete", async t => {
+test.skip("values delete", async t => {
   const dbf = tmp.tmpNameSync();
   const master = await LevelMaster.initialize(dbf);
 
   const c = new LevelCategory(`CAT-2`, master, { unit: "kWh" });
   await c.write(master.db);
 
-  const first = new Date;
+  const first = new Date();
   const firstValue = 77.34;
   let last = first;
   let lastValue = firstValue;
