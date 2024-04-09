@@ -22,6 +22,6 @@ export class LevelNote extends Note {
   }
 
   async write(db) {
-    return db.put(this.key, JSON.stringify(this.getAttributes()));
+    return db.put(this.key, JSON.stringify(this.toJSON()));
   }
 }

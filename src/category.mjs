@@ -53,7 +53,7 @@ export class LevelCategory extends Category {
    * @param {ClassicLevel} db
    */
   async write(db) {
-    return db.put(this.key, JSON.stringify(this.getAttributes()));
+    return db.put(this.key, JSON.stringify(this.toJSON()));
   }
 
   get keyPrefix() {

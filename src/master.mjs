@@ -66,7 +66,7 @@ export class LevelMaster extends Master {
    * @param {ClassicLevel} db
    */
   async write(db) {
-    return db.put(MASTER, JSON.stringify(this.getAttributes()));
+    return db.put(MASTER, JSON.stringify(this.toJSON()));
   }
 
   /**
