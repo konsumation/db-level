@@ -84,13 +84,15 @@ export class LevelMeter extends Meter {
 
   /**
    * Write a time/value pair.
-   * @param {ClassicLevel} db
-   * @param {Date} date
-   * @param {number} value
+   * @param {any} db
+   * @param {Object} attributes
+   * @param {Date} attributes.date
+   * @param {number} attributes.value
+   * @returns {Promise<any>}
    */
-  async writeValue(db, date, value) {
+  async addValue(db, attributes) {
     // @ts-ignore
-    return db.put(this.valueKey(date), value);
+    return db.put(this.valueKey(attributes.date), attributes.value);
   }
 
   /**

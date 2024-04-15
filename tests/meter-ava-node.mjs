@@ -90,7 +90,7 @@ test("values write / read", async t => {
   for (let i = 0; i < 100; i++) {
     last = new Date(first.getTime() + MSECONDS_A_DAY * i);
     lastValue = firstValue + i;
-    await meter.writeValue(master.context, last, lastValue);
+    await meter.addValue(master.context, { date: last, value: lastValue });
   }
 
   let values = [];
@@ -138,7 +138,7 @@ test.skip("readStream", async t => {
   for (let i = 0; i < 100; i++) {
     last = new Date(first.getTime() + MSECONDS_A_DAY * i);
     lastValue = firstValue + i;
-    await c.writeValue(master.db, last, lastValue);
+    await c.addValue(master.db, { date: last, value: lastValue });
   }
 
   const stream = c.readStream(master.db, { reverse: true });
@@ -169,7 +169,7 @@ test.skip("values delete", async t => {
   for (let i = 0; i < 3; i++) {
     last = new Date(first.getTime() + MSECONDS_A_DAY * i);
     lastValue = firstValue + i;
-    await c.writeValue(master.db, last, lastValue);
+    await c.addValue(master.db, { date: last, value: lastValue });
   }
   const ds = await c.getValue(master.db, first);
   t.is((await c.getValue(master.db, first)).toString(), "77.34");

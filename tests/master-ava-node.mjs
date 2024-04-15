@@ -41,7 +41,7 @@ test("backup as version 2", async t => {
     for (let i = 0; i < 10; i++) {
       last = new Date(first + SECONDS_A_DAY * i).getTime();
       lastValue = firstValue + i;
-      await c.writeValue(master.db, lastValue, last);
+      await c.addValue(master.db, { date:last, value: lastValue});
     }
   }
 
