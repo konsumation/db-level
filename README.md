@@ -73,7 +73,7 @@ example();
         *   [Parameters](#parameters-8)
     *   [valueKey](#valuekey)
         *   [Parameters](#parameters-9)
-    *   [writeValue](#writevalue)
+    *   [addValue](#addvalue)
         *   [Parameters](#parameters-10)
     *   [getValue](#getvalue)
         *   [Parameters](#parameters-11)
@@ -275,15 +275,19 @@ Key for a given value.
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** key
 
-### writeValue
+### addValue
 
 Write a time/value pair.
 
 #### Parameters
 
-*   `db` **ClassicLevel**&#x20;
-*   `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)**&#x20;
-*   `value` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
+*   `db` **any**&#x20;
+*   `attributes` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
+
+    *   `attributes.date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)**&#x20;
+    *   `attributes.value` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
+
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<any>**&#x20;
 
 ### getValue
 
