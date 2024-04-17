@@ -211,6 +211,7 @@ List Categories.
 
 #### Parameters
 
+*   `context` &#x20;
 *   `gte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**&#x20;
 *   `lte` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**&#x20;
 
