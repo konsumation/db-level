@@ -1,12 +1,11 @@
-import { ClassicLevel } from "classic-level";
 import { Category, Meter } from "@konsumation/model";
 import {
-  secondsAsString,
   readStreamWithTimeOptions,
   readStreamOptions
 } from "./util.mjs";
 import { VALUE_PREFIX, METER_PREFIX } from "./consts.mjs";
 import { LevelNote } from "./note.mjs";
+import { LevelValue } from "./value.mjs";
 
 /**
  * Meter
@@ -25,7 +24,8 @@ import { LevelNote } from "./note.mjs";
 export class LevelMeter extends Meter {
   static get factories() {
     return {
-      [LevelNote.type]: LevelNote
+      [LevelNote.type]: LevelNote,
+      [LevelValue.type]: LevelValue
     };
   }
 
@@ -72,48 +72,6 @@ export class LevelMeter extends Meter {
   }
 
   /**
-   * Key for a given value.
-   * @param {Date} date
-   * @return {string} key
-   */
-  valueKey(date) {
-    return (
-      VALUE_PREFIX + this.name + "." + secondsAsString(date.getTime() / 1000)
-    );
-  }
-
-  /**
-   * Write a time/value pair.
-   * @param {any} db
-   * @param {Object} attributes
-   * @param {Date} attributes.date
-   * @param {number} attributes.value
-   * @returns {Promise<any>}
-   */
-  async addValue(db, attributes) {
-    // @ts-ignore
-    return db.put(this.valueKey(attributes.date), attributes.value);
-  }
-
-  /**
-   *
-   * @param {ClassicLevel} db
-   * @param {Date} date
-   */
-  async getValue(db, date) {
-    return db.get(this.valueKey(date)).catch(err => {});
-  }
-
-  /**
-   *
-   * @param {ClassicLevel} db
-   * @param {Date} date
-   */
-  async deleteValue(db, date) {
-    return db.del(this.valueKey(date));
-  }
-
-  /**
    * Get values of the meter.
    * @param {any} db
    * @param {Object} [options]
@@ -129,10 +87,11 @@ export class LevelMeter extends Meter {
     for await (const [k, v] of db.iterator(
       readStreamWithTimeOptions(key, options)
     )) {
-      yield {
+      yield new LevelValue({
+        meter: this,
         value: parseFloat(v),
         date: new Date(parseInt(k.slice(prefixLength), 10) * 1000)
-      };
+      });
     }
   }
 

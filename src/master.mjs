@@ -3,9 +3,10 @@ import { SCHEMA_VERSION_CURRENT, Master, Base } from "@konsumation/model";
 import { LevelCategory } from "./category.mjs";
 import { LevelMeter } from "./meter.mjs";
 import { LevelNote } from "./note.mjs";
+import { LevelValue } from "./value.mjs";
 import { MASTER } from "./consts.mjs";
 
-export { LevelCategory, LevelMeter, LevelNote };
+export { LevelCategory, LevelMeter, LevelNote, LevelValue };
 
 /**
  * Master record.

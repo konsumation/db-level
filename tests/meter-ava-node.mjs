@@ -2,13 +2,7 @@ import test from "ava";
 import tmp from "tmp";
 import { Readable } from "node:stream";
 import { createWriteStream } from "node:fs";
-import { LevelMaster, LevelCategory, LevelMeter } from "@konsumation/db-level";
-
-test("LevelMeter value time 0", t =>
-  t.is(
-    new LevelMeter({ name: "cat" }).valueKey(new Date(0)),
-    "values.cat.000000000000000"
-  ));
+import { LevelMaster, LevelCategory, LevelMeter, LevelValue } from "@konsumation/db-level";
 
 test("create Meter", async t => {
   const category = new LevelCategory({
@@ -55,7 +49,7 @@ test("Meter write / read", async t => {
   await category.write(master.context);
 
   for (let i = 0; i < 2; i++) {
-    const meter = new LevelMeter({ name: `M-${i}`, category, serial: i });
+    const meter = new LevelMeter({ name: `M-${i}`, category, serial: String(i) });
     await meter.write(master.context);
   }
 
@@ -90,18 +84,19 @@ test("values write / read", async t => {
   for (let i = 0; i < 100; i++) {
     last = new Date(first.getTime() + MSECONDS_A_DAY * i);
     lastValue = firstValue + i;
-    await meter.addValue(master.context, { date: last, value: lastValue });
+    const value = meter.addValue(master.context,{ date: last, value: lastValue });
+    await value.write(master.context);
   }
 
   let values = [];
 
-  for await (const { value, date } of meter.values(master.context)) {
-    values.push({ value, date });
+  for await (const value of meter.values(master.context)) {
+    values.push(value);
   }
 
   //console.log(values.length, values);
   t.true(values.length >= 100);
-  t.deepEqual(values[0], { value: firstValue, date: first });
+  t.deepEqual(values[0], new LevelValue({ meter, value: firstValue, date: first }));
 
   /*
   values = [];
@@ -138,10 +133,10 @@ test.skip("readStream", async t => {
   for (let i = 0; i < 100; i++) {
     last = new Date(first.getTime() + MSECONDS_A_DAY * i);
     lastValue = firstValue + i;
-    await c.addValue(master.db, { date: last, value: lastValue });
+    await c.addValue(master.context, { date: last, value: lastValue });
   }
 
-  const stream = c.readStream(master.db, { reverse: true });
+  const stream = c.readStream(master.context, { reverse: true });
 
   // stream.pipe(process.stdout);
 
@@ -158,8 +153,8 @@ test.skip("values delete", async t => {
   const dbf = tmp.tmpNameSync();
   const master = await LevelMaster.initialize(dbf);
 
-  const c = new LevelCategory(`CAT-2`, master, { unit: "kWh" });
-  await c.write(master.db);
+  const c = new LevelCategory( { name: 'CAT-2', unit: "kWh" });
+  await c.write(master.context);
 
   const first = new Date();
   const firstValue = 77.34;
@@ -169,7 +164,7 @@ test.skip("values delete", async t => {
   for (let i = 0; i < 3; i++) {
     last = new Date(first.getTime() + MSECONDS_A_DAY * i);
     lastValue = firstValue + i;
-    await c.addValue(master.db, { date: last, value: lastValue });
+    await c.addValue(master.context, { date: last, value: lastValue });
   }
   const ds = await c.getValue(master.db, first);
   t.is((await c.getValue(master.db, first)).toString(), "77.34");
