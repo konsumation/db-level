@@ -71,21 +71,15 @@ example();
     *   [Properties](#properties-2)
     *   [notes](#notes)
         *   [Parameters](#parameters-8)
-    *   [valueKey](#valuekey)
-        *   [Parameters](#parameters-9)
-    *   [addValue](#addvalue)
-        *   [Parameters](#parameters-10)
-    *   [getValue](#getvalue)
-        *   [Parameters](#parameters-11)
-    *   [deleteValue](#deletevalue)
-        *   [Parameters](#parameters-12)
     *   [values](#values)
-        *   [Parameters](#parameters-13)
+        *   [Parameters](#parameters-9)
     *   [key](#key-1)
 *   [LevelNote](#levelnote)
     *   [key](#key-2)
 *   [secondsAsString](#secondsasstring)
-    *   [Parameters](#parameters-14)
+    *   [Parameters](#parameters-10)
+*   [LevelValue](#levelvalue)
+    *   [key](#key-3)
 
 ## LevelCategory
 
@@ -265,44 +259,6 @@ List assigned Notes.
 
 Returns **AsyncIterable<[LevelNote](#levelnote)>**&#x20;
 
-### valueKey
-
-Key for a given value.
-
-#### Parameters
-
-*   `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)**&#x20;
-
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** key
-
-### addValue
-
-Write a time/value pair.
-
-#### Parameters
-
-*   `db` **any**&#x20;
-*   `attributes` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
-
-    *   `attributes.date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)**&#x20;
-    *   `attributes.value` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
-
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<any>**&#x20;
-
-### getValue
-
-#### Parameters
-
-*   `db` **ClassicLevel**&#x20;
-*   `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)**&#x20;
-
-### deleteValue
-
-#### Parameters
-
-*   `db` **ClassicLevel**&#x20;
-*   `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)**&#x20;
-
 ### values
 
 Get values of the meter.
@@ -341,3 +297,13 @@ Format seconds as string left padded with '0'.
 *   `seconds` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** seconds since epoch
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** padded seconds
+
+## LevelValue
+
+**Extends Value**
+
+Hints placed on a category at a specific time.
+
+### key
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
