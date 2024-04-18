@@ -1,27 +1,25 @@
 import { Value } from "@konsumation/model";
 import { VALUE_PREFIX } from "./consts.mjs";
-import {
-    secondsAsString
-  } from "./util.mjs";
-  
+import { secondsAsString } from "./util.mjs";
+
 /**
  * Hints placed on a category at a specific time.
  */
 export class LevelValue extends Value {
-
-  static get keyPrefix() {
-    return VALUE_PREFIX;
+  static keyPrefixWith(owner) {
+    return VALUE_PREFIX + owner.category.name + "." + owner.name + ".";
   }
 
   get keyPrefix() {
-    return VALUE_PREFIX + this.meter.name + ".";
+    // @ts-ignore
+    return this.constructor.keyPrefixWith(this.meter);
   }
 
   /**
    * @return {string}
    */
   get key() {
-    return VALUE_PREFIX + this.meter.name + "." + secondsAsString(this.date.getTime() / 1000)
+    return this.keyPrefix + secondsAsString(this.date.getTime() / 1000);
   }
 
   async write(db) {

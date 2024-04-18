@@ -6,12 +6,13 @@ import { NOTE_PREFIX } from "./consts.mjs";
  */
 export class LevelNote extends Note {
 
-  static get keyPrefix() {
-    return NOTE_PREFIX;
+  static keyPrefixWith(owner) {
+    return NOTE_PREFIX + owner.category.name + "." + owner.name + ".";
   }
 
   get keyPrefix() {
-    return NOTE_PREFIX + this.meter.name + ".";
+    // @ts-ignore
+    return this.constructor.keyPrefixWith(this.meter);
   }
 
   /**

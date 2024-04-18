@@ -56,10 +56,6 @@ export class LevelCategory extends Category {
     return db.put(this.key, JSON.stringify(this.toJSON()));
   }
 
-  get keyPrefix() {
-    return CATEGORY_PREFIX;
-  }
-
   /**
    * @return {string}
    */

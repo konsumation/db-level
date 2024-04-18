@@ -8,8 +8,6 @@ import { LevelMaster, LevelCategory } from "@konsumation/db-level";
 import { CATEGORY_PREFIX } from "../src/consts.mjs";
 
 test("Category keyPrefix", t => t.is(LevelCategory.keyPrefix, CATEGORY_PREFIX));
-test("Category instance keyPrefix", t =>
-  t.is(new LevelCategory("c1").keyPrefix, CATEGORY_PREFIX));
 
 test("Category key", t =>
   t.is(new LevelCategory({ name: "name1" }).key, "categories.name1"));
@@ -31,16 +29,15 @@ test("Category write / read / delete", async t => {
   t.is(categories[0].fractionalDigits, 3);
 
   let category = await LevelCategory.entry(master.context, "CAT-7");
-  
+
   t.is(category.name, "CAT-7");
   t.is(category.unit, "kWh");
   t.is(category.fractionalDigits, 3);
 
-
   category = await LevelCategory.entry(master.context, "CAT-12");
   await category.delete(master.context);
 
-  for await(const line of master.text()) {
+  for await (const line of master.text()) {
     console.log(line);
   }
 

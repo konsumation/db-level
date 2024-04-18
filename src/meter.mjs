@@ -81,7 +81,7 @@ export class LevelMeter extends Meter {
    * @return {AsyncIterable<{value:number, date: Date}>}
    */
   async *values(db, options) {
-    const key = VALUE_PREFIX + this.name + ".";
+    const key = LevelValue.keyPrefixWith(this);
     const prefixLength = key.length;
 
     for await (const [k, v] of db.iterator(
@@ -93,10 +93,6 @@ export class LevelMeter extends Meter {
         date: new Date(parseInt(k.slice(prefixLength), 10) * 1000)
       });
     }
-  }
-
-  get keyPrefix() {
-    return METER_PREFIX + this.category.name + ".";
   }
 
   /**

@@ -2,7 +2,24 @@ import test from "ava";
 import tmp from "tmp";
 import { Readable } from "node:stream";
 import { createWriteStream } from "node:fs";
-import { LevelMaster, LevelCategory, LevelMeter, LevelValue } from "@konsumation/db-level";
+import {
+  LevelMaster,
+  LevelCategory,
+  LevelMeter,
+  LevelValue
+} from "@konsumation/db-level";
+import { METER_PREFIX } from "../src/consts.mjs";
+
+test("Meter key", t =>
+  t.is(
+    new LevelMeter({
+      name: "M-1",
+      category: new LevelCategory({
+        name: "CAT-1"
+      })
+    }).key,
+    METER_PREFIX + "CAT-1.M-1"
+  ));
 
 test("create Meter", async t => {
   const category = new LevelCategory({
@@ -40,22 +57,27 @@ test("create Meter with unit", async t => {
 
 test("Meter write / read", async t => {
   const master = await LevelMaster.initialize(tmp.tmpNameSync());
+  const context = master.context;
 
   const category = new LevelCategory({
     name: "CAT-1",
     unit: "kWh",
     fractionalDigits: 3
   });
-  await category.write(master.context);
+  await category.write(context);
 
   for (let i = 0; i < 2; i++) {
-    const meter = new LevelMeter({ name: `M-${i}`, category, serial: String(i) });
-    await meter.write(master.context);
+    const meter = new LevelMeter({
+      name: `M-${i}`,
+      category,
+      serial: String(i)
+    });
+    await meter.write(context);
   }
 
   const ms = [];
 
-  for await (const m of LevelMeter.entriesWith(master.context, category)) {
+  for await (const m of LevelMeter.entriesWith(context, category)) {
     ms.push(m);
   }
   t.true(ms.length >= 2);
@@ -70,33 +92,36 @@ const MSECONDS_A_DAY = 60 * 60 * 24 * 1000;
 test("values write / read", async t => {
   const dbf = tmp.tmpNameSync();
   const master = await LevelMaster.initialize(dbf);
+  const context = master.context;
 
-  const category = new LevelCategory({ name: "CAT-1", unit: "kWh" });
-  await category.write(master.context);
-  const meter = new LevelMeter({ name: `M-1`, category, serial: "123" });
-  await meter.write(master.context);
+  const category = master.addCategory(context, { name: "CAT-1", unit: "kWh" });
+  await category.write(context);
+  const meter = category.addMeter(context, { name: "M-1", serial: "123" });
+  await meter.write(context);
 
   const first = new Date(Math.floor(Date.now() / 1000) * 1000);
   const firstValue = 77.34;
-  let last = first;
-  let lastValue = firstValue;
 
   for (let i = 0; i < 100; i++) {
-    last = new Date(first.getTime() + MSECONDS_A_DAY * i);
-    lastValue = firstValue + i;
-    const value = meter.addValue(master.context,{ date: last, value: lastValue });
-    await value.write(master.context);
+    const value = await meter.addValue(context, {
+      date: new Date(first.getTime() + MSECONDS_A_DAY * i),
+      value: firstValue + i
+    });
+    await value.write(context);
   }
 
   let values = [];
 
-  for await (const value of meter.values(master.context)) {
+  for await (const value of meter.values(context)) {
     values.push(value);
   }
 
   //console.log(values.length, values);
   t.true(values.length >= 100);
-  t.deepEqual(values[0], new LevelValue({ meter, value: firstValue, date: first }));
+  t.deepEqual(
+    values[0],
+    new LevelValue({ meter, value: firstValue, date: first })
+  );
 
   /*
   values = [];
@@ -153,7 +178,7 @@ test.skip("values delete", async t => {
   const dbf = tmp.tmpNameSync();
   const master = await LevelMaster.initialize(dbf);
 
-  const c = new LevelCategory( { name: 'CAT-2', unit: "kWh" });
+  const c = new LevelCategory({ name: "CAT-2", unit: "kWh" });
   await c.write(master.context);
 
   const first = new Date();

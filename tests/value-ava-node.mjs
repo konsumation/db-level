@@ -10,5 +10,5 @@ test("LevelValue value time 0", t =>
       }),
       date: new Date(0)
     }).key,
-    "values.M-1.000000000000000"
+    "values.CAT-1.M-1.000000000000000"
   ));
