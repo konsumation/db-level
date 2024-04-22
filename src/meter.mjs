@@ -1,9 +1,9 @@
-import { Category, Meter } from "@konsumation/model";
+import { Category, Meter, Value } from "@konsumation/model";
 import {
   readStreamWithTimeOptions,
   readStreamOptions
 } from "./util.mjs";
-import { VALUE_PREFIX, METER_PREFIX } from "./consts.mjs";
+import { METER_PREFIX } from "./consts.mjs";
 import { LevelNote } from "./note.mjs";
 import { LevelValue } from "./value.mjs";
 
@@ -78,7 +78,7 @@ export class LevelMeter extends Meter {
    * @param {string} [options.gte] time of earliest value
    * @param {string} [options.lte] time of latest value
    * @param {boolean} [options.reverse] order
-   * @return {AsyncIterable<{value:number, date: Date}>}
+   * @return {AsyncIterable<Value>}
    */
   async *values(db, options) {
     const key = LevelValue.keyPrefixWith(this);
