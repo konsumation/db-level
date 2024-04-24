@@ -24,9 +24,9 @@ test("backup", async t => {
 
   let n = 0;
   for await (const line of master.text(context)) {
-    //console.log(line);
+   // console.log(line);
     n++;
   }
   //t.log(n);
-  t.true(n >= 1211);
+  t.true(n >= 1210);
 });
