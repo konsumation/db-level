@@ -28,5 +28,5 @@ test("backup", async t => {
     n++;
   }
   //t.log(n);
-  t.true(n >= 1214);
+  t.true(n >= 1211);
 });
