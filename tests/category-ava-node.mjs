@@ -37,9 +37,12 @@ test("Category write / read / delete", async t => {
   category = await LevelCategory.entry(master.context, "CAT-12");
   await category.delete(master.context);
 
+  const lines = [];
   for await (const line of master.text()) {
-    console.log(line);
+    lines.push(line);
   }
+
+  t.true(lines.length >= 5 * 10);
 
   //c = await LevelCategory.entry(master.context, "CAT-7");
   //t.falsy(c);
