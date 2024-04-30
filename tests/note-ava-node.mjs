@@ -26,14 +26,16 @@ test("create Note", async t => {
 
 test.skip("Note write / read", async t => {
   const master = await LevelMaster.initialize(tmp.tmpNameSync());
+  const context = master.context;
 
   const category = new LevelCategory({
     name: "CAT-1",
     unit: "kWh",
     fractionalDigits: 3
   });
-  await category.write(master.context);
+  await category.write(context);
   const meter = new LevelMeter({
+    category,
     name: "M-1",
     category,
     description: "some text"
@@ -44,23 +46,23 @@ test.skip("Note write / read", async t => {
 
   for (let i = 0; i < 5; i++) {
     const note = new LevelNote({
-      name: new Date(time.getTime() + i),
       meter,
+      name: new Date(time.getTime() + i),
       description: `description ${i}`
     });
     await note.write(master.context);
   }
 
-  /*
   const ms = [];
 
-  for await (const m of Note.entriesWith(master.db, c)) {
+  for await (const m of meter.notes(context)) {
+    console.log(m);
     ms.push(m);
   }
 
+
   t.true(ms.length >= 5);
   t.is(ms[0].description, "description 0");
-*/
 
   master.close();
 });
