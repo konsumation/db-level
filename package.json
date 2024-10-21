@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@konsumation/model": "^7.3.0",
-    "classic-level": "^1.4.1"
+    "classic-level": "^2.0.0"
   },
   "devDependencies": {
     "@konsumation/db-test": "^4.2.16",
