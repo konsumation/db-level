@@ -8,8 +8,8 @@
   "types": "./types/master.d.mts",
   "exports": {
     ".": {
-      "default": "./src/master.mjs",
-      "types": "./types/master.d.mts"
+      "types": "./types/master.d.mts",
+      "default": "./src/master.mjs"
     }
   },
   "description": "timeseries database on leveldb",
