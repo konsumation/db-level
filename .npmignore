@@ -4,4 +4,5 @@ doc
 *.log
 *.tmp
 .vscode
+tsconfig.json
 .github
