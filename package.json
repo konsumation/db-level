@@ -43,7 +43,7 @@
     "classic-level": "^3.0.0"
   },
   "devDependencies": {
-    "@konsumation/db-test": "^4.2.17",
+    "@konsumation/db-test": "^4.2.18",
     "@types/node": "^22.15.12",
     "ava": "^6.3.0",
     "browser-ava": "^2.2.26",
