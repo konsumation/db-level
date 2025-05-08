@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@konsumation/db-test": "^4.2.18",
-    "@types/node": "^22.15.15",
+    "@types/node": "^22.15.16",
     "ava": "^6.3.0",
     "browser-ava": "^2.2.26",
     "c8": "^10.1.3",
