@@ -23,12 +23,12 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v6.0.1
+      - name: checkout
+        run: npm ci
       - name: prepare node
         uses: actions/setup-node@v6.1.0
         with:
           node-version: ${{ matrix.node-version }}
-      - name: checkout
-        run: npm ci
       - name: install
         run: npm ci
       - name: test and coverage
@@ -53,12 +53,12 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v6.0.1
+      - name: checkout
+        run: npm ci
       - name: prepare node
         uses: actions/setup-node@v6.1.0
         with:
           node-version: 24.11.1
-      - name: checkout
-        run: npm ci
       - name: install
         run: npm ci
       - name: release
