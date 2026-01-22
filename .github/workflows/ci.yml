@@ -22,7 +22,7 @@ jobs:
           - 24.13.0
     steps:
       - name: checkout
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
       - name: checkout
         run: npm ci
       - name: prepare node
@@ -52,7 +52,7 @@ jobs:
       id-token: write
     steps:
       - name: checkout
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
       - name: checkout
         run: npm ci
       - name: prepare node
