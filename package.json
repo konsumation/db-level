@@ -54,6 +54,11 @@
     "tmp": "0.2.5",
     "typescript": "^6.0.3"
   },
+  "overrides": {
+    "c8": {
+      "yargs": "^18.0.0"
+    }
+  },
   "engines": {
     "node": ">=22.15.0"
   },
