@@ -1,5 +1,6 @@
 [![npm](https://img.shields.io/npm/v/@konsumation/db-level.svg)](https://www.npmjs.com/package/@konsumation/db-level)
 [![Typed with TypeScript](https://flat.badgen.net/badge/icon/Typed?icon=typescript\&label\&labelColor=blue\&color=555555)](https://typescriptlang.org)
+[![License](https://img.shields.io/badge/License-0BSD-blue.svg)](https://spdx.org/licenses/0BSD.html)
 [![bundlejs](https://deno.bundlejs.com/?q=@konsumation/db-level\&badge=detailed)](https://bundlejs.com/?q=@konsumation/db-level)
 [![downloads](http://img.shields.io/npm/dm/@konsumation/db-level.svg?style=flat-square)](https://npmjs.org/package/@konsumation/db-level)
 [![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fkonsumation%2Fdb-level%2Fbadge\&style=flat)](https://actions-badge.atrox.dev/konsumation/db-level/goto)
