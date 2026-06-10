@@ -27,7 +27,7 @@
       "name": "Konstantin Karpman"
     }
   ],
-  "license": "BSD-2-Clause",
+  "license": "0BSD",
   "scripts": {
     "prepare": "node --run prepare:typescript",
     "prepare:typescript": "tsc --allowJs --declaration --emitDeclarationOnly --declarationDir types --resolveJsonModule --target esnext -m esnext --module nodenext --moduleResolution nodenext --rootDir src ./src**/*.mjs",
@@ -50,7 +50,7 @@
     "browser-ava": "^2.2.26",
     "c8": "^11.0.0",
     "documentation": "^14.0.3",
-    "semantic-release": "^25.0.3",
+    "semantic-release": "^25.0.5",
     "tmp": "0.2.7",
     "typescript": "^6.0.3"
   },
